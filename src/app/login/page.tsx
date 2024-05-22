@@ -20,6 +20,7 @@ import ControlledInput from "@/components/Forms/ControlledInput";
 import logo from "@/assets/svgs/logo.png";
 import { userLogin } from "@/services/actions/userLogin";
 import { toast } from "sonner";
+import { storeUserInfo } from "@/services/auth.service";
 
 // export const ValidationSchema = z.object({
 //   email: z.string().email("Please enter a valid email address!"),
@@ -41,14 +42,14 @@ const LoginPage = () => {
 
     try {
       const res = await userLogin(values);
-      console.log(res);
+      // console.log(res);
       if (res?.data?.accessToken) {
         toast.success(res?.message);
-        // storeUserInfo({ accessToken: res?.data?.accessToken });
+        storeUserInfo({ accessToken: res?.data?.accessToken });
         router.push("/");
       } else {
         setError(res?.message);
-        // toast.error(res?.message);
+        toast.error(res?.message);
       }
     } catch (err: any) {
       console.error(err.message);

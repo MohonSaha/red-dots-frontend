@@ -15,6 +15,9 @@ import { modifyPayload } from "@/utils/modifyPayload";
 import { registerUser } from "@/services/actions/registerUser";
 import ControlledDatePicker from "@/components/Forms/ControlledDatePicker ";
 import { dateFormatter } from "@/utils/dateFormatter";
+import { userLogin } from "@/services/actions/userLogin";
+import { storeUserInfo } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
 // import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 
 const defaultValues = {
@@ -31,6 +34,7 @@ const defaultValues = {
 const RegisterPage = () => {
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const router = useRouter();
 
   const handleRegister = async (values: FieldValues) => {
     if (values?.password !== values?.confirmPassword) {
@@ -54,21 +58,19 @@ const RegisterPage = () => {
     try {
       const res = await registerUser(registerUserData);
       console.log(res);
+
+      // register user direct login functionality
       if (res?.data?.id) {
         toast.success("User registered successfully!");
+        const result = await userLogin({
+          password: values.password,
+          email: values.email,
+        });
+        if (result?.data?.accessToken) {
+          storeUserInfo({ accessToken: result?.data?.accessToken });
+          router.push("/");
+        }
       }
-      // // register user direct login
-      // if (res?.data?.id) {
-      //   toast.success(res.message);
-      //   const result = await userLogin({
-      //     password: values.password,
-      //     email: values.patient.email,
-      //   });
-      //   if (result?.data?.accessToken) {
-      //     storeUserInfo({ accessToken: result?.data?.accessToken });
-      //     router.push("/dashboard");
-      //   }
-      // }
     } catch (err: any) {
       console.log(err.message);
     }

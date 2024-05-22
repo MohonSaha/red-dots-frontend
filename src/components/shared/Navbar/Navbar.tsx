@@ -13,12 +13,11 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button, { ButtonProps } from "@mui/material/Button";
 import { Stack, styled } from "@mui/material";
 import Link from "next/link";
-import Image from "next/image";
-import logo from "../../../assets/logos/blood.png";
-import { grey } from "@mui/material/colors";
+import { getUserInfo } from "@/services/auth.service";
+import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
 
 interface Props {
   window?: () => Window;
@@ -28,8 +27,16 @@ const drawerWidth = 240;
 const navItems = ["Home", "About", "Contact"];
 
 export default function Navbar(props: Props) {
+  const AuthButton = dynamic(
+    () => import("@/components/UI/AuthButton/AuthButton"),
+    { ssr: false }
+  );
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const router = useRouter();
+
+  const userInfo = getUserInfo();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -128,19 +135,8 @@ export default function Navbar(props: Props) {
                 </Typography>
               </Stack>
             </Box>
-            <Button
-              component={Link}
-              href="/login"
-              sx={{
-                backgroundColor: "white",
-                color: "red",
-                "&:hover": {
-                  backgroundColor: grey[300],
-                },
-              }}
-            >
-              Login
-            </Button>
+
+            <AuthButton />
           </Stack>
         </Toolbar>
       </AppBar>
