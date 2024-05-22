@@ -3,7 +3,7 @@ import ControlledDatePicker from "@/components/Forms/ControlledDatePicker ";
 import ControlledForm from "@/components/Forms/ControlledForm";
 import ControlledInput from "@/components/Forms/ControlledInput";
 import ControlledSelectField from "@/components/Forms/ControlledSelectField";
-import { BloodGroups, DonateOption } from "@/types";
+import { BloodGroups, Districts, DonateOption, DonorType } from "@/types";
 import {
   Box,
   Button,
@@ -20,7 +20,7 @@ import { FieldValues } from "react-hook-form";
 interface SearchFormValues {
   bloodType?: string;
   donateOption?: string;
-  lastDonationDate?: Date | null;
+  dateOfBloodDonation?: Date | null;
 }
 
 // Define the props type for the component
@@ -70,23 +70,23 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={3}>
                   <ControlledSelectField
-                    items={DonateOption}
-                    name="donateOption"
-                    label="Want to donate blood?"
+                    items={Districts}
+                    name="district"
+                    label="District"
                   />
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={3}>
                   <ControlledDatePicker
-                    name="lastDonationDate"
-                    label="Last Donation Date"
+                    name="dateOfBloodDonation"
+                    label="Date of Blood Donation"
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={3}>
                   <ControlledSelectField
-                    items={DonateOption}
-                    name="donateOption"
-                    label="Want to donate blood?"
+                    items={DonorType}
+                    name="donorType"
+                    label="Donor Type"
                   />
                 </Grid>
               </Grid>
