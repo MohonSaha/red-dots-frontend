@@ -44,11 +44,11 @@ export default function Navbar(props: Props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+      <Typography variant="h5" sx={{ fontWeight: 700, my: 2.5 }}>
+        Red Dots
       </Typography>
       <Divider />
-      <List>
+      {/* <List>
         {navItems.map((item) => (
           <ListItem key={item} disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
@@ -56,7 +56,68 @@ export default function Navbar(props: Props) {
             </ListItemButton>
           </ListItem>
         ))}
-      </List>
+      </List> */}
+      <Stack direction="column" gap={4}>
+        <Typography
+          component={Link}
+          href="/"
+          sx={{
+            color: "black",
+            mt: 4,
+            fontWeight: 600,
+          }}
+        >
+          Home
+        </Typography>
+        <Typography
+          component={Link}
+          href="/consultation"
+          sx={{
+            color: "black",
+            fontWeight: 600,
+          }}
+        >
+          Consultation
+        </Typography>
+        <Typography
+          component={Link}
+          href="/health-plans"
+          sx={{
+            color: "black",
+            fontWeight: 600,
+          }}
+        >
+          Health Plans
+        </Typography>
+        <Typography
+          component={Link}
+          href="/login"
+          sx={{
+            color: "black",
+            fontWeight: 600,
+          }}
+        >
+          Medicins
+        </Typography>
+        <Typography
+          component={Link}
+          href="/about-us"
+          sx={{
+            color: "black",
+            fontWeight: 600,
+            // transition: "transform 3s ease-in-out",
+            // "&:hover": {
+            //   // transform: "scale(1.1)",
+            //   backgroundColor: "gray",
+            //   paddingY: "10px",
+            //   transition: "transform 0.4s ease-in-out",
+            //   borderRight: "4px solid red",
+            // },
+          }}
+        >
+          About Us
+        </Typography>
+      </Stack>
     </Box>
   );
 
@@ -114,24 +175,73 @@ export default function Navbar(props: Props) {
               <Stack direction="row" gap={4} justifyContent="space-between">
                 <Typography
                   component={Link}
+                  href="/"
+                  sx={{
+                    color: "white",
+                    fontWeight: 500,
+                    transition: "transform 0.4s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                  }}
+                >
+                  Home
+                </Typography>
+                <Typography
+                  component={Link}
                   href="/consultation"
-                  sx={{ color: "white", fontWeight: 500 }}
+                  sx={{
+                    color: "white",
+                    fontWeight: 500,
+                    transition: "transform 0.4s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                  }}
                 >
                   Consultation
                 </Typography>
                 <Typography
                   component={Link}
                   href="/health-plans"
-                  sx={{ color: "white", fontWeight: 500 }}
+                  sx={{
+                    color: "white",
+                    fontWeight: 500,
+                    transition: "transform 0.4s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                  }}
                 >
                   Health Plans
                 </Typography>
                 <Typography
                   component={Link}
                   href="/login"
-                  sx={{ color: "white", fontWeight: 500 }}
+                  sx={{
+                    color: "white",
+                    fontWeight: 500,
+                    transition: "transform 0.4s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                  }}
                 >
                   Medicins
+                </Typography>
+                <Typography
+                  component={Link}
+                  href="/about-us"
+                  sx={{
+                    color: "white",
+                    fontWeight: 500,
+                    transition: "transform 0.4s ease-in-out",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                  }}
+                >
+                  About Us
                 </Typography>
               </Stack>
             </Box>

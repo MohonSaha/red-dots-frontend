@@ -20,7 +20,7 @@ export const getUserInfo = () => {
     return {
       ...decodedData,
       // role: decodedData?.role?.toLowerCase(),    TODO: set role base system in backend
-      role: "user",
+      role: "admin",
     };
   }
 };

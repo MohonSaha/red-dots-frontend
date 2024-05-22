@@ -40,7 +40,7 @@ const LoginPage = () => {
       password: values?.password,
     };
 
-    console.log(loginUserData);
+    // console.log(loginUserData);
 
     try {
       const res = await userLogin(values);
@@ -48,7 +48,7 @@ const LoginPage = () => {
       if (res?.data?.accessToken) {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
-        router.push("/");
+        router.push("/dashboard");
       } else {
         setError(res?.message);
         toast.error(res?.message);

@@ -17,10 +17,7 @@ const AuthButton = () => {
   return (
     <>
       {userInfo?.email ? (
-        // <Button color="error" onClick={handleLogout}>
-        //   Logout
-        // </Button>
-        <AccountMenu />
+        <AccountMenu color="white" />
       ) : (
         <Button
           component={Link}

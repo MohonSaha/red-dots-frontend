@@ -20,7 +20,6 @@ import { storeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-// import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 
 // validation schema for patient registration
 export const ValidationSchema = z.object({
@@ -82,7 +81,7 @@ const RegisterPage = () => {
         });
         if (result?.data?.accessToken) {
           storeUserInfo({ accessToken: result?.data?.accessToken });
-          router.push("/");
+          router.push("/dashboard");
         }
       }
     } catch (err: any) {

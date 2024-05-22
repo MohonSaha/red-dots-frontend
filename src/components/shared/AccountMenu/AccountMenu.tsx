@@ -11,7 +11,9 @@ import Logout from "@mui/icons-material/Logout";
 import { useRouter } from "next/navigation";
 import userLogo from "@/assets/svgs/userham.png";
 import Image from "next/image";
-import { removeUser } from "@/services/auth.service";
+import { getUserInfo, removeUser } from "@/services/auth.service";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import PersonIcon from "@mui/icons-material/Person";
 
 const menuStyles = {
   paper: {
@@ -40,10 +42,17 @@ const menuStyles = {
   },
 };
 
-export default function AccountMenu() {
+export default function AccountMenu({ color }: { color: string }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const router = useRouter();
+
+  const [userRole, setUserRole] = React.useState("");
+  React.useEffect(() => {
+    const { role } = getUserInfo() as any;
+    setUserRole(role);
+  }, []);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -56,6 +65,10 @@ export default function AccountMenu() {
     // logoutUser(router);
     removeUser();
     router.refresh();
+  };
+
+  const openDashboard = () => {
+    router.push(`/dashboard/${userRole}`);
   };
 
   return (
@@ -90,7 +103,7 @@ export default function AccountMenu() {
           <IconButton onClick={handleClick} sx={{ p: 0 }}>
             <Box
               sx={{
-                border: "3px solid white",
+                border: `3px solid ${color}`,
                 borderRadius: "50%",
                 padding: "6px 6px 8px 10px",
               }}
@@ -112,19 +125,49 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={handleClose}>
-          <Avatar sx={{ background: "transparent", color: "primary.main" }} />
-          Profile
-        </MenuItem>
-
-        <Divider />
-
-        <MenuItem onClick={handleLogout}>
-          <ListItemIcon>
-            <Logout fontSize="small" sx={{ color: "error.main" }} />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
+        <Box sx={{ paddingX: "2px" }}>
+          <MenuItem
+            onClick={handleClose}
+            sx={{
+              width: "160px",
+            }}
+          >
+            <Box>
+              <PersonIcon
+                sx={{ background: "transparent", color: "black", mr: "5px" }}
+              />
+            </Box>
+            <Box sx={{ width: "50%", fontWeight: 600, mt: "2px" }}>Profile</Box>
+          </MenuItem>
+          <Divider />
+          <MenuItem
+            onClick={openDashboard}
+            sx={{ display: "flex", justifyContent: "start", width: "160px" }}
+          >
+            <Box>
+              <DashboardIcon
+                sx={{ background: "transparent", color: "black", mr: "5px" }}
+              />
+            </Box>
+            <Box sx={{ width: "50%", fontWeight: 600, mt: "2px" }}>
+              Dashboard
+            </Box>
+          </MenuItem>
+          <Divider />
+          <MenuItem
+            onClick={handleLogout}
+            sx={{
+              display: "flex",
+              width: "160px",
+              justifyContent: "start",
+            }}
+          >
+            <Box>
+              <Logout sx={{ color: "error.main", mr: "5px" }} />
+            </Box>
+            <Box sx={{ width: "50%", fontWeight: 600, mt: "2px" }}>Logout</Box>
+          </MenuItem>
+        </Box>
       </Menu>
     </React.Fragment>
   );
