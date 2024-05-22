@@ -1,4 +1,5 @@
 import { SxProps, TextField } from "@mui/material";
+import { FocusEvent } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 
 type TInputProps = {
@@ -10,6 +11,7 @@ type TInputProps = {
   sx?: SxProps;
   placeholder?: string;
   required?: boolean;
+  onBlur?: (e: FocusEvent<HTMLInputElement, Element>) => void;
 };
 
 const ControlledInput = ({
@@ -21,6 +23,7 @@ const ControlledInput = ({
   sx,
   placeholder,
   required,
+  onBlur,
 }: TInputProps) => {
   const { handleSubmit, control } = useFormContext();
   return (
@@ -40,6 +43,7 @@ const ControlledInput = ({
           required={required}
           error={!!error?.message}
           helperText={error?.message}
+          onBlur={onBlur}
         />
       )}
     />

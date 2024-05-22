@@ -2,7 +2,7 @@
 
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import logo from "@/assets/svgs/logo.png";
 import ControlledForm from "@/components/Forms/ControlledForm";
 import Link from "next/link";
@@ -11,6 +11,10 @@ import { FieldValues } from "react-hook-form";
 import ControlledSelectField from "@/components/Forms/ControlledSelectField";
 import { BloodGroups, DonateOption } from "@/types/common";
 import { toast } from "sonner";
+import { modifyPayload } from "@/utils/modifyPayload";
+import { registerUser } from "@/services/actions/registerUser";
+import ControlledDatePicker from "@/components/Forms/ControlledDatePicker ";
+import { dateFormatter } from "@/utils/dateFormatter";
 // import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 
 const defaultValues = {
@@ -21,22 +25,38 @@ const defaultValues = {
   bloodType: "",
   donateOption: "",
   address: "",
+  age: 0,
 };
 
 const RegisterPage = () => {
-  const handleRegister = async (values: FieldValues) => {
-    // const data = modifyPayload(values);
-    // console.log(data);
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
+  const handleRegister = async (values: FieldValues) => {
     if (values?.password !== values?.confirmPassword) {
-      toast.error("Password does not mathched!");
+      toast.error("Password does not match!");
       return;
     }
-    console.log(values);
+
+    const registerUserData = {
+      name: values?.name,
+      email: values?.email,
+      password: values?.password,
+      bloodType: values?.bloodType,
+      location: values?.address,
+      lastDonationDate: dateFormatter(values?.lastDonationDate),
+      age: Number(values?.age),
+      bio: "Create your bio here ...",
+    };
+
+    // console.log({ registerUserData });
 
     try {
-      // const res = await registerPetient(data);
-      // console.log(res);
+      const res = await registerUser(registerUserData);
+      console.log(res);
+      if (res?.data?.id) {
+        toast.success("User registered successfully!");
+      }
       // // register user direct login
       // if (res?.data?.id) {
       //   toast.success(res.message);
@@ -53,6 +73,22 @@ const RegisterPage = () => {
       console.log(err.message);
     }
   };
+
+  const handleConfirmPasswordBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const confirmPassword = e.target.value;
+    const password = (
+      document.querySelector("input[name='password']") as HTMLInputElement
+    ).value;
+
+    if (password !== confirmPassword) {
+      setPasswordMatchError(true);
+      setIsButtonDisabled(true);
+    } else {
+      setPasswordMatchError(false);
+      setIsButtonDisabled(false);
+    }
+  };
+
   return (
     <Container>
       <Stack
@@ -75,7 +111,7 @@ const RegisterPage = () => {
             </Box>
             <Box>
               <Typography variant="h6" fontWeight={600}>
-                Register Here
+                Register To Red Dots
               </Typography>
             </Box>
           </Stack>
@@ -113,6 +149,7 @@ const RegisterPage = () => {
                     type="password"
                     fullWidth={true}
                     name="confirmPassword"
+                    onBlur={handleConfirmPasswordBlur}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12}>
@@ -127,7 +164,7 @@ const RegisterPage = () => {
                     items={DonateOption}
                     name="donateOption"
                     label="Want to donate blood?"
-                    sx={{ mt: 1 }}
+                    sx={{ mt: 0.5 }}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
@@ -135,7 +172,23 @@ const RegisterPage = () => {
                     items={BloodGroups}
                     name="bloodType"
                     label="Blood Group"
-                    sx={{ mt: 1 }}
+                    sx={{ mt: 0.5 }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={6}>
+                  <ControlledDatePicker
+                    name="lastDonationDate"
+                    label="Last Donation Date"
+                    sx={{ mt: 0.5 }}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={6}>
+                  <ControlledInput
+                    label="Age"
+                    fullWidth={true}
+                    name="age"
+                    sx={{ mt: 0.5 }}
+                    type="number"
                   />
                 </Grid>
               </Grid>
@@ -146,22 +199,21 @@ const RegisterPage = () => {
                 }}
                 fullWidth={true}
                 type="submit"
+                // disabled={isButtonDisabled}
               >
                 Register
               </Button>
 
-              <Typography
-                component="p"
-                fontWeight={300}
-                // sx={{
-                //   display: "flex",
-                //   alignItems: "center",
-                //   justifyContent: "center",
-                // }}
-              >
+              <Typography component="p" fontWeight={300}>
                 Do you already have an account?{" "}
                 <Link href="/login">Login Here</Link>
               </Typography>
+
+              {passwordMatchError && (
+                <Typography color="error" variant="body2">
+                  Passwords do not match.
+                </Typography>
+              )}
             </ControlledForm>
           </Box>
         </Box>

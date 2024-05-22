@@ -18,6 +18,8 @@ import { useRouter } from "next/navigation";
 import ControlledForm from "@/components/Forms/ControlledForm";
 import ControlledInput from "@/components/Forms/ControlledInput";
 import logo from "@/assets/svgs/logo.png";
+import { userLogin } from "@/services/actions/userLogin";
+import { toast } from "sonner";
 
 // export const ValidationSchema = z.object({
 //   email: z.string().email("Please enter a valid email address!"),
@@ -30,17 +32,24 @@ const LoginPage = () => {
   const [error, setError] = useState("");
 
   const handleLogin = async (values: FieldValues) => {
+    const loginUserData = {
+      email: values?.email,
+      password: values?.password,
+    };
+
+    console.log(loginUserData);
+
     try {
-      // const res = await userLogin(values);
-      // console.log(res);
-      // if (res?.data?.accessToken) {
-      //   toast.success(res?.message);
-      //   storeUserInfo({ accessToken: res?.data?.accessToken });
-      //   router.push("/dashboard");
-      // } else {
-      //   setError(res?.message);
-      //   // toast.error(res?.message);
-      // }
+      const res = await userLogin(values);
+      console.log(res);
+      if (res?.data?.accessToken) {
+        toast.success(res?.message);
+        // storeUserInfo({ accessToken: res?.data?.accessToken });
+        router.push("/");
+      } else {
+        setError(res?.message);
+        // toast.error(res?.message);
+      }
     } catch (err: any) {
       console.error(err.message);
     }
@@ -72,7 +81,7 @@ const LoginPage = () => {
             }}
           >
             <Box>
-              <Image src={logo} alt="logo" width={50} height={50} />
+              <Image src={logo} alt="logo" width={80} height={80} />
             </Box>
             <Box>
               <Typography variant="h6" fontWeight={600}>
@@ -99,7 +108,7 @@ const LoginPage = () => {
               }}
             >
               <Grid container spacing={2} my={1}>
-                <Grid item md={6}>
+                <Grid item xs={12} sm={12} md={6}>
                   <ControlledInput
                     name="email"
                     label="Email"
@@ -107,7 +116,7 @@ const LoginPage = () => {
                     fullWidth={true}
                   />
                 </Grid>
-                <Grid item md={6}>
+                <Grid item xs={12} sm={12} md={6}>
                   <ControlledInput
                     name="password"
                     label="Password"
