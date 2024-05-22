@@ -21,11 +21,13 @@ import logo from "@/assets/svgs/logo.png";
 import { userLogin } from "@/services/actions/userLogin";
 import { toast } from "sonner";
 import { storeUserInfo } from "@/services/auth.service";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-// export const ValidationSchema = z.object({
-//   email: z.string().email("Please enter a valid email address!"),
-//   password: z.string().min(6, "Must be at least 6 charecters!"),
-// });
+export const ValidationSchema = z.object({
+  email: z.string().email("Please enter a valid email address!"),
+  password: z.string().min(6, "Must be at least 6 charecters!"),
+});
 
 const LoginPage = () => {
   const router = useRouter();
@@ -102,7 +104,7 @@ const LoginPage = () => {
           <Box>
             <ControlledForm
               onSubmit={handleLogin}
-              // resolver={zodResolver(ValidationSchema)}
+              resolver={zodResolver(ValidationSchema)}
               defaultValues={{
                 email: "",
                 password: "",

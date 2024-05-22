@@ -18,7 +18,21 @@ import { dateFormatter } from "@/utils/dateFormatter";
 import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 // import BloodtypeIcon from "@mui/icons-material/Bloodtype";
+
+// validation schema for patient registration
+export const ValidationSchema = z.object({
+  name: z.string().min(1, "Please enter you name!"),
+  email: z.string().email("Please enter a valid email address!"),
+  address: z.string().min(1, "Please enter your addresss!"),
+  password: z.string().min(6, "Must be at least 6 charecters!"),
+  confirmPassword: z.string().min(6, "Must be at least 6 charecters!"),
+  bloodType: z.string().min(1, "Please select a blood group!"),
+  donateOption: z.string().min(1, "Please select a option!"),
+  age: z.number().min(1, "Please enter your age!"),
+});
 
 const defaultValues = {
   name: "",
@@ -121,7 +135,7 @@ const RegisterPage = () => {
           <Box>
             <ControlledForm
               onSubmit={handleRegister}
-              // resolver={zodResolver(ValidationSchema)}
+              resolver={zodResolver(ValidationSchema)}
               defaultValues={defaultValues}
             >
               <Grid container spacing={2} my={1}>
