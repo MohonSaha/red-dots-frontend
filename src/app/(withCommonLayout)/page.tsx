@@ -1,12 +1,12 @@
-import { Button } from "@mui/material";
+import HeroSection from "@/components/UI/HomePage/HeroSection/HeroSection";
+
 import React from "react";
 
 const HomePage = () => {
   return (
-    <div>
-      <h1>Home Page</h1>
-      <Button variant="contained">Outlined</Button>
-    </div>
+    <>
+      <HeroSection />
+    </>
   );
 };
 
