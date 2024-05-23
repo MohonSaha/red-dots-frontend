@@ -25,9 +25,26 @@ const requestApi = baseApi.injectEndpoints({
       //   },
       // providesTags: "user",
     }),
+    getRequestsMadeByMe: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: "/donation-request-by-me",
+        method: "GET",
+        params: arg,
+      }),
+      //   transformResponse: (response: IUser[], meta: IMeta) => {
+      //     return {
+      //       donors: response,
+      //       meta: meta,
+      //     };
+      //   },
+      // providesTags: "user",
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetMyRequestsQuery, useCreateRequestForBloodMutation } =
-  requestApi;
+export const {
+  useGetMyRequestsQuery,
+  useCreateRequestForBloodMutation,
+  useGetRequestsMadeByMeQuery,
+} = requestApi;

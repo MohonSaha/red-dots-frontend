@@ -11,6 +11,8 @@ import KeyIcon from "@mui/icons-material/Key";
 import { DrawerItems, IUserRole } from "@/types";
 import { USER_ROLE } from "@/constants/role";
 // import GroupIcon from '@mui/icons-material/Group';
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 
 export const drawerItems = (role: IUserRole): DrawerItems[] => {
   const roleMenus: DrawerItems[] = [];
@@ -57,14 +59,14 @@ export const drawerItems = (role: IUserRole): DrawerItems[] => {
           icon: DashboardIcon,
         },
         {
-          title: "My Blood Requests",
+          title: "My Requests",
           path: `${role}/my-blood-donation-request`,
-          icon: CalendarMonthIcon,
+          icon: PersonSearchIcon,
         },
         {
-          title: "Requests for Blood",
+          title: "Received Requests",
           path: `${role}/donation-request-for-blood`,
-          icon: CalendarMonthIcon,
+          icon: BloodtypeIcon,
         },
         {
           title: "Reviews",

@@ -69,7 +69,7 @@ const MyDonationRequestPage = () => {
               {row?.requestStatus === "APPROVED" ? (
                 <Typography sx={{ color: "green" }}>APPROVED</Typography>
               ) : (
-                "PENDING"
+                <Typography sx={{ color: "orange" }}>PENDING</Typography>
               )}
             </Box>
           </Box>
@@ -81,7 +81,7 @@ const MyDonationRequestPage = () => {
       field: "button",
       headerName: "Details",
       flex: 1,
-      headerAlign: "center",
+      // headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
         return (
@@ -95,7 +95,7 @@ const MyDonationRequestPage = () => {
             <Link
               href={`/dashboard/user/donation-request-for-blood/details/${row.id}`}
             >
-              <Button variant="text" size="small">
+              <Button variant="text" size="small" sx={{ p: 0 }}>
                 Details
               </Button>
             </Link>
@@ -128,7 +128,7 @@ const MyDonationRequestPage = () => {
     <Box sx={{ mt: 2 }}>
       <Box sx={{ mb: 2 }}>
         <Typography fontWeight={700} variant="h6">
-          Blood Request To Me
+          Blood Requests Received By Me
         </Typography>
       </Box>
 
