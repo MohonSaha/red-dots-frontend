@@ -3,7 +3,6 @@ import { useGetAllDonorsQuery } from "@/redux/api/userApi";
 import { Box, Container, IconButton, Typography } from "@mui/material";
 import React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import Link from "next/link";
 import { formatBloodType } from "@/utils/formatBloodType";

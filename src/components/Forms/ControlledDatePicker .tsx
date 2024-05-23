@@ -34,7 +34,7 @@ const ControlledDatePicker = ({
             <DesktopDatePicker
               label={label}
               timezone="system"
-              disableFuture
+              // disableFuture
               onChange={(date) => onChange(date)}
               {...field}
               value={value || Date.now()}

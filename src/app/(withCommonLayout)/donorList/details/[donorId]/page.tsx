@@ -1,5 +1,4 @@
 "use client";
-
 import { useGetSingleDonorQuery } from "@/redux/api/userApi";
 import {
   Box,
@@ -19,9 +18,12 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import FlakyIcon from "@mui/icons-material/Flaky";
 
 import { FieldValues } from "react-hook-form";
-import RequestForBlood from "@/components/shared/RequestForBlood/RequestForBlood";
+// import RequestForBlood from "@/components/shared/RequestForBlood/RequestForBlood";
 import { getUserInfo } from "@/services/auth.service";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import { useCreateRequestForBloodMutation } from "@/redux/api/requestApi";
 
 type TParams = {
   params: {
@@ -30,14 +32,22 @@ type TParams = {
 };
 
 const DonorDetailsPage = ({ params }: TParams) => {
+  // const [requestInfo, setRequestInfo] = useState({});
+  const [user, setUser] = useState({});
+  const RequestForBlood = dynamic(
+    () => import("@/components/shared/RequestForBlood/RequestForBlood"),
+    { ssr: false }
+  );
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { data, isLoading } = useGetSingleDonorQuery(params?.donorId);
   const userInfo = getUserInfo();
 
-  console.log(data);
-
-  //   const formatedBlood =
+  // // solve hydration error
+  useEffect(() => {
+    const userInfo = getUserInfo() as any;
+    setUser(userInfo);
+  }, []);
 
   return (
     <Container>
@@ -116,9 +126,9 @@ const DonorDetailsPage = ({ params }: TParams) => {
         </Grid>
 
         <>
-          {userInfo?.email ? (
+          {user ? (
             <Container>
-              <RequestForBlood />
+              <RequestForBlood donorId={params?.donorId} />
             </Container>
           ) : (
             <Link href="/login">

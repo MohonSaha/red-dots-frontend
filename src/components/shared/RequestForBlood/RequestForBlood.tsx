@@ -12,12 +12,57 @@ import {
   useTheme,
 } from "@mui/material";
 import { FieldValues } from "react-hook-form";
+import { useGetSingleUserQuery } from "@/redux/api/authApi";
+import { dateFormatter } from "@/utils/dateFormatter";
+import { useCreateRequestForBloodMutation } from "@/redux/api/requestApi";
+import { toast } from "sonner";
 
-const RequestForBlood = () => {
+// Define the props type for the component
+interface IProps {
+  donorId: string;
+}
+
+const RequestForBlood = ({ donorId }: IProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleRegister = async (values: FieldValues) => {};
+  const { data, isLoading } = useGetSingleUserQuery({});
+
+  const [createRequestForBlood] = useCreateRequestForBloodMutation();
+
+  // console.log(data);
+
+  const handleRequestForBlood = async (values: FieldValues) => {
+    console.log(values);
+
+    const requestData = {
+      donorId: donorId,
+      phoneNumber: values?.phoneNumber,
+      dateOfDonation: dateFormatter(values?.dateOfDonation),
+      hospitalName: values?.hospitalName,
+      hospitalAddress: values?.hospitalAddress,
+      reason: values?.reason,
+    };
+
+    try {
+      const res = await createRequestForBlood(requestData).unwrap();
+      console.log(res);
+      if (res?.id) {
+        toast.success("Your request sent successfully!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const defaultValues = {
+    name: data?.name,
+    email: data?.email,
+    hospitalName: "",
+    hospitalAddress: "",
+    reason: "",
+    phoneNumber: "",
+  };
 
   return (
     <Box sx={{ my: 12 }}>
@@ -50,78 +95,76 @@ const RequestForBlood = () => {
           }}
         ></Box>
       </Box>
-      <Box sx={{ width: "70%", mx: "auto", mt: 4 }}>
-        <ControlledForm
-          onSubmit={handleRegister}
-          //   resolver={zodResolver(ValidationSchema)}
-          //   defaultValues={defaultValues}
-        >
-          <Grid container spacing={2} my={1}>
-            <Grid item xs={12} sm={12} md={6}>
-              <ControlledInput label="Name" fullWidth={true} name="name" />
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <ControlledInput
-                label="Email"
-                type="email"
-                name="email"
-                fullWidth={true}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={12} md={12}>
-              <ControlledInput
-                label="Address"
-                fullWidth={true}
-                name="address"
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <ControlledSelectField
-                items={DonateOption}
-                name="donateOption"
-                label="Want to donate blood?"
-                sx={{ mt: 0.5 }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <ControlledSelectField
-                items={BloodGroups}
-                name="bloodType"
-                label="Blood Group"
-                sx={{ mt: 0.5 }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <ControlledDatePicker
-                name="lastDonationDate"
-                label="Last Donation Date"
-                sx={{ mt: 0.5 }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={6}>
-              <ControlledInput
-                label="Age"
-                fullWidth={true}
-                name="age"
-                sx={{ mt: 0.5 }}
-                type="number"
-              />
-            </Grid>
-          </Grid>
-
-          <Button
-            sx={{
-              margin: "10px 0px",
-            }}
-            fullWidth={true}
-            type="submit"
-            // disabled={isButtonDisabled}
+      {!isLoading && (
+        <Box sx={{ width: "70%", mx: "auto", mt: 4 }}>
+          <ControlledForm
+            onSubmit={handleRequestForBlood}
+            //   resolver={zodResolver(ValidationSchema)}
+            defaultValues={defaultValues}
           >
-            Send Blood Request
-          </Button>
-        </ControlledForm>
-      </Box>
+            <Grid container spacing={2} my={1}>
+              <Grid item xs={12} sm={12} md={6}>
+                <ControlledInput label="Name" fullWidth={true} name="name" />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <ControlledInput
+                  label="Email"
+                  type="email"
+                  name="email"
+                  fullWidth={true}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <ControlledInput
+                  label="Hospital"
+                  fullWidth={true}
+                  name="hospitalName"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <ControlledInput
+                  label="Hospital Address"
+                  fullWidth={true}
+                  name="hospitalAddress"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <ControlledInput
+                  label="Reason Of Blood"
+                  fullWidth={true}
+                  name="reason"
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={6}>
+                <ControlledDatePicker
+                  name="dateOfDonation"
+                  label="Date Of Donation"
+                  sx={{ mt: 0.5 }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={12}>
+                <ControlledInput
+                  label="Contack Number"
+                  type="number"
+                  name="phoneNumber"
+                  fullWidth={true}
+                />
+              </Grid>
+            </Grid>
+
+            <Button
+              sx={{
+                margin: "10px 0px",
+              }}
+              fullWidth={true}
+              type="submit"
+              // disabled={isButtonDisabled}
+            >
+              Send Blood Request
+            </Button>
+          </ControlledForm>
+        </Box>
+      )}
     </Box>
   );
 };
