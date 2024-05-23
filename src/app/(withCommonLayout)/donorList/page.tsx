@@ -5,6 +5,7 @@ import SearchDonor from "@/components/shared/SearchDonor/SearchDonor";
 import { useGetAllDonorsQuery } from "@/redux/api/userApi";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import { useState } from "react";
+import DonorLoadingPage from "./loading";
 
 const DonorListPage = () => {
   const [searchValue, setSearchValue] = useState({});
@@ -41,12 +42,18 @@ const DonorListPage = () => {
 
         <Box sx={{ mt: 4 }}>
           <Grid container spacing={2}>
-            {donors &&
+            {}
+
+            {isLoading ? (
+              <DonorLoadingPage />
+            ) : (
+              donors &&
               donors.map((item, index) => (
                 <Grid item key={item.id} xs={12} sm={12} md={4}>
                   <DonorCard item={item} />
                 </Grid>
-              ))}
+              ))
+            )}
           </Grid>
         </Box>
       </Container>
