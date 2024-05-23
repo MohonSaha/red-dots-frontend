@@ -8,17 +8,32 @@ import { useState } from "react";
 import DonorLoadingPage from "./loading";
 
 const DonorListPage = () => {
-  const [searchValue, setSearchValue] = useState({});
-  //   console.log(searchValue);
+  const query: Record<string, any> = {};
+  // const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState<{
+    bloodType?: string;
+    location?: string;
+  }>({});
 
-  const { data, isLoading } = useGetAllDonorsQuery({});
+  // console.log(searchTerm);
+
+  if (searchTerm.bloodType) {
+    query["bloodType"] = searchTerm.bloodType;
+  }
+  if (searchTerm.location) {
+    query["searchTerm"] = searchTerm.location;
+  }
+
+  // console.log(query);
+
+  const { data, isLoading } = useGetAllDonorsQuery({ ...query });
   //   console.log(data);
   const donors = data?.donors;
   const meta = data?.meta;
 
   return (
     <Box sx={{ mb: 5 }}>
-      <SearchDonor search={searchValue} setSearch={setSearchValue} />
+      <SearchDonor search={searchTerm} setSearch={setSearchTerm} />
 
       <Container>
         <Box

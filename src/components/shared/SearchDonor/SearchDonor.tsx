@@ -33,10 +33,17 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleRegister = async (values: FieldValues) => {
+  const handleSearchFunctionality = async (values: FieldValues) => {
     // console.log(values);
-    setSearch(values);
+
+    const searchObj = {
+      bloodType: values?.bloodType,
+      location: values?.district,
+    };
+
+    setSearch(searchObj);
   };
+
   return (
     <Box
       sx={{
@@ -47,7 +54,7 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
       <Container>
         <Box>
           <ControlledForm
-            onSubmit={handleRegister}
+            onSubmit={handleSearchFunctionality}
             //   defaultValues={defaultValues}
           >
             <Stack

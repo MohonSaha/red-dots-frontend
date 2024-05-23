@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import avatar from "@/assets/svgs/avatar.png";
 import { formatBloodType } from "@/utils/formatBloodType";
 import { ChevronRight } from "@mui/icons-material";
+import Link from "next/link";
 
 const DonorCard = ({ item }: { item: IUser }) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -80,17 +81,19 @@ const DonorCard = ({ item }: { item: IUser }) => {
             },
           }}
         >
-          <ChevronRight
-            sx={{
-              cursor: "pointer",
-              color: "primary.main",
-              transition: "transform 0.3s",
-              "&:hover": {
-                transform: "translateX(5px)",
-              },
-            }}
-            onClick={handleShowDetails}
-          />
+          <Link href={`/donorList/details/${item?.id}`}>
+            <ChevronRight
+              sx={{
+                cursor: "pointer",
+                color: "primary.main",
+                transition: "transform 0.3s",
+                "&:hover": {
+                  transform: "translateX(5px)",
+                },
+              }}
+              onClick={handleShowDetails}
+            />
+          </Link>
         </Tooltip>
       </Stack>
     </Box>

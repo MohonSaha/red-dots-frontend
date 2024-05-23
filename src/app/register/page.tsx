@@ -81,7 +81,7 @@ const RegisterPage = () => {
         });
         if (result?.data?.accessToken) {
           storeUserInfo({ accessToken: result?.data?.accessToken });
-          router.push("/dashboard");
+          router.push("/donorList");
         }
       }
     } catch (err: any) {

@@ -16,10 +16,18 @@ const userApi = baseApi.injectEndpoints({
           meta: meta,
         };
       },
-      //   providesTags: 'user',
+      // providesTags: "user",
+    }),
+
+    getSingleDonor: build.query({
+      query: (id: string | undefined) => ({
+        url: `/donor-list/${id}`,
+        method: "GET",
+      }),
+      // providesTags: [tagTypes.user],
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetAllDonorsQuery } = userApi;
+export const { useGetAllDonorsQuery, useGetSingleDonorQuery } = userApi;
