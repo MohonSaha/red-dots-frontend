@@ -13,6 +13,7 @@ import { Avatar, Badge, Stack } from "@mui/material";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AccountMenu from "@/components/shared/AccountMenu/AccountMenu";
 import Sidebar from "../Sidebar/Sidebar";
+import { useGetSingleUserQuery } from "@/redux/api/authApi";
 
 const drawerWidth = 240;
 
@@ -39,7 +40,7 @@ export default function DashboardDrawer({
     }
   };
 
-  //   const { data, isLoading } = useGetSingleUserQuery({});
+  const { data, isLoading } = useGetSingleUserQuery({});
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -80,8 +81,7 @@ export default function DashboardDrawer({
                 component="div"
                 sx={{ color: "primary.main" }}
               >
-                {/* Hi, {isLoading ? "Loading..." : data?.name}. */}
-                Hi, Mohon Saha.
+                Hi, {isLoading ? "Loading..." : data?.name}.
               </Typography>
               <Typography
                 variant="h6"
