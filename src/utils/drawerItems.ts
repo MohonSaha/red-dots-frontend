@@ -67,11 +67,6 @@ export const drawerItems = (role: IUserRole): DrawerItems[] => {
           title: "Received Requests",
           path: `${role}/donation-request-for-blood`,
           icon: BloodtypeIcon,
-        },
-        {
-          title: "Reviews",
-          path: `${role}/reviews`,
-          icon: ReviewsIcon,
         }
       );
       break;

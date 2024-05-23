@@ -6,33 +6,51 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Link from "next/link";
 import EditIcon from "@mui/icons-material/Edit";
 import { useGetRequestsMadeByMeQuery } from "@/redux/api/requestApi";
+import { useEffect, useState } from "react";
 
 const MyDonationRequestPage = () => {
   const { data, isLoading } = useGetRequestsMadeByMeQuery({});
+  const [allRequest, setAllRequest] = useState<any>([]);
 
   console.log(data);
 
+  useEffect(() => {
+    const updateData = data?.map((request: any, index: number) => {
+      return {
+        sl: index + 1,
+        id: request?.id,
+        hospitalName: request?.hospitalName,
+        hospitalAddress: request?.hospitalAddress,
+        reason: request?.reason,
+        requestStatus: request?.requestStatus,
+        name: request?.donor?.name,
+      };
+    });
+    setAllRequest(updateData);
+  }, [data]);
+
   const columns: GridColDef[] = [
-    {
-      field: "name",
-      headerName: "Donor Name",
-      flex: 1,
-      renderCell: ({ row }) => {
-        return (
-          <Box
-            sx={{
-              height: "100%",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Typography>{formatBloodType(row.donor.name)}</Typography>
-          </Box>
-        );
-      },
-    },
+    { field: "sl", headerName: "SL" },
+    // {
+    //   field: "name",
+    //   headerName: "Donor Name",
+    //   flex: 1,
+    //   renderCell: ({ row }) => {
+    //     return (
+    //       <Box
+    //         sx={{
+    //           height: "100%",
+    //           display: "flex",
+    //           alignItems: "center",
+    //         }}
+    //       >
+    //         <Typography>{formatBloodType(row.donor.name)}</Typography>
+    //       </Box>
+    //     );
+    //   },
+    // },
+    { field: "name", headerName: "Donor Name", flex: 1 },
     { field: "hospitalName", headerName: "Hospital Name", flex: 1 },
-    { field: "hospitalAddress", headerName: "Hospital Address", flex: 1 },
     { field: "hospitalAddress", headerName: "Hospital Address", flex: 1 },
     { field: "reason", headerName: "Reason For Blood", flex: 1 },
     {
@@ -118,7 +136,7 @@ const MyDonationRequestPage = () => {
       {!isLoading ? (
         <Box>
           <DataGrid
-            rows={data}
+            rows={allRequest ?? []}
             columns={columns}
             initialState={{
               pagination: {
