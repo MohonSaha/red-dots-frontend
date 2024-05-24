@@ -22,7 +22,6 @@ type TProps = {
 };
 
 const EditUserModal = ({ open, setOpen, userId }: TProps) => {
-  const router = useRouter();
   const [updateUser] = useUpdateUserMutation();
 
   const handleFormSubmit = async (values: FieldValues) => {
@@ -88,7 +87,6 @@ const EditUserModal = ({ open, setOpen, userId }: TProps) => {
             }}
             fullWidth={true}
             type="submit"
-            // disabled={isButtonDisabled}
           >
             Register
           </Button>

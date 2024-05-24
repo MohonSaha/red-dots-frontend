@@ -16,14 +16,10 @@ import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 import { formatBloodType } from "@/utils/formatBloodType";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import FlakyIcon from "@mui/icons-material/Flaky";
-
-import { FieldValues } from "react-hook-form";
-// import RequestForBlood from "@/components/shared/RequestForBlood/RequestForBlood";
 import { getUserInfo } from "@/services/auth.service";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { useCreateRequestForBloodMutation } from "@/redux/api/requestApi";
 
 type TParams = {
   params: {
