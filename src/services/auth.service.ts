@@ -1,5 +1,6 @@
 import { authKey } from "@/constants/authKey";
 import { decodedToken } from "@/utils/jwtDecode";
+import { instance as axiosInstance } from "@/helpers/axios/axiosInstance";
 import {
   getFromLocalStorage,
   removeFromLocalStorage,
@@ -19,8 +20,8 @@ export const getUserInfo = () => {
     const decodedData: any = decodedToken(authToken);
     return {
       ...decodedData,
-      // role: decodedData?.role?.toLowerCase(),    TODO: set role base system in backend
-      role: "user",
+      role: decodedData?.role?.toLowerCase(),
+      // role: "user",
     };
   }
 };
@@ -36,4 +37,16 @@ export const isLoggedIn = () => {
 // 4. Remove the user (use mainly for logout)
 export const removeUser = () => {
   return removeFromLocalStorage(authKey);
+};
+
+// to generate access by the help of refresh token
+export const getNewAccessToken = async () => {
+  return await axiosInstance({
+    url: "http://localhost:5000/api/refreshToken",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  });
 };

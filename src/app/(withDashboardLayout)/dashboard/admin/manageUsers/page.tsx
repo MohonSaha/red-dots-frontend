@@ -1,15 +1,18 @@
 "use client";
 import { useGetAllDonorsQuery } from "@/redux/api/userApi";
-import { Box, Container, IconButton, Typography } from "@mui/material";
-import React from "react";
+import { Box, Button, Container, IconButton, Typography } from "@mui/material";
+import React, { useState } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import Link from "next/link";
 import { formatBloodType } from "@/utils/formatBloodType";
+import EditUserModal from "./components/EditUserModal";
 
 const ManageUserPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [updateUserId, setUpdateUserId] = useState("");
   const { data, isLoading } = useGetAllDonorsQuery({});
-  console.log(data);
+  // console.log(data);
   const donors = data?.donors;
   const meta = data?.meta;
 
@@ -27,7 +30,7 @@ const ManageUserPage = () => {
 
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", flex: 1 },
-    { field: "email", headerName: "Email", flex: 1 },
+    { field: "email", headerName: "Email", width: 220 },
     {
       field: "bloodType",
       headerName: "Blood Group",
@@ -48,27 +51,33 @@ const ManageUserPage = () => {
     },
     { field: "availability", headerName: "Availability", flex: 1 },
     { field: "location", headerName: "Location", flex: 1 },
-
+    { field: "role", headerName: "Role", flex: 1 },
+    { field: "activeStatus", headerName: "Status", flex: 1 },
     {
-      field: "action",
+      field: "button",
       headerName: "Action",
       flex: 1,
-      headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
         return (
-          <Box>
-            {/* <IconButton
-              onClick={() => handleDelete(row.id)}
-              aria-label="delete"
+          <Box
+            sx={{
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              onClick={() => {
+                setIsModalOpen(true);
+                setUpdateUserId(row?.id);
+              }}
+              variant="contained"
+              size="small"
+              sx={{ p: "5px 10px" }}
             >
-              <DeleteIcon sx={{ color: "red" }} />
-            </IconButton> */}
-            <Link href={`/dashboard/admin/doctors/edit/${row.id}`}>
-              <IconButton color="secondary" aria-label="" sx={{ ml: 1 }}>
-                <EditIcon />
-              </IconButton>
-            </Link>
+              Edit User
+            </Button>
           </Box>
         );
       },
@@ -82,6 +91,11 @@ const ManageUserPage = () => {
           Manage Users
         </Typography>
       </Box>
+      <EditUserModal
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        userId={updateUserId}
+      />
 
       {!isLoading ? (
         <Box>

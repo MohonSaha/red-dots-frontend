@@ -8,6 +8,7 @@ type TInputProps = {
   type?: string;
   size?: "small" | "medium";
   fullWidth?: boolean;
+  disabled?: boolean;
   sx?: SxProps;
   placeholder?: string;
   required?: boolean;
@@ -19,6 +20,7 @@ const ControlledInput = ({
   label,
   type = "text",
   size = "small",
+  disabled = false,
   fullWidth,
   sx,
   placeholder,
@@ -44,6 +46,7 @@ const ControlledInput = ({
           error={!!error?.message}
           helperText={error?.message}
           onBlur={onBlur}
+          disabled={disabled}
         />
       )}
     />

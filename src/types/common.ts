@@ -15,6 +15,10 @@ export const BloodGroups = [
 
 export const DonateOption = ["YES", "NO"];
 
+export const UserRoleOption = ["ADMIN", "USER"];
+
+export const ActiveStatusOption = ["ACTIVATE", "DEACTIVATE"];
+
 export type IMeta = {
   page: number;
   limit: number;

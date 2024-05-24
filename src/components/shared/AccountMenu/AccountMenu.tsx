@@ -14,6 +14,19 @@ import Image from "next/image";
 import { getUserInfo, removeUser } from "@/services/auth.service";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
+import { keyframes } from "@emotion/react";
+
+const pulse = keyframes`
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+`;
 
 const menuStyles = {
   paper: {
@@ -101,11 +114,33 @@ export default function AccountMenu({ color }: { color: string }) {
             <KeyboardArrowDownIcon />
           </IconButton> */}
           <IconButton onClick={handleClick} sx={{ p: 0 }}>
-            <Box
+            {/* <Box
               sx={{
                 border: `3px solid ${color}`,
                 borderRadius: "50%",
                 padding: "6px 6px 8px 10px",
+              }}
+            >
+              <Image alt="Remy Sharp" src={userLogo} height={25} width={25} />
+            </Box> */}
+
+            <Box
+              sx={{
+                border: `3px solid white`,
+                borderRadius: "50%",
+                padding: "6px 6px 8px 10px",
+                display: "inline-block",
+                position: "relative",
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  borderRadius: "50%",
+                  animation: `${pulse} 2s infinite`,
+                },
               }}
             >
               <Image alt="Remy Sharp" src={userLogo} height={25} width={25} />

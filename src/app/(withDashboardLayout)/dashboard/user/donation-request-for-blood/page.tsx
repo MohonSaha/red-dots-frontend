@@ -1,12 +1,22 @@
 "use client";
 import { useGetMyRequestsQuery } from "@/redux/api/requestApi";
 import { formatBloodType } from "@/utils/formatBloodType";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Link from "next/link";
 import EditIcon from "@mui/icons-material/Edit";
 
 const MyDonationRequestPage = () => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const { data, isLoading } = useGetMyRequestsQuery({});
 
   console.log(data);
@@ -15,7 +25,7 @@ const MyDonationRequestPage = () => {
     {
       field: "name",
       headerName: "Requester Name",
-      flex: 1,
+      width: 150,
       renderCell: ({ row }) => {
         return (
           <Box
@@ -30,32 +40,14 @@ const MyDonationRequestPage = () => {
         );
       },
     },
-    // {
-    //   field: "email",
-    //   headerName: "Requester Eamil",
-    //   flex: 1,
-    //   renderCell: ({ row }) => {
-    //     return (
-    //       <Box
-    //         sx={{
-    //           height: "100%",
-    //           display: "flex",
-    //           alignItems: "center",
-    //         }}
-    //       >
-    //         <Typography>{formatBloodType(row.requester.email)}</Typography>
-    //       </Box>
-    //     );
-    //   },
-    // },
-    { field: "phoneNumber", headerName: "Requester Number", flex: 1 },
-    { field: "hospitalName", headerName: "Hospital Name", flex: 1 },
-    { field: "hospitalAddress", headerName: "Hospital Address", flex: 1 },
-    { field: "dateOfDonation", headerName: "Donation Date", flex: 1 },
+    { field: "phoneNumber", headerName: "Requester Number", width: 150 },
+    { field: "hospitalName", headerName: "Hospital Name", width: 150 },
+    { field: "hospitalAddress", headerName: "Hospital Address", width: 150 },
+    { field: "dateOfDonation", headerName: "Donation Date", width: 150 },
     {
       field: "requestStatus",
       headerName: "Status",
-      flex: 1,
+      width: 120,
       renderCell: ({ row }) => {
         return (
           <Box
@@ -76,12 +68,10 @@ const MyDonationRequestPage = () => {
         );
       },
     },
-
     {
       field: "button",
       headerName: "Details",
-      flex: 1,
-      // headerAlign: "center",
+      width: 100,
       align: "center",
       renderCell: ({ row }) => {
         return (
@@ -103,11 +93,10 @@ const MyDonationRequestPage = () => {
         );
       },
     },
-
     {
       field: "action",
       headerName: "Action",
-      flex: 1,
+      width: 100,
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
@@ -133,20 +122,33 @@ const MyDonationRequestPage = () => {
       </Box>
 
       {!isLoading ? (
-        <Box>
-          <DataGrid
-            rows={data}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 8 },
-              },
-            }}
-            pageSizeOptions={[5, 10]}
-          />
+        <Box
+          sx={{
+            width: isSmallScreen ? "380px" : "100%",
+            display: "flex",
+            flexDirection: "column",
+            overflowX: isSmallScreen ? "auto" : "hidden",
+          }}
+        >
+          <Box sx={{ minWidth: isSmallScreen ? "380px" : "100%" }}>
+            <DataGrid
+              sx={{
+                width: "100%",
+              }}
+              rows={data}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 8 },
+                },
+              }}
+              pageSizeOptions={[5, 10]}
+              autoHeight
+            />
+          </Box>
         </Box>
       ) : (
-        <h1>Loading...</h1>
+        <Typography>Loading...</Typography>
       )}
     </Box>
   );

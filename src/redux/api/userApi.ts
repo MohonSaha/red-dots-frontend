@@ -16,18 +16,31 @@ const userApi = baseApi.injectEndpoints({
           meta: meta,
         };
       },
-      // providesTags: "user",
+      providesTags: [tagTypes.user],
     }),
-
     getSingleDonor: build.query({
       query: (id: string | undefined) => ({
         url: `/donor-list/${id}`,
         method: "GET",
       }),
-      // providesTags: [tagTypes.user],
+      providesTags: [tagTypes.user],
+    }),
+    updateUser: build.mutation({
+      query: (data) => {
+        return {
+          url: `/update-user/${data.id}`,
+          method: "PATCH",
+          data: data.body,
+        };
+      },
+      invalidatesTags: [tagTypes.user],
     }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetAllDonorsQuery, useGetSingleDonorQuery } = userApi;
+export const {
+  useGetAllDonorsQuery,
+  useGetSingleDonorQuery,
+  useUpdateUserMutation,
+} = userApi;
