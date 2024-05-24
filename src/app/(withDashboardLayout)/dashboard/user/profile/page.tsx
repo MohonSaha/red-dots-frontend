@@ -1,6 +1,5 @@
 "use client";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
-import { useGetSingleDonorQuery } from "@/redux/api/userApi";
 import {
   Box,
   Button,
@@ -24,7 +23,7 @@ import {
 } from "@/utils/nextDonationDate";
 import CountdownTimer from "@/components/shared/CountDown/CountdownTimer";
 
-const DoctorProfilePage = () => {
+const UserProfilePage = () => {
   const [donationDate, setDonationDate] = useState<{
     nextDonationDate: Date;
     countdown: {
@@ -349,4 +348,4 @@ const DoctorProfilePage = () => {
   );
 };
 
-export default DoctorProfilePage;
+export default UserProfilePage;

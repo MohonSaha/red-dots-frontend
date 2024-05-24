@@ -28,32 +28,32 @@ const pulse = keyframes`
   }
 `;
 
-const menuStyles = {
-  paper: {
-    elevation: 0,
-    overflow: "visible",
-    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-    mt: 1.5,
-    "& .MuiAvatar-root": {
-      width: 32,
-      height: 32,
-      ml: -0.5,
-      mr: 1,
-    },
-    "&:before": {
-      content: '""',
-      display: "block",
-      position: "absolute",
-      top: 0,
-      right: 14,
-      width: 10,
-      height: 10,
-      bgcolor: "background.paper",
-      transform: "translateY(-50%) rotate(45deg)",
-      zIndex: 0,
-    },
-  },
-};
+// const menuStyles = {
+//   paper: {
+//     elevation: 0,
+//     overflow: "visible",
+//     filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+//     mt: 1.5,
+//     "& .MuiAvatar-root": {
+//       width: 32,
+//       height: 32,
+//       ml: -0.5,
+//       mr: 1,
+//     },
+//     "&:before": {
+//       content: '""',
+//       display: "block",
+//       position: "absolute",
+//       top: 0,
+//       right: 14,
+//       width: 10,
+//       height: 10,
+//       bgcolor: "background.paper",
+//       transform: "translateY(-50%) rotate(45deg)",
+//       zIndex: 0,
+//     },
+//   },
+// };
 
 export default function AccountMenu({ color }: { color: string }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -154,9 +154,11 @@ export default function AccountMenu({ color }: { color: string }) {
         open={open}
         onClose={handleClose}
         onClick={handleClose}
-        slotProps={{
-          ...menuStyles,
-        }}
+        slotProps={
+          {
+            // ...menuStyles,
+          }
+        }
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
