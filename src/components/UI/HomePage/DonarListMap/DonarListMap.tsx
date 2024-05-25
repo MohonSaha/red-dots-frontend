@@ -62,7 +62,15 @@ const DonorMap: React.FC = () => {
   }, []);
 
   return (
-    <Box sx={{ mb: 10, backgroundColor: "#f6f6f6", minHeight: "100vh", py: 6 }}>
+    <Box
+      sx={{
+        mb: 0,
+        backgroundImage:
+          "linear-gradient(to bottom right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
+        minHeight: "100vh",
+        py: 6,
+      }}
+    >
       <Box textAlign="center">
         <Typography variant="h3" fontWeight={600}>
           We&#39;re a network of

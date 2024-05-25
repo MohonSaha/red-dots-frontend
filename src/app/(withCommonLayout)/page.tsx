@@ -5,6 +5,7 @@ import HeroSection from "@/components/UI/HomePage/HeroSection/HeroSection";
 import OurServiceSection from "@/components/UI/HomePage/OurServiceSection/OurServiceSection";
 import RecentDonorSection from "@/components/UI/HomePage/RecentDonorSection/RecentDonorSection";
 import SearchDonorSection from "@/components/UI/HomePage/SearchDonorSection/SearchDonorSection";
+import Testimonials from "@/components/UI/HomePage/Testimonials/Testimonials";
 
 import React from "react";
 
@@ -17,6 +18,7 @@ const HomePage = () => {
       {/* <OurServiceSection /> */}
       <RecentDonorSection />
       <DonorMap />
+      <Testimonials />
     </>
   );
 };
