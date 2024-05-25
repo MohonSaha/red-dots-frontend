@@ -49,6 +49,7 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
       sx={{
         backgroundColor: "#fce0df",
         padding: "40px 0",
+        borderRadius: "10px",
       }}
     >
       <Container>
