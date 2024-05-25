@@ -1,4 +1,6 @@
+"use client";
 import AboutSection from "@/components/UI/HomePage/AboutSection/AboutSection";
+import DonorMap from "@/components/UI/HomePage/DonarListMap/DonarListMap";
 import HeroSection from "@/components/UI/HomePage/HeroSection/HeroSection";
 import OurServiceSection from "@/components/UI/HomePage/OurServiceSection/OurServiceSection";
 import RecentDonorSection from "@/components/UI/HomePage/RecentDonorSection/RecentDonorSection";
@@ -14,6 +16,7 @@ const HomePage = () => {
       <AboutSection />
       {/* <OurServiceSection /> */}
       <RecentDonorSection />
+      <DonorMap />
     </>
   );
 };
