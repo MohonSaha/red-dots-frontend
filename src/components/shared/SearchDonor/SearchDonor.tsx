@@ -106,7 +106,7 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
                 fullWidth={true}
                 type="submit"
               >
-                Register
+                Search
               </Button>
             </Stack>
           </ControlledForm>

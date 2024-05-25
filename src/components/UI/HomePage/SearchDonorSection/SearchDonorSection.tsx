@@ -32,7 +32,7 @@ const SearchDonorSection = () => {
   const meta = data?.meta;
 
   return (
-    <Box sx={{}}>
+    <Box sx={{ my: 8 }}>
       <Container>
         <Box
           sx={{
@@ -66,13 +66,11 @@ const SearchDonorSection = () => {
 
             <Box sx={{ mt: 4 }}>
               <Grid container spacing={2}>
-                {}
-
                 {isLoading ? (
                   <DonorLoadingPage />
                 ) : (
                   donors &&
-                  donors.map((item, index) => (
+                  donors.slice(0, 6).map((item, index) => (
                     <Grid item key={item.id} xs={12} sm={12} md={4}>
                       <DonorCard item={item} />
                     </Grid>
