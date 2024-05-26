@@ -16,7 +16,7 @@ import DonorLoadingPage from "./loading";
 
 const DonorListPage = () => {
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(1);
+  const [limit, setLimit] = useState(6);
   const query: Record<string, any> = {};
 
   const [searchTerm, setSearchTerm] = useState<{
