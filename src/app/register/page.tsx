@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import dayjs from "dayjs";
 
 // validation schema for patient registration
-export const ValidationSchema = z.object({
+const ValidationSchema = z.object({
   name: z.string().min(1, "Please enter you name!"),
   email: z.string().email("Please enter a valid email address!"),
   address: z.string().min(1, "Please enter your addresss!"),

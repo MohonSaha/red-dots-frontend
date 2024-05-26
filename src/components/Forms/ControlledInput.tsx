@@ -1,3 +1,4 @@
+"use client";
 import { SxProps, TextField } from "@mui/material";
 import { FocusEvent } from "react";
 import { Controller, useFormContext } from "react-hook-form";

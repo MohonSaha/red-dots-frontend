@@ -1,18 +1,15 @@
 "use client";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
-import Image from "next/image";
-import logo from "@/assets/svgs/logo.png";
 import ControlledForm from "@/components/Forms/ControlledForm";
 import ControlledInput from "@/components/Forms/ControlledInput";
 import { FieldValues } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { toast } from "sonner";
 import { useChangePasswordMutation } from "@/redux/api/authApi";
 import KeyIcon from "@mui/icons-material/Key";
 
-export const ValidationSchema = z
+const ValidationSchema = z
   .object({
     oldPassword: z.string().min(6, "Must be at least 6 characters!"),
     newPassword: z.string().min(6, "Must be at least 6 characters!"),

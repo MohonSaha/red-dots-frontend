@@ -24,7 +24,7 @@ import { storeUserInfo } from "@/services/auth.service";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-export const ValidationSchema = z.object({
+const ValidationSchema = z.object({
   email: z.string().email("Please enter a valid email address!"),
   password: z.string().min(6, "Must be at least 6 charecters!"),
 });
@@ -39,8 +39,6 @@ const LoginPage = () => {
       email: values?.email,
       password: values?.password,
     };
-
-    // console.log(loginUserData);
 
     try {
       const res = await userLogin(values);
