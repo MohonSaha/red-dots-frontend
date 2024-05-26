@@ -12,8 +12,14 @@ import {
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Link from "next/link";
 import EditIcon from "@mui/icons-material/Edit";
+import { useState } from "react";
+import EditStatusModal from "./components/EditStatusModal";
 
 const MyDonationRequestPage = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [requestId, setRequestId] = useState<string>("");
+  const [requestStatus, setRequestStatus] = useState<string>("");
+  const [donateDate, setDonateDate] = useState<string>("");
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -95,18 +101,28 @@ const MyDonationRequestPage = () => {
     },
     {
       field: "action",
-      headerName: "Action",
+      headerName: "Edit Status",
       width: 100,
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
         return (
           <Box>
-            <Link href={`/dashboard/admin/doctors/edit/${row.id}`}>
-              <IconButton color="secondary" aria-label="" sx={{ ml: 1 }}>
-                <EditIcon />
-              </IconButton>
-            </Link>
+            <IconButton
+              color="secondary"
+              aria-label=""
+              sx={{ ml: 1 }}
+              onClick={() => {
+                setIsModalOpen(true);
+                setRequestId(row?.id);
+                setRequestStatus(row?.requestStatus);
+                setDonateDate(row?.dateOfDonation);
+
+                // setUpdateUserId(row?.id);
+              }}
+            >
+              <EditIcon />
+            </IconButton>
           </Box>
         );
       },
@@ -120,6 +136,20 @@ const MyDonationRequestPage = () => {
           Blood Requests Received By Me
         </Typography>
       </Box>
+
+      {/* <EditUserModal
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        userId={updateUserId}
+      /> */}
+
+      <EditStatusModal
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        requestStatus={requestStatus}
+        requestId={requestId}
+        donateDate={donateDate}
+      />
 
       {!isLoading ? (
         <Box

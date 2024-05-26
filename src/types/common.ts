@@ -23,6 +23,9 @@ export const Gender = ["MALE", "FEMALE"];
 
 export const BooleanOption = ["YES", "NO"];
 
+export const RequestStatusOption = ["PENDING", "APPROVED"];
+// "REJECTED"
+
 export type IMeta = {
   page: number;
   limit: number;

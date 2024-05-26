@@ -1,5 +1,6 @@
 import { IMeta } from "@/types";
 import { baseApi } from "./baseApi";
+import { tagTypes } from "../tag-types";
 
 const requestApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
@@ -23,7 +24,7 @@ const requestApi = baseApi.injectEndpoints({
       //       meta: meta,
       //     };
       //   },
-      // providesTags: "user",
+      providesTags: [tagTypes.request],
     }),
     getRequestsMadeByMe: build.query({
       query: (arg: Record<string, any>) => ({
@@ -37,7 +38,18 @@ const requestApi = baseApi.injectEndpoints({
       //       meta: meta,
       //     };
       //   },
-      // providesTags: "user",
+      providesTags: [tagTypes.request],
+    }),
+
+    updateRequestStatus: build.mutation({
+      query: (data) => {
+        return {
+          url: `/donation-request/${data.id}`,
+          method: "PATCH",
+          data: data.body,
+        };
+      },
+      invalidatesTags: [tagTypes.request],
     }),
   }),
   overrideExisting: false,
@@ -47,4 +59,5 @@ export const {
   useGetMyRequestsQuery,
   useCreateRequestForBloodMutation,
   useGetRequestsMadeByMeQuery,
+  useUpdateRequestStatusMutation,
 } = requestApi;

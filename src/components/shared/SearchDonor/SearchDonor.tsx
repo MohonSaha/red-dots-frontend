@@ -10,6 +10,7 @@ import {
   Container,
   Grid,
   Stack,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -48,7 +49,7 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
     <Box
       sx={{
         backgroundColor: "#fce0df",
-        padding: "40px 0",
+        padding: "30px 0",
         borderRadius: "10px",
       }}
     >
@@ -70,6 +71,7 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
             >
               <Grid container spacing={2} my={1}>
                 <Grid item xs={12} sm={12} md={3}>
+                  <Typography sx={{ fontWeight: 5 }}>Blood Group</Typography>
                   <ControlledSelectField
                     items={BloodGroups}
                     name="bloodType"
@@ -77,6 +79,7 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={3}>
+                  <Typography>Blood Group</Typography>
                   <ControlledSelectField
                     items={Districts}
                     name="district"
@@ -85,12 +88,14 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={3}>
+                  <Typography>Blood Group</Typography>
                   <ControlledDatePicker
                     name="dateOfBloodDonation"
                     label="Date of Blood Donation"
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={3}>
+                  <Typography>Blood Group</Typography>
                   <ControlledSelectField
                     items={DonorType}
                     name="donorType"
@@ -100,7 +105,7 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
               </Grid>
               <Button
                 sx={{
-                  mt: { xs: 0, sm: 0, md: 2 }, // Responsive margin-top
+                  mt: { xs: 0, sm: 0, md: 5 }, // Responsive margin-top
                   width: { xs: "100%", sm: "100%", md: "auto" }, // Responsive width
                 }}
                 fullWidth={true}
