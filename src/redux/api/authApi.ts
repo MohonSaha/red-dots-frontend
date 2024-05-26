@@ -8,9 +8,20 @@ export const authApi = baseApi.injectEndpoints({
         url: "/my-profile",
         method: "GET",
       }),
-      //   providesTags: [tagTypes.user],
+      providesTags: [tagTypes.user],
+    }),
+    updateMyProfile: build.mutation({
+      query: (data) => {
+        // console.log(data);
+        return {
+          url: "/my-profile",
+          method: "PUT",
+          data: data.body,
+        };
+      },
+      invalidatesTags: [tagTypes.user],
     }),
   }),
 });
 
-export const { useGetSingleUserQuery } = authApi;
+export const { useGetSingleUserQuery, useUpdateMyProfileMutation } = authApi;

@@ -22,6 +22,7 @@ import {
   getNextDonationDate,
 } from "@/utils/nextDonationDate";
 import CountdownTimer from "@/components/shared/CountDown/CountdownTimer";
+import Link from "next/link";
 
 const UserProfilePage = () => {
   const [donationDate, setDonationDate] = useState<{
@@ -105,15 +106,16 @@ const UserProfilePage = () => {
           </Grid>
 
           <Grid item md={3} sm={12} xs={12}>
-            <Button
-              sx={{
-                margin: "10px 0px",
-              }}
-              fullWidth={false}
-              type="submit"
-            >
-              Edit Profile
-            </Button>
+            <Link href={`/dashboard/user/profile/edit-my-profile`}>
+              <Button
+                sx={{
+                  margin: "10px 0px",
+                }}
+                fullWidth={false}
+              >
+                Edit Profile
+              </Button>
+            </Link>
           </Grid>
         </Grid>
 
@@ -314,7 +316,7 @@ const UserProfilePage = () => {
             >
               Allergies:
               <Typography ml={1}>
-                {data?.userProfile?.hasAllergies === false ? "No" : "Yes"}
+                {data?.userProfile?.hasAllergies === false ? "NO" : "Yes"}
               </Typography>
             </Box>
             <Box
@@ -327,7 +329,7 @@ const UserProfilePage = () => {
             >
               Diabetes:
               <Typography ml={1}>
-                {data?.userProfile?.hasDiabetes === false ? "No" : "Yes"}
+                {data?.userProfile?.hasDiabetes === false ? "NO" : "Yes"}
               </Typography>
             </Box>
             <Box

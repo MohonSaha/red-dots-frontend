@@ -360,7 +360,7 @@ const DonorDetailsPage = ({ params }: TParams) => {
             >
               Allergies:
               <Typography ml={1}>
-                {data?.userProfile?.hasAllergies === false ? "No" : "Yes"}
+                {data?.userProfile?.hasAllergies === false ? "NO" : "Yes"}
               </Typography>
             </Box>
             <Box
@@ -373,7 +373,7 @@ const DonorDetailsPage = ({ params }: TParams) => {
             >
               Diabetes:
               <Typography ml={1}>
-                {data?.userProfile?.hasDiabetes === false ? "No" : "Yes"}
+                {data?.userProfile?.hasDiabetes === false ? "NO" : "Yes"}
               </Typography>
             </Box>
             <Box

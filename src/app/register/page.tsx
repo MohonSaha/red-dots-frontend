@@ -9,17 +9,18 @@ import Link from "next/link";
 import ControlledInput from "@/components/Forms/ControlledInput";
 import { FieldValues } from "react-hook-form";
 import ControlledSelectField from "@/components/Forms/ControlledSelectField";
-import { BloodGroups, DonateOption } from "@/types/common";
+import { BloodGroups, Districts, DonateOption } from "@/types/common";
 import { toast } from "sonner";
 import { modifyPayload } from "@/utils/modifyPayload";
 import { registerUser } from "@/services/actions/registerUser";
-import ControlledDatePicker from "@/components/Forms/ControlledDatePicker ";
+import ControlledDatePicker from "@/components/Forms/ControlledDatePicker";
 import { dateFormatter } from "@/utils/dateFormatter";
 import { userLogin } from "@/services/actions/userLogin";
 import { storeUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import dayjs from "dayjs";
 
 // validation schema for patient registration
 export const ValidationSchema = z.object({
@@ -30,7 +31,13 @@ export const ValidationSchema = z.object({
   confirmPassword: z.string().min(6, "Must be at least 6 charecters!"),
   bloodType: z.string().min(1, "Please select a blood group!"),
   donateOption: z.string().min(1, "Please select a option!"),
-  age: z.number().min(1, "Please enter your age!"),
+  age: z.string().min(1, "Please enter your age!"),
+  // lastDonationDate: z.date(),
+  lastDonationDate: z
+    .custom((val) => val === null || (dayjs.isDayjs(val) && val.isValid()), {
+      message: "Please select a valid date",
+    })
+    .nullable(),
 });
 
 const defaultValues = {
@@ -42,6 +49,7 @@ const defaultValues = {
   donateOption: "",
   address: "",
   age: 0,
+  lastDonationDate: null,
 };
 
 const RegisterPage = () => {
@@ -55,6 +63,12 @@ const RegisterPage = () => {
       return;
     }
 
+    // if (values && values?.donateOption === "YES") {
+    //   values.donateOption = true;
+    // } else {
+    //   values.donateOption = false;
+    // }
+
     const registerUserData = {
       name: values?.name,
       email: values?.email,
@@ -64,14 +78,15 @@ const RegisterPage = () => {
       lastDonationDate: dateFormatter(values?.lastDonationDate),
       age: Number(values?.age),
       bio: "Create your bio here ...",
+      availability: values?.donateOption === "YES" ? true : false,
     };
 
+    // console.log(values);
     // console.log({ registerUserData });
 
     try {
       const res = await registerUser(registerUserData);
       console.log(res);
-
       // register user direct login functionality
       if (res?.data?.id) {
         toast.success("User registered successfully!");
@@ -81,7 +96,7 @@ const RegisterPage = () => {
         });
         if (result?.data?.accessToken) {
           storeUserInfo({ accessToken: result?.data?.accessToken });
-          router.push("/donorList");
+          router.push("/");
         }
       }
     } catch (err: any) {
@@ -168,10 +183,10 @@ const RegisterPage = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={12}>
-                  <ControlledInput
+                  <ControlledSelectField
                     label="Address"
-                    fullWidth={true}
                     name="address"
+                    items={Districts}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>

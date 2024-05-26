@@ -19,6 +19,10 @@ export const UserRoleOption = ["ADMIN", "USER"];
 
 export const ActiveStatusOption = ["ACTIVATE", "DEACTIVATE"];
 
+export const Gender = ["MALE", "FEMALE"];
+
+export const BooleanOption = ["YES", "NO"];
+
 export type IMeta = {
   page: number;
   limit: number;

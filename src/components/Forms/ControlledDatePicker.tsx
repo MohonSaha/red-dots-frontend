@@ -27,17 +27,16 @@ const ControlledDatePicker = ({
     <Controller
       name={name}
       control={control}
-      defaultValue={dayjs(new Date().toDateString())}
+      defaultValue={null}
       render={({ field: { onChange, value, ...field } }) => {
+        const dateValue = value ? dayjs(value) : null;
         return (
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
               label={label}
-              timezone="system"
-              // disableFuture
-              onChange={(date) => onChange(date)}
+              onChange={(date) => onChange(date ? dayjs(date) : null)}
               {...field}
-              value={value || Date.now()}
+              value={dateValue}
               slotProps={{
                 textField: {
                   required: required,
