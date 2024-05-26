@@ -15,6 +15,9 @@ import { getUserInfo, removeUser } from "@/services/auth.service";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
 import { keyframes } from "@emotion/react";
+import { authKey } from "@/constants/authKey";
+import { deleteCookies } from "@/services/actions/deleteCookies";
+import { logoutUser } from "@/services/actions/logoutUser";
 
 const pulse = keyframes`
   0% {
@@ -73,15 +76,21 @@ export default function AccountMenu({ color }: { color: string }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const handleLogout = () => {
     setAnchorEl(null);
-    // logoutUser(router);
-    removeUser();
-    router.refresh();
+
+    logoutUser(router);
   };
 
   const openDashboard = () => {
+    setAnchorEl(null);
     router.push(`/dashboard/${userRole}`);
+  };
+
+  const openProfile = () => {
+    setAnchorEl(null);
+    router.push(`/dashboard/${userRole}/profile`);
   };
 
   return (
@@ -164,7 +173,7 @@ export default function AccountMenu({ color }: { color: string }) {
       >
         <Box sx={{ paddingX: "2px" }}>
           <MenuItem
-            onClick={handleClose}
+            onClick={openProfile}
             sx={{
               width: "160px",
             }}

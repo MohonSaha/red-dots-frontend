@@ -3,19 +3,26 @@
 import DonorCard from "@/components/UI/DonorCard/DonorCard";
 import SearchDonor from "@/components/shared/SearchDonor/SearchDonor";
 import { useGetAllDonorsQuery } from "@/redux/api/userApi";
-import { Box, Container, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Pagination,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import DonorLoadingPage from "./loading";
 
 const DonorListPage = () => {
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(1);
   const query: Record<string, any> = {};
-  // const [searchTerm, setSearchTerm] = useState("");
+
   const [searchTerm, setSearchTerm] = useState<{
     bloodType?: string;
     location?: string;
   }>({});
-
-  // console.log(searchTerm);
 
   if (searchTerm.bloodType) {
     query["bloodType"] = searchTerm.bloodType;
@@ -24,12 +31,23 @@ const DonorListPage = () => {
     query["searchTerm"] = searchTerm.location;
   }
 
-  // console.log(query);
+  // add pagination query:
+  query["page"] = page;
+  query["limit"] = limit;
 
   const { data, isLoading } = useGetAllDonorsQuery({ ...query });
   //   console.log(data);
   const donors = data?.donors;
   const meta = data?.meta;
+  let pageCount: number = 0;
+
+  if (meta?.total) {
+    pageCount = Math.ceil(meta.total / limit);
+  }
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
   return (
     <Box sx={{ mb: 5 }}>
@@ -70,6 +88,16 @@ const DonorListPage = () => {
               ))
             )}
           </Grid>
+        </Box>
+
+        <Box sx={{ mt: 6, display: "flex", justifyContent: "center" }}>
+          <Pagination
+            count={pageCount}
+            page={page}
+            onChange={handleChange}
+            variant="outlined"
+            color="primary"
+          />
         </Box>
       </Container>
     </Box>
