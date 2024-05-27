@@ -6,22 +6,16 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Stack, styled } from "@mui/material";
+import { Stack } from "@mui/material";
 import Link from "next/link";
 import { getUserInfo } from "@/services/auth.service";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-
-// interface Props {
-//   window?: () => Window;
-// }
+import Image from "next/image";
+import navLogo from "@/assets/svgs/reg-logo.png";
 
 const drawerWidth = 240;
 // const navItems = ["Home", "About", "Contact"];
@@ -128,25 +122,34 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
 
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
+          <Box
             sx={{
-              mr: 2,
-              display: { xs: "flex", md: "flex", sm: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              //   letterSpacing: ".1rem",
-              color: "inherit",
-              textDecoration: "none",
               flexGrow: 1,
+              display: "flex",
+              // justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            Red Dots
-          </Typography>
-          {/* <Image height={100} width={100} src={logo} alt="blood" /> */}
+            <Image height={50} width={50} src={navLogo} alt="blood" />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              sx={{
+                mr: 2,
+                display: { xs: "flex", md: "flex", sm: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                color: "inherit",
+                textDecoration: "none",
+                fontSize: 35,
+              }}
+            >
+              Red Dots
+            </Typography>
+          </Box>
+
           <Stack
             py={2}
             direction="row"

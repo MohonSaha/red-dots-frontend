@@ -40,6 +40,7 @@ const EditStatusModal = ({
   const handleFormSubmit = async (values: FieldValues) => {
     const updatedInfo = {
       requestStatus: values?.status,
+      // isAccepted: true,
     };
 
     console.log(updatedInfo);

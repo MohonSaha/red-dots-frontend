@@ -75,36 +75,11 @@ const MyDonationRequestPage = () => {
       },
     },
     {
-      field: "button",
-      headerName: "Details",
-      width: 100,
-      align: "center",
-      renderCell: ({ row }) => {
-        return (
-          <Box
-            sx={{
-              height: "100%",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Link
-              href={`/dashboard/user/donation-request-for-blood/details/${row.id}`}
-            >
-              <Button variant="text" size="small" sx={{ p: 0 }}>
-                Details
-              </Button>
-            </Link>
-          </Box>
-        );
-      },
-    },
-    {
       field: "action",
       headerName: "Edit Status",
       width: 100,
-      headerAlign: "center",
-      align: "center",
+      // headerAlign: "center",
+      // align: "center",
       renderCell: ({ row }) => {
         return (
           <Box>
@@ -117,8 +92,6 @@ const MyDonationRequestPage = () => {
                 setRequestId(row?.id);
                 setRequestStatus(row?.requestStatus);
                 setDonateDate(row?.dateOfDonation);
-
-                // setUpdateUserId(row?.id);
               }}
             >
               <EditIcon />

@@ -24,35 +24,42 @@ const MyDonationRequestPage = () => {
         reason: request?.reason,
         requestStatus: request?.requestStatus,
         name: request?.donor?.name,
+        email: request?.donor?.email,
       };
     });
     setAllRequest(updateData);
   }, [data]);
 
   const columns: GridColDef[] = [
-    { field: "sl", headerName: "SL" },
-    // {
-    //   field: "name",
-    //   headerName: "Donor Name",
-    //   flex: 1,
-    //   renderCell: ({ row }) => {
-    //     return (
-    //       <Box
-    //         sx={{
-    //           height: "100%",
-    //           display: "flex",
-    //           alignItems: "center",
-    //         }}
-    //       >
-    //         <Typography>{formatBloodType(row.donor.name)}</Typography>
-    //       </Box>
-    //     );
-    //   },
-    // },
+    { field: "sl", headerName: "SL", width: 30 },
     { field: "name", headerName: "Donor Name", flex: 1 },
+    {
+      field: "contactInfo",
+      headerName: "Contact Info",
+      width: 200,
+      renderCell: ({ row }) => {
+        return (
+          <Box
+            sx={{
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Box>
+              {row?.requestStatus === "APPROVED" ? (
+                <Typography sx={{ color: "green" }}>{row.email}</Typography>
+              ) : (
+                <Typography sx={{ color: "orange" }}>Not Available</Typography>
+              )}
+            </Box>
+          </Box>
+        );
+      },
+    },
     { field: "hospitalName", headerName: "Hospital Name", flex: 1 },
     { field: "hospitalAddress", headerName: "Hospital Address", flex: 1 },
-    { field: "reason", headerName: "Reason For Blood", flex: 1 },
+    { field: "reason", headerName: "Reason", flex: 1 },
     {
       field: "requestStatus",
       headerName: "Status",

@@ -52,7 +52,7 @@ const ChangePasswordPage = () => {
     <Container>
       <Stack
         sx={{
-          height: "100vh",
+          height: "80vh",
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -121,10 +121,6 @@ const ChangePasswordPage = () => {
                   />
                 </Grid>
               </Grid>
-
-              <Typography mb={1} textAlign="end" component="p" fontWeight={300}>
-                Forgot Password?
-              </Typography>
 
               <Button
                 sx={{
