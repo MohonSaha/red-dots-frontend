@@ -15,8 +15,10 @@ const RecentDonorSection = () => {
     <Box
       sx={{
         minHeight: "100vh",
+        backgroundImage:
+          "linear-gradient(to top right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
         // display: "flex",
-        my: 8,
+        py: 8,
         // flexDirection: "column",
         // justifyContent: "center",
       }}

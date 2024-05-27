@@ -9,13 +9,11 @@ import { useState } from "react";
 
 const SearchDonorSection = () => {
   const query: Record<string, any> = {};
-  // const [searchTerm, setSearchTerm] = useState("");
   const [searchTerm, setSearchTerm] = useState<{
     bloodType?: string;
     location?: string;
+    availability?: boolean;
   }>({});
-
-  // console.log(searchTerm);
 
   if (searchTerm.bloodType) {
     query["bloodType"] = searchTerm.bloodType;
@@ -23,8 +21,9 @@ const SearchDonorSection = () => {
   if (searchTerm.location) {
     query["searchTerm"] = searchTerm.location;
   }
-
-  // console.log(query);
+  if (searchTerm.availability) {
+    query["availability"] = searchTerm.availability;
+  }
 
   const { data, isLoading } = useGetAllDonorsQuery({ ...query });
   //   console.log(data);
@@ -32,7 +31,13 @@ const SearchDonorSection = () => {
   const meta = data?.meta;
 
   return (
-    <Box sx={{ my: 8 }}>
+    <Box
+      sx={{
+        py: 8,
+        backgroundImage:
+          "conic-gradient(from 135deg, #f6f6f6, #FED7D5 90deg, #f6f6f6 180deg, #f6f6f6)",
+      }}
+    >
       <Container>
         <Box
           sx={{

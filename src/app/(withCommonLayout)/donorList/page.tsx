@@ -25,8 +25,6 @@ const DonorListPage = () => {
     availability?: boolean;
   }>({});
 
-  console.log(searchTerm);
-
   if (searchTerm.bloodType) {
     query["bloodType"] = searchTerm.bloodType;
   }

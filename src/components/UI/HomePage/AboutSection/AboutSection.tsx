@@ -4,7 +4,13 @@ import Link from "next/link";
 
 const AboutSection = () => {
   return (
-    <Box sx={{ my: 10 }}>
+    <Box
+      sx={{
+        py: 10,
+        backgroundImage:
+          "linear-gradient(to bottom right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
+      }}
+    >
       <Container>
         <Box sx={{ mx: "auto", width: "100%" }}>
           <Stack
