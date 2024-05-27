@@ -63,7 +63,8 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
   return (
     <Box
       sx={{
-        backgroundColor: "#fce0df",
+        // backgroundColor: "#fce0df",
+        backgroundImage: "linear-gradient(to right, #FED7D5, #f6f6f6)",
         padding: "30px 0",
         borderRadius: "10px",
       }}

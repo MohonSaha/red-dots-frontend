@@ -35,7 +35,7 @@ const SearchDonorSection = () => {
       sx={{
         py: 8,
         backgroundImage:
-          "conic-gradient(from 135deg, #f6f6f6, #FED7D5 90deg, #f6f6f6 180deg, #f6f6f6)",
+          "linear-gradient(to top right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
       }}
     >
       <Container>
@@ -47,6 +47,12 @@ const SearchDonorSection = () => {
             justifyContent: "center",
           }}
         >
+          <Box textAlign="center" sx={{ mb: 4 }}>
+            <Typography variant="h3" fontWeight={600}>
+              Search, Connect & Save Life
+            </Typography>
+          </Box>
+
           <SearchDonor search={searchTerm} setSearch={setSearchTerm} />
 
           <Container>

@@ -16,11 +16,16 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import navLogo from "@/assets/svgs/reg-logo.png";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const drawerWidth = 240;
 // const navItems = ["Home", "About", "Contact"];
 
 export default function Navbar() {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const AuthButton = dynamic(
     () => import("@/components/UI/AuthButton/AuthButton"),
     { ssr: false }
@@ -130,24 +135,29 @@ export default function Navbar() {
               alignItems: "center",
             }}
           >
-            <Image height={50} width={50} src={navLogo} alt="blood" />
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
-              sx={{
-                mr: 2,
-                display: { xs: "flex", md: "flex", sm: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
-                color: "inherit",
-                textDecoration: "none",
-                fontSize: 35,
-              }}
-            >
-              Red Dots
-            </Typography>
+            <Link href="/">
+              <Box sx={{ display: isSmallScreen ? "none" : "block" }}>
+                <Image height={50} width={50} src={navLogo} alt="blood" />
+              </Box>
+            </Link>
+
+            <Link href="/">
+              <Typography
+                variant="h5"
+                noWrap
+                sx={{
+                  mr: 2,
+                  display: { xs: "flex", md: "flex", sm: "flex" },
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                  color: "inherit",
+                  textDecoration: "none",
+                  fontSize: { md: 35, sm: 20 },
+                }}
+              >
+                Red Dots
+              </Typography>
+            </Link>
           </Box>
 
           <Stack

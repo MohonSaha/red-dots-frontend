@@ -54,7 +54,13 @@ const DonorListPage = () => {
   };
 
   return (
-    <Box sx={{ mb: 5 }}>
+    <Box
+      sx={{
+        mb: 5,
+        // backgroundImage:
+        //   "linear-gradient(to bottom right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
+      }}
+    >
       <SearchDonor search={searchTerm} setSearch={setSearchTerm} />
 
       <Container>

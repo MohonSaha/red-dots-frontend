@@ -2,30 +2,33 @@ import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import React from "react";
 import Link from "next/link";
 
+// backgroundImage:
+//           "conic-gradient(from 135deg, #f6f6f6, #FED7D5 90deg, #f6f6f6 180deg, #f6f6f6)",
+
 const AboutSection = () => {
   return (
     <Box
       sx={{
+        minHeight: "100vh",
         py: 10,
         backgroundImage:
           "linear-gradient(to bottom right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
       }}
     >
       <Container>
-        <Box sx={{ mx: "auto", width: "100%" }}>
-          <Stack
-            //   direction={{ md: "row", sm: "column" }}
-            //   justifyContent="space-between"
-            gap={5}
-            direction="row"
-            // spacing={{ md: 10, sm: 5, xs: 5 }}
-            // container
-          >
+        <Stack sx={{ mx: "auto", width: "100%" }} direction="column" gap={8}>
+          <Box textAlign="center" sx={{ mb: 4 }}>
+            <Typography variant="h3" fontWeight={600}>
+              About Us: Lifelines of Hope
+            </Typography>
+          </Box>
+
+          <Stack direction={{ md: "row", sm: "column" }} gap={5}>
             <Box sx={{ width: "100%" }}>
               <Box>
                 <Typography
                   component="h5"
-                  variant="h4"
+                  variant="h5"
                   sx={{ fontWeight: 600, mb: 2 }}
                 >
                   Why is Red Dots?
@@ -44,7 +47,7 @@ const AboutSection = () => {
               <Box sx={{ mx: "auto", width: "100%" }}>
                 <Typography
                   component="h5"
-                  variant="h4"
+                  variant="h5"
                   sx={{ fontWeight: 600, mb: 2 }}
                 >
                   Objectives
@@ -59,20 +62,20 @@ const AboutSection = () => {
               </Box>
             </Box>
           </Stack>
-        </Box>
 
-        <Box sx={{ mx: "auto", textAlign: "center" }}>
-          <Link href="/about-us">
-            <Button
-              sx={{
-                margin: "10px 0px",
-              }}
-              fullWidth={false}
-            >
-              About Us
-            </Button>
-          </Link>
-        </Box>
+          <Box sx={{ mx: "auto", textAlign: "center" }}>
+            <Link href="/about-us">
+              <Button
+                sx={{
+                  margin: "10px 0px",
+                }}
+                fullWidth={false}
+              >
+                About Us
+              </Button>
+            </Link>
+          </Box>
+        </Stack>
       </Container>
     </Box>
   );

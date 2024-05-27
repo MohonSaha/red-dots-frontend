@@ -57,7 +57,7 @@ const LoginPage = () => {
   };
 
   return (
-    <Container>
+    <Container sx={{}}>
       <Stack
         sx={{
           height: "100vh",

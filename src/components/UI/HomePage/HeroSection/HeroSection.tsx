@@ -1,26 +1,62 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import React from "react";
 import heroImage from "@/assets/images/hero-banner-2.png";
+import mobileImage from "@/assets/images/mobile-image.png";
 import Link from "next/link";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const HeroSection = () => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
-    <Box sx={{ position: "relative" }}>
-      <Box>
-        <Image src={heroImage} alt="Hero Image" />
+    <Box sx={{ position: "relative", minHeight: "100vh" }}>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <Box sx={{ display: isSmallScreen ? "none" : "block" }}>
+          <Image
+            src={heroImage}
+            alt="Hero Image"
+            layout="responsive"
+            objectFit="cover"
+            priority
+            style={{
+              width: "100%",
+              minHeight: "90vh",
+            }}
+          />
+        </Box>
+        <Box sx={{ display: isSmallScreen ? "block" : "none" }}>
+          <Image
+            src={mobileImage}
+            alt="Mobile Hero Image"
+            layout="responsive"
+            objectFit="cover"
+            priority
+            style={{
+              width: "100%",
+              minHeight: "90vh",
+            }}
+          />
+        </Box>
       </Box>
       <Container>
         <Box
           sx={{
             position: "absolute",
-            top: "10%",
-            // left: "50%",
-            width: "50%",
+            top: isSmallScreen ? "10%" : "10%",
+            width: isSmallScreen ? "90%" : "50%",
+            textAlign: isSmallScreen ? "left" : "left",
           }}
         >
           <Typography
-            variant="h2"
+            variant={isSmallScreen ? "h3" : "h2"}
             component="p"
             fontWeight={600}
             sx={{ color: "primary.main" }}
@@ -28,45 +64,54 @@ const HeroSection = () => {
             #
           </Typography>
           <Typography
-            variant="h2"
+            variant={isSmallScreen ? "h4" : "h2"}
             fontWeight={600}
             sx={{ color: "primary.main" }}
           >
             EVERYONE COULD
           </Typography>
           <Typography
-            variant="h2"
+            variant={isSmallScreen ? "h4" : "h2"}
             fontWeight={600}
             sx={{ color: "primary.main" }}
           >
             BE A HERO
           </Typography>
-          <Box sx={{ width: "70%", mt: 2 }}>
-            <Typography fontWeight={600}>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi
-              non quis exercitationem culpa nesciunt nihil aut nostrum explicabo
-              reprehenderit optio amet ab temporibus asperiores quasi
-              cupiditate. Voluptatum ducimus voluptates voluptas?
+          <Box sx={{ width: isSmallScreen ? "90%" : "70%", mt: 2 }}>
+            <Typography
+              fontWeight={600}
+              style={{ textShadow: "0 0 5px rgba(255, 255, 255, 1)" }}
+            >
+              Because of You, Life Doesn&#39;t Stop. Every two minutes, someone
+              in the Bangaldesh needs blood. This could be a little girl in the
+              ICU or a mother with Stage 3 leukemia. If you&#39;re worried about
+              needles, don&#39;t be—most blood donors compare the experience to
+              a mild, split-second pinch!
             </Typography>
           </Box>
 
-          <Stack direction="row" gap={4} mt={2}>
-            <Link href="/about-us">
+          <Stack
+            direction={isSmallScreen ? "column" : "row"}
+            gap={{ md: 4, sm: 1 }}
+            mt={2}
+            alignItems={isSmallScreen ? "center" : "flex-start"}
+          >
+            <Link href="/about-us" passHref>
               <Button
                 sx={{
-                  margin: "10px 0px",
+                  margin: isSmallScreen ? "10px 0px" : "10px 0px 10px 0px",
                 }}
-                fullWidth={false}
+                fullWidth={isSmallScreen}
               >
                 About Us
               </Button>
             </Link>
-            <Link href="/donorList">
+            <Link href="/donorList" passHref>
               <Button
                 sx={{
-                  margin: "10px 0px",
+                  margin: isSmallScreen ? "10px 0px" : "10px 0px 10px 0px",
                 }}
-                fullWidth={false}
+                fullWidth={isSmallScreen}
                 variant="outlined"
               >
                 Search Donors
