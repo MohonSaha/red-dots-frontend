@@ -22,13 +22,19 @@ const DonorListPage = () => {
   const [searchTerm, setSearchTerm] = useState<{
     bloodType?: string;
     location?: string;
+    availability?: boolean;
   }>({});
+
+  console.log(searchTerm);
 
   if (searchTerm.bloodType) {
     query["bloodType"] = searchTerm.bloodType;
   }
   if (searchTerm.location) {
     query["searchTerm"] = searchTerm.location;
+  }
+  if (searchTerm.availability) {
+    query["availability"] = searchTerm.availability;
   }
 
   // add pagination query:

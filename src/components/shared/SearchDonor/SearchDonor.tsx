@@ -35,15 +35,30 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleSearchFunctionality = async (values: FieldValues) => {
-    // console.log(values);
+    console.log(values);
 
-    const searchObj = {
-      bloodType: values?.bloodType,
-      location: values?.district,
-    };
+    let searchObj = {};
+
+    if (values?.donorType == "Eligible") {
+      console.log("clicked");
+      searchObj = {
+        bloodType: values?.bloodType,
+        location: values?.district,
+        availability: true,
+      };
+    } else {
+      searchObj = {
+        bloodType: values?.bloodType,
+        location: values?.district,
+      };
+    }
+
+    console.log(searchObj);
 
     setSearch(searchObj);
   };
+
+  // donorType: 'Eligible'
 
   return (
     <Box
@@ -71,7 +86,6 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
             >
               <Grid container spacing={2} my={1}>
                 <Grid item xs={12} sm={12} md={3}>
-                  <Typography sx={{ fontWeight: 5 }}>Blood Group</Typography>
                   <ControlledSelectField
                     items={BloodGroups}
                     name="bloodType"
@@ -79,7 +93,6 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={3}>
-                  <Typography>Blood Group</Typography>
                   <ControlledSelectField
                     items={Districts}
                     name="district"
@@ -88,14 +101,12 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
                 </Grid>
 
                 <Grid item xs={12} sm={12} md={3}>
-                  <Typography>Blood Group</Typography>
                   <ControlledDatePicker
                     name="dateOfBloodDonation"
                     label="Date of Blood Donation"
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={3}>
-                  <Typography>Blood Group</Typography>
                   <ControlledSelectField
                     items={DonorType}
                     name="donorType"
@@ -105,7 +116,7 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
               </Grid>
               <Button
                 sx={{
-                  mt: { xs: 0, sm: 0, md: 5 }, // Responsive margin-top
+                  mt: { xs: 0, sm: 0, md: 2 }, // Responsive margin-top
                   width: { xs: "100%", sm: "100%", md: "auto" }, // Responsive width
                 }}
                 fullWidth={true}
