@@ -199,7 +199,7 @@ export default function Navbar() {
                 </Typography>
                 <Typography
                   component={Link}
-                  href="/health-plans"
+                  href="/create-post"
                   sx={{
                     color: "white",
                     fontWeight: 500,
@@ -209,21 +209,21 @@ export default function Navbar() {
                     },
                   }}
                 >
-                  Health Plans
+                  Create Post
                 </Typography>
                 <Typography
                   component={Link}
-                  href="/login"
+                  href="/posts-for-blood"
                   sx={{
                     color: "white",
-                    fontWeight: 500,
+                    fontWeight: 600,
                     transition: "transform 0.4s ease-in-out",
                     "&:hover": {
                       transform: "scale(1.1)",
                     },
                   }}
                 >
-                  Medicins
+                  Donate Now
                 </Typography>
                 <Typography
                   component={Link}

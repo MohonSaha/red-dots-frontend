@@ -5,12 +5,26 @@ export function getNextDonationDate(lastDonationDate: string) {
     throw new Error("Invalid date provided");
   }
 
+  // Calculate the next donation date by adding 4 months to the last donation date
   const nextDonationDate = new Date(lastDate);
   nextDonationDate.setMonth(nextDonationDate.getMonth() + 4);
 
+  // Adjust the day if adding months changes the day (e.g., from 31st to 1st)
   if (nextDonationDate.getDate() !== lastDate.getDate()) {
     nextDonationDate.setDate(0);
   }
+
+  // Ensure nextDonationDate is at least today
+  const now = new Date();
+  if (nextDonationDate.getTime() < now.getTime()) {
+    nextDonationDate.setFullYear(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
+  }
+
+  // console.log("Next Donation Date:", nextDonationDate);
 
   return {
     nextDonationDate: nextDonationDate,
@@ -20,10 +34,11 @@ export function getNextDonationDate(lastDonationDate: string) {
 
 export function calculateCountdown(nextDonationDate: Date) {
   const now = new Date();
-  const localOffset = now.getTimezoneOffset() * 60000; // Offset in milliseconds
-  const localTime = now.getTime() - localOffset; // Convert to local time
+  // console.log("Current Date:", now);
+  // console.log("Next Donation Date:", nextDonationDate);
+  const diffTime = Math.max(nextDonationDate.getTime() - now.getTime(), 0);
 
-  const diffTime = Math.max(nextDonationDate.getTime() - localTime, 0);
+  // console.log("Time Difference (ms):", diffTime);
 
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
   const months = Math.floor(diffDays / 30);
@@ -48,3 +63,8 @@ export function calculateCountdown(nextDonationDate: Date) {
     seconds,
   };
 }
+
+// Example usage:
+// const result = getNextDonationDate("2023-01-29T00:00:00Z");
+// console.log("Next Donation Date:", result.nextDonationDate);
+// console.log("Countdown:", result.countdown);

@@ -67,6 +67,7 @@ const DonorDetailsPage = ({ params }: TParams) => {
     if (!isLoading && data?.userProfile?.lastDonationDate) {
       const date = String(data.userProfile.lastDonationDate);
       const nextDate = getNextDonationDate(date);
+      // console.log(nextDate);
       setDonationDate(nextDate);
 
       const interval = setInterval(() => {
@@ -84,6 +85,8 @@ const DonorDetailsPage = ({ params }: TParams) => {
       return () => clearInterval(interval);
     }
   }, [isLoading, data]);
+
+  // console.log(donationDate);
 
   // Memoize the RequestForBlood component
   const MemoizedRequestForBlood = useMemo(
@@ -148,18 +151,6 @@ const DonorDetailsPage = ({ params }: TParams) => {
                 </Box>
               </Box>
             </Stack>
-          </Grid>
-
-          <Grid item md={3} sm={12} xs={12}>
-            <Button
-              sx={{
-                margin: "10px 0px",
-              }}
-              fullWidth={false}
-              type="submit"
-            >
-              Edit Profile
-            </Button>
           </Grid>
         </Grid>
 

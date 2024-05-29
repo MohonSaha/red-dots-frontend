@@ -71,7 +71,7 @@ const CountdownTimer = ({ nextDonationDate }: CountdownProps) => {
     <Box
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
-      {renderSegment(countdown.months, "Months", 12)}
+      {renderSegment(countdown.months, "Months", 4)}
       {renderSegment(countdown.days, "Days", 30)}
       {renderSegment(countdown.hours, "Hours", 24)}
       {renderSegment(countdown.minutes, "Minutes", 60)}
