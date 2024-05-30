@@ -18,6 +18,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { FieldValues } from "react-hook-form";
+import { toast } from "sonner";
 
 const CreatePostPage = () => {
   const theme = useTheme();
@@ -43,10 +44,10 @@ const CreatePostPage = () => {
 
     try {
       const res = await createPostForBlood(postData).unwrap();
-      console.log(res);
-      //   if (res?.id) {
-      //     toast.success("Your request sent successfully!");
-      //   }
+      // console.log(res);
+      if (res?.id) {
+        toast.success("Blood post created successfully!");
+      }
     } catch (error) {
       console.log(error);
     }

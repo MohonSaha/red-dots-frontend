@@ -26,6 +26,21 @@ const requestApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.post],
     }),
+    acceptBloodPost: build.mutation({
+      query: (data) => ({
+        url: "/accept-blood-post",
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [tagTypes.post],
+    }),
+    getSinglePost: build.query({
+      query: (id: string | undefined) => ({
+        url: `/blood-posts/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.post],
+    }),
     // getRequestsMadeByMe: build.query({
     //   query: (arg: Record<string, any>) => ({
     //     url: "/donation-request-by-me",
@@ -55,5 +70,9 @@ const requestApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useCreatePostForBloodMutation, useGetBloodPostsQuery } =
-  requestApi;
+export const {
+  useCreatePostForBloodMutation,
+  useGetBloodPostsQuery,
+  useAcceptBloodPostMutation,
+  useGetSinglePostQuery,
+} = requestApi;

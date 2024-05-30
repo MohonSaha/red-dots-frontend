@@ -1,10 +1,46 @@
+import PopupModal from "@/components/shared/Modal/PopupModal";
+import { useAcceptBloodPostMutation } from "@/redux/api/postApi";
 import { formatBloodType } from "@/utils/formatBloodType";
 import { ChevronRight } from "@mui/icons-material";
 import { Box, Button, Stack, Tooltip, Typography } from "@mui/material";
 import Link from "next/link";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const PostCard = ({ item }: { item: IBloodPost }) => {
-  console.log(item);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [itemId, setItemId] = useState<string | null>(null);
+  const [acceptBloodPost] = useAcceptBloodPostMutation();
+  //   console.log(item);
+
+  const handleOpenModal = (itemId: string) => {
+    setItemId(itemId);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setItemId(null);
+  };
+
+  const handleConfirm = async () => {
+    const data = {
+      bloodPostId: itemId,
+    };
+    console.log(data);
+
+    try {
+      const res = await acceptBloodPost(data).unwrap();
+      console.log(res);
+      if (res?.id) {
+        toast.success("Accepted successfully!");
+        handleCloseModal();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -74,9 +110,24 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
         alignItems="center"
         sx={{ mt: 2 }}
       >
-        <Button sx={{ mr: 3, padding: "2px 10px" }} variant="contained">
-          Donate
-        </Button>
+        <Box>
+          <Button
+            sx={{ mr: 3, padding: "2px 10px" }}
+            variant="contained"
+            onClick={() => handleOpenModal(item.id)}
+          >
+            Donate
+          </Button>
+          <PopupModal
+            open={isModalOpen}
+            handleClose={handleCloseModal}
+            handleConfirm={handleConfirm}
+            title="Donate Blood"
+            message="Are you sure you want to donote blood?"
+            okButton="Confirm"
+            cancelButtom="Cancel"
+          />
+        </Box>
 
         <Tooltip
           title="Post Details"
@@ -90,7 +141,7 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
             },
           }}
         >
-          <Link href={`/donorList/details/${item?.id}`}>
+          <Link href={`/posts-for-blood/details/${item?.id}`}>
             <ChevronRight
               sx={{
                 cursor: "pointer",

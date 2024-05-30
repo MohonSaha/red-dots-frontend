@@ -91,7 +91,7 @@ const DonorListPage = () => {
               <DonorLoadingPage />
             ) : (
               donors &&
-              donors.map((item, index) => (
+              donors.map((item) => (
                 <Grid item key={item.id} xs={12} sm={12} md={4}>
                   <DonorCard item={item} />
                 </Grid>
