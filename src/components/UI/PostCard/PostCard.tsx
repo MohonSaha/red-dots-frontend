@@ -3,7 +3,7 @@ import { ChevronRight } from "@mui/icons-material";
 import { Box, Stack, Tooltip, Typography } from "@mui/material";
 import Link from "next/link";
 
-const PostCard = ({ item }: { item: any }) => {
+const PostCard = ({ item }: { item: IBloodPost }) => {
   console.log(item);
   return (
     <Box

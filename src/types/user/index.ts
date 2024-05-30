@@ -3,9 +3,9 @@ interface UserProfile {
   userId: string;
   bio: string;
   age: number;
-  lastDonationDate: string; // You can use Date type if you parse it to a Date object
-  createdAt: string; // You can use Date type if you parse it to a Date object
-  updatedAt: string; // You can use Date type if you parse it to a Date object
+  lastDonationDate: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface IUser {
@@ -15,7 +15,7 @@ interface IUser {
   bloodType: string;
   location: string;
   availability: boolean;
-  createdAt: string; // You can use Date type if you parse it to a Date object
-  updatedAt: string; // You can use Date type if you parse it to a Date object
+  createdAt: string;
+  updatedAt: string;
   userProfile: UserProfile;
 }

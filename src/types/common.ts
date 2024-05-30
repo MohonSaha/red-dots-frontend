@@ -24,7 +24,20 @@ export const Gender = ["MALE", "FEMALE"];
 export const BooleanOption = ["YES", "NO"];
 
 export const RequestStatusOption = ["PENDING", "APPROVED"];
-// "REJECTED"
+
+export const TotalBloodBags = [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+];
 
 export type IMeta = {
   page: number;

@@ -18,12 +18,12 @@ const requestApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      //   transformResponse: (response: IUser[], meta: IMeta) => {
-      //     return {
-      //       donors: response,
-      //       meta: meta,
-      //     };
-      //   },
+      transformResponse: (response: IBloodPost[], meta: IMeta) => {
+        return {
+          posts: response,
+          meta: meta,
+        };
+      },
       providesTags: [tagTypes.post],
     }),
     // getRequestsMadeByMe: build.query({
