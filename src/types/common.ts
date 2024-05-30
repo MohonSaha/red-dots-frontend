@@ -26,7 +26,6 @@ export const BooleanOption = ["YES", "NO"];
 export const RequestStatusOption = ["PENDING", "APPROVED"];
 
 export const TotalBloodBags = [
-  "0",
   "1",
   "2",
   "3",

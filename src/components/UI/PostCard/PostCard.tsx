@@ -1,6 +1,6 @@
 import { formatBloodType } from "@/utils/formatBloodType";
 import { ChevronRight } from "@mui/icons-material";
-import { Box, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Stack, Tooltip, Typography } from "@mui/material";
 import Link from "next/link";
 
 const PostCard = ({ item }: { item: IBloodPost }) => {
@@ -72,17 +72,20 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
         direction="row"
         justifyContent="flex-end"
         alignItems="center"
-        // sx={{ mt: 3 }}
+        sx={{ mt: 2 }}
       >
-        {/* <Typography>Show More</Typography> */}
+        <Button sx={{ mr: 3, padding: "2px 10px" }} variant="contained">
+          Donate
+        </Button>
+
         <Tooltip
           title="Post Details"
-          placement="left"
+          placement="bottom"
           componentsProps={{
             tooltip: {
               sx: {
                 bgcolor: "#cdd1da5c",
-                color: "primary.main", // Change text color if necessary
+                color: "primary.main", // Change text color if
               },
             },
           }}
@@ -93,7 +96,7 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
                 cursor: "pointer",
                 color: "primary.main",
                 transition: "transform 0.3s",
-                mt: 1,
+                // mt: 1,
                 "&:hover": {
                   transform: "translateX(5px)",
                 },
