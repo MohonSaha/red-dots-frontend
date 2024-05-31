@@ -41,20 +41,20 @@ const requestApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.post],
     }),
-    // getRequestsMadeByMe: build.query({
-    //   query: (arg: Record<string, any>) => ({
-    //     url: "/donation-request-by-me",
-    //     method: "GET",
-    //     params: arg,
-    //   }),
-    //   //   transformResponse: (response: IUser[], meta: IMeta) => {
-    //   //     return {
-    //   //       donors: response,
-    //   //       meta: meta,
-    //   //     };
-    //   //   },
-    //   providesTags: [tagTypes.request],
-    // }),
+    getMyAcceptedPost: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: "/my-accepted-post",
+        method: "GET",
+        params: arg,
+      }),
+      //   transformResponse: (response: IUser[], meta: IMeta) => {
+      //     return {
+      //       donors: response,
+      //       meta: meta,
+      //     };
+      //   },
+      providesTags: [tagTypes.post],
+    }),
 
     // updateRequestStatus: build.mutation({
     //   query: (data) => {
@@ -75,4 +75,5 @@ export const {
   useGetBloodPostsQuery,
   useAcceptBloodPostMutation,
   useGetSinglePostQuery,
+  useGetMyAcceptedPostQuery,
 } = requestApi;

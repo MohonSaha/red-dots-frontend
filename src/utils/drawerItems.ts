@@ -10,7 +10,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import KeyIcon from "@mui/icons-material/Key";
 import { DrawerItems, IUserRole } from "@/types";
 import { USER_ROLE } from "@/constants/role";
-// import GroupIcon from '@mui/icons-material/Group';
+import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
+import MarkunreadMailboxIcon from "@mui/icons-material/MarkunreadMailbox";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import BloodtypeIcon from "@mui/icons-material/Bloodtype";
 
@@ -67,6 +68,16 @@ export const drawerItems = (role: IUserRole): DrawerItems[] => {
           title: "Received Requests",
           path: `${role}/donation-request-for-blood`,
           icon: BloodtypeIcon,
+        },
+        {
+          title: "My Posts",
+          path: `${role}/my-posts`,
+          icon: DynamicFeedIcon,
+        },
+        {
+          title: "Accepted Posts",
+          path: `${role}/my-accepted-posts`,
+          icon: MarkunreadMailboxIcon,
         }
       );
       break;

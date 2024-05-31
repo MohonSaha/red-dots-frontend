@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 
-const PostCard = ({ item }: { item: IBloodPost }) => {
+const AcceptedPostCard = ({ item }: { item: IBloodPost }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemId, setItemId] = useState<string | null>(null);
   const [acceptBloodPost] = useAcceptBloodPostMutation();
@@ -115,16 +115,16 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
             variant="contained"
             onClick={() => handleOpenModal(item.id)}
           >
-            Donate
+            Reject
           </Button>
           <PopupModal
             open={isModalOpen}
             handleClose={handleCloseModal}
             handleConfirm={handleConfirm}
-            title="Donate Blood"
-            message="Are you sure you want to donote blood?"
-            okButton="Confirm"
-            cancelButtom="Cancel"
+            title="Reject accepted post"
+            message="Are you sure you want to reject this post?"
+            okButton="Yes"
+            cancelButtom="No"
           />
         </Box>
 
@@ -160,4 +160,4 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
   );
 };
 
-export default PostCard;
+export default AcceptedPostCard;

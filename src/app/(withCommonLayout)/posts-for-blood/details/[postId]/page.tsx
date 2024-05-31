@@ -1,4 +1,5 @@
 "use client";
+import DonorLoadingPage from "@/app/(withCommonLayout)/donorList/loading";
 import AccetpedDonorCard from "@/components/UI/AccetpedDonorCard/AccetpedDonorCard";
 import { useGetSinglePostQuery } from "@/redux/api/postApi";
 import { formatBloodType } from "@/utils/formatBloodType";
@@ -13,7 +14,9 @@ type TParams = {
 const BloodPostDetails = ({ params }: TParams) => {
   const { data, isLoading } = useGetSinglePostQuery(params?.postId);
 
-  console.log(data);
+  if (isLoading) {
+    return <DonorLoadingPage />;
+  }
 
   return (
     <Container sx={{ my: 6 }}>
