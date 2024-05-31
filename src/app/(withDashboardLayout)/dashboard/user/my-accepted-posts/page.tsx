@@ -2,6 +2,7 @@
 import DonorLoadingPage from "@/app/(withCommonLayout)/donorList/loading";
 import AcceptedPostCard from "@/components/UI/AcceptedPostCard/AcceptedPostCard";
 import DonorLoadingCard from "@/components/UI/LoadingCards/DonorLoadingCard";
+import PostLoadingPage from "@/components/UI/LoadingPage/PostLoadingPage";
 import PostCard from "@/components/UI/PostCard/PostCard";
 import { useGetMyAcceptedPostQuery } from "@/redux/api/postApi";
 import { Box, Grid, Typography } from "@mui/material";
@@ -21,7 +22,7 @@ const MyAcceptedPost = () => {
       <Box>
         <Grid container spacing={2} my={1}>
           {isLoading ? (
-            <DonorLoadingPage />
+            <PostLoadingPage />
           ) : (
             data &&
             data.map((item: any) => (

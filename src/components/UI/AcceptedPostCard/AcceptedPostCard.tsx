@@ -31,7 +31,7 @@ const AcceptedPostCard = ({ item }: { item: IBloodPost }) => {
       if (itemId) {
         const res = await deleteAcceptedPost(itemId).unwrap();
         if (res?.count > 0) {
-          toast.success("Accepted successfully!");
+          toast.success("Post rejected successfully!");
           handleCloseModal();
         }
       }
@@ -43,7 +43,9 @@ const AcceptedPostCard = ({ item }: { item: IBloodPost }) => {
   return (
     <Box
       sx={{
-        backgroundColor: "white",
+        // backgroundColor: "white",
+        backgroundImage:
+          "linear-gradient(to bottom right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
         padding: "15px",
         borderRadius: "8px",
         border: "1px solid #e0e0e0",

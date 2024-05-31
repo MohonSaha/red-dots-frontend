@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
-import React from "react";
 import { ChevronRight } from "@mui/icons-material";
+import React from "react";
 
 const blinkEffect = {
   animation: "blink 1.5s ease-in-out infinite",
@@ -11,12 +11,13 @@ const blinkEffect = {
   },
 };
 
-const DonorLoadingCard = () => {
+const PostLoadingCard = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "white",
-        padding: "20px",
+        backgroundImage:
+          "linear-gradient(to bottom right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
+        padding: "30px 20px",
         borderRadius: "8px",
         border: "1px solid #e0e0e0",
         boxShadow:
@@ -42,9 +43,7 @@ const DonorLoadingCard = () => {
             borderRadius: 3,
             mt: 1,
           }}
-        >
-          {/* <Image src={avatar} alt="avatar" height={70} width={70} /> */}
-        </Box>
+        ></Box>
         <Box>
           <Stack
             direction="row"
@@ -53,7 +52,7 @@ const DonorLoadingCard = () => {
             alignItems="center"
           >
             <Box>
-              {[...Array(3)].map((_, index) => (
+              {[...Array(6)].map((_, index) => (
                 <Typography
                   key={index}
                   sx={{
@@ -66,7 +65,7 @@ const DonorLoadingCard = () => {
               ))}
             </Box>
             <Box>
-              {[...Array(3)].map((_, index) => (
+              {[...Array(6)].map((_, index) => (
                 <Typography
                   key={index}
                   sx={{
@@ -81,8 +80,35 @@ const DonorLoadingCard = () => {
           </Stack>
         </Box>
       </Stack>
+      <Stack
+        direction="row"
+        justifyContent="flex-end"
+        alignItems="center"
+        sx={{ mt: 2 }}
+      >
+        <Box>
+          <Typography
+            sx={{
+              ...blinkEffect,
+              padding: "16px 50px",
+              borderRadius: 2,
+              mr: 3,
+            }}
+          ></Typography>
+        </Box>
+        <ChevronRight
+          sx={{
+            cursor: "pointer",
+            color: "primary.main",
+            transition: "transform 0.3s",
+            "&:hover": {
+              transform: "translateX(5px)",
+            },
+          }}
+        />
+      </Stack>
     </Box>
   );
 };
 
-export default DonorLoadingCard;
+export default PostLoadingCard;

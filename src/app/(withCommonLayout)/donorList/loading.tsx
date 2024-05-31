@@ -4,7 +4,7 @@ import { Box, Container, Grid } from "@mui/material";
 import React from "react";
 
 const DonorLoadingPage = () => {
-  const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+  const numbers = ["1", "2", "3", "4", "5", "6"];
   return (
     <Container>
       <Box sx={{ mt: 4 }}>

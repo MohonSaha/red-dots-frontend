@@ -41,6 +41,20 @@ const requestApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.post],
     }),
+    getMyPosts: build.query({
+      query: (arg: Record<string, any>) => ({
+        url: "/my-posts",
+        method: "GET",
+        params: arg,
+      }),
+      //   transformResponse: (response: IUser[], meta: IMeta) => {
+      //     return {
+      //       donors: response,
+      //       meta: meta,
+      //     };
+      //   },
+      providesTags: [tagTypes.post],
+    }),
     getMyAcceptedPost: build.query({
       query: (arg: Record<string, any>) => ({
         url: "/my-accepted-post",
@@ -84,4 +98,5 @@ export const {
   useGetSinglePostQuery,
   useGetMyAcceptedPostQuery,
   useDeleteAcceptedPostMutation,
+  useGetMyPostsQuery,
 } = requestApi;

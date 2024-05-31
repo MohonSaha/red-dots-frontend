@@ -19,6 +19,7 @@ import { useState } from "react";
 import FilterModal from "./components/FilterModal";
 import { useDebounced } from "@/redux/hooks";
 import { FieldValues } from "react-hook-form";
+import PostLoadingPage from "@/components/UI/LoadingPage/PostLoadingPage";
 
 const BloodPost = () => {
   const [page, setPage] = useState(1);
@@ -113,7 +114,8 @@ const BloodPost = () => {
       <Box>
         <Grid container spacing={2} my={1}>
           {isLoading ? (
-            <DonorLoadingPage />
+            // <DonorLoadingPage />
+            <PostLoadingPage />
           ) : (
             posts &&
             posts.map((item) => (

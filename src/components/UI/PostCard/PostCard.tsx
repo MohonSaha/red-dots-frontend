@@ -43,7 +43,9 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
   return (
     <Box
       sx={{
-        backgroundColor: "white",
+        // backgroundColor: "white",
+        backgroundImage:
+          "linear-gradient(to bottom right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
         padding: "15px",
         borderRadius: "8px",
         border: "1px solid #e0e0e0",
@@ -59,7 +61,7 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
       }}
     >
       <Stack
-        direction="row"
+        direction={{ md: "row", sm: "column" }}
         gap={2}
         justifyContent="space-around"
         alignItems="center"
