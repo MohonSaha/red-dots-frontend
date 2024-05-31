@@ -55,6 +55,13 @@ const requestApi = baseApi.injectEndpoints({
       //   },
       providesTags: [tagTypes.post],
     }),
+    deleteAcceptedPost: build.mutation({
+      query: (id: string | undefined) => ({
+        url: `/delete-accept-post/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.post],
+    }),
 
     // updateRequestStatus: build.mutation({
     //   query: (data) => {
@@ -76,4 +83,5 @@ export const {
   useAcceptBloodPostMutation,
   useGetSinglePostQuery,
   useGetMyAcceptedPostQuery,
+  useDeleteAcceptedPostMutation,
 } = requestApi;

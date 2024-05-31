@@ -1,5 +1,8 @@
 import PopupModal from "@/components/shared/Modal/PopupModal";
-import { useAcceptBloodPostMutation } from "@/redux/api/postApi";
+import {
+  useAcceptBloodPostMutation,
+  useDeleteAcceptedPostMutation,
+} from "@/redux/api/postApi";
 import { formatBloodType } from "@/utils/formatBloodType";
 import { ChevronRight } from "@mui/icons-material";
 import { Box, Button, Stack, Tooltip, Typography } from "@mui/material";
@@ -11,6 +14,7 @@ const AcceptedPostCard = ({ item }: { item: IBloodPost }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemId, setItemId] = useState<string | null>(null);
   const [acceptBloodPost] = useAcceptBloodPostMutation();
+  const [deleteAcceptedPost] = useDeleteAcceptedPostMutation();
 
   const handleOpenModal = (itemId: string) => {
     setItemId(itemId);
@@ -23,17 +27,13 @@ const AcceptedPostCard = ({ item }: { item: IBloodPost }) => {
   };
 
   const handleConfirm = async () => {
-    const data = {
-      bloodPostId: itemId,
-    };
-    console.log(data);
-
     try {
-      const res = await acceptBloodPost(data).unwrap();
-      console.log(res);
-      if (res?.id) {
-        toast.success("Accepted successfully!");
-        handleCloseModal();
+      if (itemId) {
+        const res = await deleteAcceptedPost(itemId).unwrap();
+        if (res?.count > 0) {
+          toast.success("Accepted successfully!");
+          handleCloseModal();
+        }
       }
     } catch (error) {
       console.log(error);
