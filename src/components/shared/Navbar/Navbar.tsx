@@ -12,28 +12,27 @@ import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/material";
 import Link from "next/link";
 import { getUserInfo } from "@/services/auth.service";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import navLogo from "@/assets/svgs/reg-logo.png";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import mobileLogo from "@/assets/svgs/logo.png";
 
 const drawerWidth = 240;
-// const navItems = ["Home", "About", "Contact"];
 
-export default function Navbar() {
+const AuthButton = dynamic(
+  () => import("@/components/UI/AuthButton/AuthButton"),
+  { ssr: false }
+);
+
+const Navbar: React.FC = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const AuthButton = dynamic(
-    () => import("@/components/UI/AuthButton/AuthButton"),
-    { ssr: false }
-  );
-
-  // const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const router = useRouter();
+  const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);
+  const pathname = usePathname();
 
   const userInfo = getUserInfo();
 
@@ -43,71 +42,70 @@ export default function Navbar() {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h5" sx={{ fontWeight: 700, my: 2.5 }}>
-        Red Dots
-      </Typography>
+      <Box
+        sx={{
+          flexGrow: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          my: 2.5,
+          gap: 1,
+        }}
+      >
+        <Link href="/">
+          <Box>
+            <Image height={35} width={35} src={mobileLogo} alt="blood" />
+          </Box>
+        </Link>
+
+        <Link href="/">
+          <Typography
+            variant="h5"
+            noWrap
+            sx={{
+              display: "flex",
+              fontFamily: "monospace",
+              fontWeight: 700,
+              color: "inherit",
+              textDecoration: "none",
+              fontSize: 28,
+            }}
+          >
+            Red Dots
+          </Typography>
+        </Link>
+      </Box>
       <Divider />
 
       <Stack direction="column" gap={4}>
-        <Typography
-          component={Link}
-          href="/"
-          sx={{
-            color: "black",
-            mt: 4,
-            fontWeight: 600,
-          }}
-        >
-          Home
-        </Typography>
-        <Typography
-          component={Link}
-          href="/donorList"
-          sx={{
-            color: "black",
-            fontWeight: 600,
-          }}
-        >
-          Donor List
-        </Typography>
-        <Typography
-          component={Link}
-          href="/health-plans"
-          sx={{
-            color: "black",
-            fontWeight: 600,
-          }}
-        >
-          Health Plans
-        </Typography>
-        <Typography
-          component={Link}
-          href="/login"
-          sx={{
-            color: "black",
-            fontWeight: 600,
-          }}
-        >
-          Medicins
-        </Typography>
-        <Typography
-          component={Link}
-          href="/about-us"
-          sx={{
-            color: "black",
-            fontWeight: 600,
-            // transition: "transform 3s ease-in-out",
-            // "&:hover": {
-            //   // transform: "scale(1.1)",
-            //   backgroundColor: "gray",
-            //   paddingY: "10px",
-            //   transition: "transform 0.4s ease-in-out",
-            //   borderRight: "4px solid red",
-            // },
-          }}
-        >
-          About Us
-        </Typography>
+        {[
+          "/",
+          "/donorList",
+          "/create-post",
+          "/posts-for-blood",
+          "/about-us",
+        ].map((path, index) => (
+          <Typography
+            key={index}
+            component={Link}
+            href={path}
+            sx={{
+              color: pathname === path ? theme.palette.primary.main : "black",
+              mt: index === 0 ? 4 : 0,
+              fontWeight: 600,
+            }}
+          >
+            {path === "/"
+              ? "Home"
+              : path === "/donorList"
+              ? "Search Donors"
+              : path === "/create-post"
+              ? "Create Post"
+              : path === "/posts-for-blood"
+              ? "Donate Now"
+              : "About Us"}
+          </Typography>
+        ))}
       </Stack>
     </Box>
   );
@@ -131,7 +129,6 @@ export default function Navbar() {
             sx={{
               flexGrow: 1,
               display: "flex",
-              // justifyContent: "center",
               alignItems: "center",
             }}
           >
@@ -169,76 +166,51 @@ export default function Navbar() {
           >
             <Box sx={{ display: { xs: "none", sm: "block" } }}>
               <Stack direction="row" gap={4} justifyContent="space-between">
-                <Typography
-                  component={Link}
-                  href="/"
-                  sx={{
-                    color: "white",
-                    fontWeight: 500,
-                    transition: "transform 0.4s ease-in-out",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                    },
-                  }}
-                >
-                  Home
-                </Typography>
-                <Typography
-                  component={Link}
-                  href="/donorList"
-                  sx={{
-                    color: "white",
-                    fontWeight: 500,
-                    transition: "transform 0.4s ease-in-out",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                    },
-                  }}
-                >
-                  Search Donors
-                </Typography>
-                <Typography
-                  component={Link}
-                  href="/create-post"
-                  sx={{
-                    color: "white",
-                    fontWeight: 500,
-                    transition: "transform 0.4s ease-in-out",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                    },
-                  }}
-                >
-                  Create Post
-                </Typography>
-                <Typography
-                  component={Link}
-                  href="/posts-for-blood"
-                  sx={{
-                    color: "white",
-                    fontWeight: 600,
-                    transition: "transform 0.4s ease-in-out",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                    },
-                  }}
-                >
-                  Donate Now
-                </Typography>
-                <Typography
-                  component={Link}
-                  href="/about-us"
-                  sx={{
-                    color: "white",
-                    fontWeight: 500,
-                    transition: "transform 0.4s ease-in-out",
-                    "&:hover": {
-                      transform: "scale(1.1)",
-                    },
-                  }}
-                >
-                  About Us
-                </Typography>
+                {[
+                  "/",
+                  "/donorList",
+                  "/create-post",
+                  "/posts-for-blood",
+                  "/about-us",
+                ].map((path, index) => (
+                  <Typography
+                    key={index}
+                    component={Link}
+                    href={path}
+                    sx={{
+                      color: "white",
+                      fontWeight: 500,
+                      transition: "transform 0.4s ease-in-out",
+                      "&:hover": {
+                        transform: "scale(1.1)",
+                      },
+                      position: "relative",
+                      "&::after": {
+                        content: '""',
+                        position: "absolute",
+                        width: "100%",
+                        height: "2px",
+                        backgroundColor: "white",
+                        bottom: "-2px",
+                        left: 0,
+                        transform:
+                          pathname === path ? "scaleX(1)" : "scaleX(0)",
+                        transformOrigin: "bottom right",
+                        transition: "transform 0.25s ease-out",
+                      },
+                    }}
+                  >
+                    {path === "/"
+                      ? "Home"
+                      : path === "/donorList"
+                      ? "Search Donors"
+                      : path === "/create-post"
+                      ? "Create Post"
+                      : path === "/posts-for-blood"
+                      ? "Donate Now"
+                      : "About Us"}
+                  </Typography>
+                ))}
               </Stack>
             </Box>
 
@@ -270,4 +242,6 @@ export default function Navbar() {
       </Box>
     </Box>
   );
-}
+};
+
+export default Navbar;

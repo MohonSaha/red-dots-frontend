@@ -20,14 +20,18 @@ import {
 } from "@/redux/api/authApi";
 import { dateFormatter } from "@/utils/dateFormatter";
 import { useRouter } from "next/navigation";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { useState } from "react";
+import SaveIcon from "@mui/icons-material/Save";
 
 const EditMyProfile = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { data: userData, isLoading } = useGetSingleUserQuery({});
   const [updateMyProfile] = useUpdateMyProfileMutation();
 
   const handleFormSubmit = async (values: FieldValues) => {
-    // console.log(values); // convert the data to form data
+    setLoading(true);
     values.lastDonationDate = dateFormatter(values.lastDonationDate);
     values.age = Number(values.age);
     values.phoneNumber = Number(values.phoneNumber);
@@ -41,9 +45,10 @@ const EditMyProfile = () => {
 
     try {
       const res = await updateMyProfile({ body: values }).unwrap();
-      console.log(res);
+
       if (res?.id) {
         toast.success("Profile updated successfully!");
+        setLoading(false);
         router.push("/dashboard/user/profile");
       }
     } catch (err: any) {
@@ -197,7 +202,19 @@ const EditMyProfile = () => {
         </Grid>
       </Grid>
 
-      <Button type="submit">Update</Button>
+      <LoadingButton
+        size="small"
+        type="submit"
+        loading={loading}
+        variant="contained"
+        endIcon={<SaveIcon />}
+        loadingPosition="end"
+        sx={{
+          margin: "10px 0px",
+        }}
+      >
+        <span>Save</span>
+      </LoadingButton>
     </ControlledForm>
   );
 };

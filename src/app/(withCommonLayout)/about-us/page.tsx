@@ -4,14 +4,16 @@ import React from "react";
 const AboutUsPage = () => {
   return (
     <Container>
-      <Box sx={{ my: 8 }}>
-        <Grid
-          //   direction={{ md: "row", sm: "column" }}
-          //   justifyContent="space-between"
-          //   gap={5}
-          spacing={{ md: 20, sm: 5, xs: 5 }}
-          container
-        >
+      <Box sx={{ my: 6 }}>
+        <Box pb={8}>
+          <Typography variant="h4" fontWeight={600}>
+            About Us
+          </Typography>
+          <Typography sx={{ color: "black" }}>
+            Know about Red Dots. What, how, and why.
+          </Typography>
+        </Box>
+        <Grid spacing={{ md: 20, sm: 5, xs: 5 }} container>
           <Grid item md={6} sm={12} xs={12}>
             <Box>
               <Typography>
