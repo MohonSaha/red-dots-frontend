@@ -11,6 +11,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const AcceptedPostCard = ({ item }: { item: IBloodPost }) => {
+  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemId, setItemId] = useState<string | null>(null);
   const [acceptBloodPost] = useAcceptBloodPostMutation();
@@ -27,11 +28,13 @@ const AcceptedPostCard = ({ item }: { item: IBloodPost }) => {
   };
 
   const handleConfirm = async () => {
+    setLoading(true);
     try {
       if (itemId) {
         const res = await deleteAcceptedPost(itemId).unwrap();
         if (res?.count > 0) {
           toast.success("Post rejected successfully!");
+          setLoading(false);
           handleCloseModal();
         }
       }
@@ -120,6 +123,7 @@ const AcceptedPostCard = ({ item }: { item: IBloodPost }) => {
             Reject
           </Button>
           <PopupModal
+            loading={loading}
             open={isModalOpen}
             handleClose={handleCloseModal}
             handleConfirm={handleConfirm}

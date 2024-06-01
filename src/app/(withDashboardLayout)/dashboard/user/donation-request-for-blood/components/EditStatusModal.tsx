@@ -1,3 +1,4 @@
+"use client";
 import ControlledForm from "@/components/Forms/ControlledForm";
 import ControlledInput from "@/components/Forms/ControlledInput";
 import ControlledSelectField from "@/components/Forms/ControlledSelectField";
@@ -12,8 +13,10 @@ import {
   UserRoleOption,
 } from "@/types";
 import { modifyPayload } from "@/utils/modifyPayload";
+import LoadingButton from "@mui/lab/LoadingButton";
 import { Box, Button, Grid, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -32,18 +35,14 @@ const EditStatusModal = ({
   requestId,
   donateDate,
 }: TProps) => {
+  const [loading, setLoading] = useState(false);
   const [updateRequestStatus] = useUpdateRequestStatusMutation();
-  //   const [updateUser] = useUpdateUserMutation();
-
-  //   console.log(requestStatus, requestId);
 
   const handleFormSubmit = async (values: FieldValues) => {
+    setLoading(true);
     const updatedInfo = {
       requestStatus: values?.status,
-      // isAccepted: true,
     };
-
-    console.log(updatedInfo);
 
     try {
       const res = await updateRequestStatus({
@@ -54,6 +53,7 @@ const EditStatusModal = ({
 
       if (res?.id) {
         toast.success("Request updated successfully!");
+        setLoading(false);
         setOpen(false);
       }
     } catch (error: any) {
@@ -88,15 +88,18 @@ const EditStatusModal = ({
             </Grid>
           </Grid>
 
-          <Button
+          <LoadingButton
+            size="small"
+            type="submit"
+            loading={loading}
+            variant="contained"
+            fullWidth={true}
             sx={{
               margin: "10px 0px",
             }}
-            fullWidth={true}
-            type="submit"
           >
-            Register
-          </Button>
+            <span>Update</span>
+          </LoadingButton>
         </ControlledForm>
       </MyModal>
     </div>
