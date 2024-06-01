@@ -7,6 +7,7 @@ import {
   DialogTitle,
   Button,
 } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 interface PopupModalProps {
   open: boolean;
@@ -16,6 +17,7 @@ interface PopupModalProps {
   message: string;
   okButton: string;
   cancelButtom: string;
+  loading: boolean;
 }
 
 const PopupModal: React.FC<PopupModalProps> = ({
@@ -26,6 +28,7 @@ const PopupModal: React.FC<PopupModalProps> = ({
   title,
   okButton,
   cancelButtom,
+  loading,
 }) => {
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -37,9 +40,21 @@ const PopupModal: React.FC<PopupModalProps> = ({
         <Button onClick={handleClose} color="secondary">
           {cancelButtom}
         </Button>
-        <Button onClick={handleConfirm} color="primary" autoFocus>
+        {/* <Button onClick={handleConfirm} color="primary" autoFocus>
           {okButton}
-        </Button>
+        </Button> */}
+
+        <LoadingButton
+          onClick={handleConfirm}
+          size="small"
+          loading={loading}
+          variant="contained"
+          sx={{
+            margin: "10px 0px",
+          }}
+        >
+          <span>{okButton}</span>
+        </LoadingButton>
       </DialogActions>
     </Dialog>
   );

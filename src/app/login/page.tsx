@@ -11,8 +11,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
-
+import { FieldValues } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ControlledForm from "@/components/Forms/ControlledForm";
@@ -23,6 +22,7 @@ import { toast } from "sonner";
 import { storeUserInfo } from "@/services/auth.service";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const ValidationSchema = z.object({
   email: z.string().email("Please enter a valid email address!"),
@@ -30,11 +30,13 @@ const ValidationSchema = z.object({
 });
 
 const LoginPage = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   // error message state that comes from server
   const [error, setError] = useState("");
 
   const handleLogin = async (values: FieldValues) => {
+    setLoading(true);
     const loginUserData = {
       email: values?.email,
       password: values?.password,
@@ -47,6 +49,7 @@ const LoginPage = () => {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
         // router.push("/");
+        setLoading(false);
       } else {
         setError(res?.message);
         toast.error(res?.message);
@@ -131,15 +134,20 @@ const LoginPage = () => {
                 Forgot Password?
               </Typography>
 
-              <Button
+              <LoadingButton
+                size="small"
+                type="submit"
+                loading={loading}
+                variant="contained"
+                fullWidth={true}
+                // endIcon={<SendIcon />}
+                loadingPosition="end"
                 sx={{
                   margin: "5px 0px",
                 }}
-                fullWidth={true}
-                type="submit"
               >
-                Login
-              </Button>
+                <span>Login</span>
+              </LoadingButton>
 
               <Typography component="p" fontWeight={300}>
                 Don&apos;t have an account?{" "}

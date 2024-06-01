@@ -21,6 +21,8 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import dayjs from "dayjs";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SendIcon from "@mui/icons-material/Send";
 
 // validation schema for patient registration
 const ValidationSchema = z.object({
@@ -53,6 +55,7 @@ const defaultValues = {
 };
 
 const RegisterPage = () => {
+  const [loading, setLoading] = useState(false);
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const router = useRouter();
@@ -63,11 +66,7 @@ const RegisterPage = () => {
       return;
     }
 
-    // if (values && values?.donateOption === "YES") {
-    //   values.donateOption = true;
-    // } else {
-    //   values.donateOption = false;
-    // }
+    setLoading(true);
 
     const registerUserData = {
       name: values?.name,
@@ -97,6 +96,7 @@ const RegisterPage = () => {
         if (result?.data?.accessToken) {
           storeUserInfo({ accessToken: result?.data?.accessToken });
           // router.push("/");
+          setLoading(false);
         }
       }
     } catch (err: any) {
@@ -223,7 +223,7 @@ const RegisterPage = () => {
                 </Grid>
               </Grid>
 
-              <Button
+              {/* <Button
                 sx={{
                   margin: "10px 0px",
                 }}
@@ -232,7 +232,22 @@ const RegisterPage = () => {
                 // disabled={isButtonDisabled}
               >
                 Register
-              </Button>
+              </Button> */}
+              <LoadingButton
+                size="small"
+                type="submit"
+                loading={loading}
+                // loadingIndicator="Logging…"
+                variant="contained"
+                fullWidth={true}
+                endIcon={<SendIcon />}
+                loadingPosition="end"
+                sx={{
+                  margin: "10px 0px",
+                }}
+              >
+                <span>Register</span>
+              </LoadingButton>
 
               <Typography component="p" fontWeight={300}>
                 Do you already have an account?{" "}

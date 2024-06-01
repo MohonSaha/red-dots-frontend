@@ -8,6 +8,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 const PostCard = ({ item }: { item: IBloodPost }) => {
+  const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemId, setItemId] = useState<string | null>(null);
   const [acceptBloodPost] = useAcceptBloodPostMutation();
@@ -23,16 +24,17 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
   };
 
   const handleConfirm = async () => {
+    setLoading(true);
     const data = {
       bloodPostId: itemId,
     };
-    console.log(data);
 
     try {
       const res = await acceptBloodPost(data).unwrap();
-      console.log(res);
+
       if (res?.id) {
         toast.success("Accepted successfully!");
+        setLoading(false);
         handleCloseModal();
       }
     } catch (error) {
@@ -120,6 +122,7 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
             Donate
           </Button>
           <PopupModal
+            loading={loading}
             open={isModalOpen}
             handleClose={handleCloseModal}
             handleConfirm={handleConfirm}

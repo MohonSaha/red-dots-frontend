@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import avater1 from "@/assets/images/test-1.jpg";
+import avater2 from "@/assets/images/test-2.jpg";
+import avater3 from "@/assets/images/test-3.jpg";
 
 const Testimonials = () => {
   //   const theme = useTheme();
@@ -22,6 +24,7 @@ const Testimonials = () => {
         alignItems: "center",
         backgroundImage:
           "linear-gradient(to top right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
+        pb: 5,
       }}
     >
       <Box>
@@ -55,16 +58,14 @@ const Testimonials = () => {
                   borderRadius: "50%", // Make the box circular
                   overflow: "hidden", // Ensure the image stays within the circle
                   margin: "10px auto", // Center the circle horizontally
-                  //   marginBottom: "20px", // Add some margin below the circle
                   position: "relative",
                 }}
               >
                 <Image
                   src={avater1}
                   alt="avatar"
-                  layout="fill" // Fill the entire box with the image
-                  objectFit="cover" // Cover the entire box without stretching the image
-                  objectPosition="center" // Center the image within the box
+                  fill // Fill the entire box with the image
+                  style={{ objectFit: "cover", objectPosition: "center" }} // Cover the entire box without stretching the image
                 />
               </Box>
               <CardContent>
@@ -74,7 +75,7 @@ const Testimonials = () => {
                   component="div"
                   sx={{ textAlign: "center" }}
                 >
-                  Devid Molar
+                  Hasibul Hasan
                 </Typography>
                 <Typography
                   variant="body2"
@@ -91,9 +92,8 @@ const Testimonials = () => {
                   sx={{ textAlign: "center", fontWeight: "600" }}
                   color="text.secondary"
                 >
-                  I want to help wherever I can and lead by example. Donating
-                  blood is a small way to give back and it does so in such a
-                  mighty way.
+                  One donation can help up to three different people, so that
+                  makes me feel really good. The payback is unbelievable.
                 </Typography>
               </CardContent>
               <Box
@@ -103,16 +103,14 @@ const Testimonials = () => {
                   borderRadius: "50%", // Make the box circular
                   overflow: "hidden", // Ensure the image stays within the circle
                   margin: "10px auto", // Center the circle horizontally
-                  //   marginBottom: "20px", // Add some margin below the circle
                   position: "relative",
                 }}
               >
                 <Image
-                  src={avater1}
+                  src={avater2}
                   alt="avatar"
-                  layout="fill" // Fill the entire box with the image
-                  objectFit="cover" // Cover the entire box without stretching the image
-                  objectPosition="center" // Center the image within the box
+                  fill // Fill the entire box with the image
+                  style={{ objectFit: "cover", objectPosition: "center" }} // Cover the entire box without stretching the image
                 />
               </Box>
               <CardContent>
@@ -122,14 +120,14 @@ const Testimonials = () => {
                   component="div"
                   sx={{ textAlign: "center" }}
                 >
-                  Devid Molar
+                  Khabirul Shanto
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   sx={{ textAlign: "center" }}
                 >
-                  BLOOD DONOR
+                  BLOOD & PLATELET DONOR
                 </Typography>
               </CardContent>
             </Card>
@@ -139,9 +137,8 @@ const Testimonials = () => {
                   sx={{ textAlign: "center", fontWeight: "600" }}
                   color="text.secondary"
                 >
-                  I want to help wherever I can and lead by example. Donating
-                  blood is a small way to give back and it does so in such a
-                  mighty way.
+                  I was surprised by how quick and painless the blood donation
+                  process was. The facility was clean and well-organized.
                 </Typography>
               </CardContent>
               <Box
@@ -151,16 +148,14 @@ const Testimonials = () => {
                   borderRadius: "50%", // Make the box circular
                   overflow: "hidden", // Ensure the image stays within the circle
                   margin: "10px auto", // Center the circle horizontally
-                  //   marginBottom: "20px", // Add some margin below the circle
                   position: "relative",
                 }}
               >
                 <Image
-                  src={avater1}
+                  src={avater3}
                   alt="avatar"
-                  layout="fill" // Fill the entire box with the image
-                  objectFit="cover" // Cover the entire box without stretching the image
-                  objectPosition="center" // Center the image within the box
+                  fill // Fill the entire box with the image
+                  style={{ objectFit: "cover", objectPosition: "center" }} // Cover the entire box without stretching the image
                 />
               </Box>
               <CardContent>
@@ -170,7 +165,7 @@ const Testimonials = () => {
                   component="div"
                   sx={{ textAlign: "center" }}
                 >
-                  Devid Molar
+                  Fazley Rabby
                 </Typography>
                 <Typography
                   variant="body2"

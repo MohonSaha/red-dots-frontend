@@ -16,9 +16,6 @@ const MyPostCard = ({ item }: { item: IBloodPost }) => {
   const [acceptBloodPost] = useAcceptBloodPostMutation();
   const [deleteAcceptedPost] = useDeleteAcceptedPostMutation();
 
-  console.log(item.acceptedDonors.length);
-  console.log(item);
-
   const handleOpenModal = (itemId: string) => {
     setItemId(itemId);
     setIsModalOpen(true);

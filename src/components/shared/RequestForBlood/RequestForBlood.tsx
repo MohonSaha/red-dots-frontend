@@ -1,3 +1,4 @@
+"use client";
 import ControlledForm from "@/components/Forms/ControlledForm";
 import ControlledInput from "@/components/Forms/ControlledInput";
 import ControlledDatePicker from "@/components/Forms/ControlledDatePicker";
@@ -16,6 +17,9 @@ import { useGetSingleUserQuery } from "@/redux/api/authApi";
 import { dateFormatter } from "@/utils/dateFormatter";
 import { useCreateRequestForBloodMutation } from "@/redux/api/requestApi";
 import { toast } from "sonner";
+import LoadingButton from "@mui/lab/LoadingButton";
+import SendIcon from "@mui/icons-material/Send";
+import { useState } from "react";
 
 // Define the props type for the component
 interface IProps {
@@ -23,6 +27,7 @@ interface IProps {
 }
 
 const RequestForBlood = ({ donorId }: IProps) => {
+  const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -30,10 +35,8 @@ const RequestForBlood = ({ donorId }: IProps) => {
 
   const [createRequestForBlood] = useCreateRequestForBloodMutation();
 
-  // console.log(data);
-
   const handleRequestForBlood = async (values: FieldValues) => {
-    console.log(values);
+    setLoading(true);
 
     const requestData = {
       donorId: donorId,
@@ -49,6 +52,7 @@ const RequestForBlood = ({ donorId }: IProps) => {
       console.log(res);
       if (res?.id) {
         toast.success("Your request sent successfully!");
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -152,7 +156,7 @@ const RequestForBlood = ({ donorId }: IProps) => {
               </Grid>
             </Grid>
 
-            <Button
+            {/* <Button
               sx={{
                 margin: "10px 0px",
               }}
@@ -161,7 +165,22 @@ const RequestForBlood = ({ donorId }: IProps) => {
               // disabled={isButtonDisabled}
             >
               Send Blood Request
-            </Button>
+            </Button> */}
+
+            <LoadingButton
+              size="small"
+              type="submit"
+              loading={loading}
+              variant="contained"
+              fullWidth={true}
+              endIcon={<SendIcon />}
+              loadingPosition="end"
+              sx={{
+                margin: "10px 0px",
+              }}
+            >
+              <span>Send Blood Request</span>
+            </LoadingButton>
           </ControlledForm>
         </Box>
       )}

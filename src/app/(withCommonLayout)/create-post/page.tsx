@@ -7,6 +7,7 @@ import { useGetSingleUserQuery } from "@/redux/api/authApi";
 import { useCreatePostForBloodMutation } from "@/redux/api/postApi";
 import { Districts } from "@/types";
 import { dateFormatter } from "@/utils/dateFormatter";
+import LoadingButton from "@mui/lab/LoadingButton";
 import {
   Box,
   Button,
@@ -16,11 +17,12 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 const CreatePostPage = () => {
+  const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -28,7 +30,7 @@ const CreatePostPage = () => {
   const [createPostForBlood] = useCreatePostForBloodMutation();
 
   const handleRequestForBlood = async (values: FieldValues) => {
-    // console.log(values);
+    setLoading(true);
 
     const postData = {
       phoneNumber: values?.phoneNumber,
@@ -40,13 +42,12 @@ const CreatePostPage = () => {
       reason: values?.reason,
     };
 
-    console.log(postData);
-
     try {
       const res = await createPostForBlood(postData).unwrap();
       // console.log(res);
       if (res?.id) {
         toast.success("Blood post created successfully!");
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -168,16 +169,20 @@ const CreatePostPage = () => {
                 </Grid>
               </Grid>
 
-              <Button
+              <LoadingButton
+                size="small"
+                type="submit"
+                loading={loading}
+                variant="contained"
+                fullWidth={true}
+                // endIcon={<SendIcon />}
+                loadingPosition="end"
                 sx={{
                   margin: "10px 0px",
                 }}
-                fullWidth={true}
-                type="submit"
-                // disabled={isButtonDisabled}
               >
-                Send Blood Request
-              </Button>
+                <span>Create Post</span>
+              </LoadingButton>
             </ControlledForm>
           </Box>
         )}
