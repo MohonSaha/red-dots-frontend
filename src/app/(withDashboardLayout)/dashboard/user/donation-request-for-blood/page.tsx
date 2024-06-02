@@ -5,6 +5,7 @@ import {
   Box,
   Button,
   IconButton,
+  Skeleton,
   Typography,
   useMediaQuery,
   useTheme,
@@ -151,7 +152,16 @@ const MyDonationRequestPage = () => {
           </Box>
         </Box>
       ) : (
-        <Typography>Loading...</Typography>
+        <Box>
+          {Array.from(new Array(7)).map((_, index) => (
+            <Skeleton
+              key={index}
+              variant="rectangular"
+              height={52}
+              sx={{ mb: 2 }}
+            />
+          ))}
+        </Box>
       )}
     </Box>
   );

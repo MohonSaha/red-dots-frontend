@@ -1,9 +1,22 @@
 "use client";
 import DonorLoadingPage from "@/app/(withCommonLayout)/donorList/loading";
 import AccetpedDonorCard from "@/components/UI/AccetpedDonorCard/AccetpedDonorCard";
-import { useGetSinglePostQuery } from "@/redux/api/postApi";
+import PopupModal from "@/components/shared/Modal/PopupModal";
+import {
+  useAcceptBloodPostMutation,
+  useGetSinglePostQuery,
+} from "@/redux/api/postApi";
 import { formatBloodType } from "@/utils/formatBloodType";
-import { Box, Container, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
+import { toast } from "sonner";
 
 type TParams = {
   params: {
@@ -12,10 +25,57 @@ type TParams = {
 };
 
 const BloodPostDetails = ({ params }: TParams) => {
+  const [loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [itemId, setItemId] = useState<string | null>(null);
+  const [acceptBloodPost] = useAcceptBloodPostMutation();
+
+  const handleOpenModal = (itemId: string) => {
+    setItemId(itemId);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setItemId(null);
+  };
+
+  const handleConfirm = async () => {
+    setLoading(true);
+    const data = {
+      bloodPostId: itemId,
+    };
+
+    try {
+      const res = await acceptBloodPost(data).unwrap();
+
+      if (res?.id) {
+        toast.success("Accepted successfully!");
+        setLoading(false);
+        handleCloseModal();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const { data, isLoading } = useGetSinglePostQuery(params?.postId);
 
   if (isLoading) {
-    return <DonorLoadingPage />;
+    return (
+      <Container>
+        <Box sx={{ my: 6 }}>
+          {Array.from(new Array(7)).map((_, index) => (
+            <Skeleton
+              key={index}
+              variant="rectangular"
+              height={52}
+              sx={{ mb: 2 }}
+            />
+          ))}
+        </Box>
+      </Container>
+    );
   }
 
   return (
@@ -165,7 +225,7 @@ const BloodPostDetails = ({ params }: TParams) => {
             }}
           >
             <Typography sx={{ textAlign: "center", mb: 4, fontWeight: 600 }}>
-              Managed Donors
+              Managed Donors: {data?.acceptedDonors?.length}
             </Typography>
             {data && data.acceptedDonors.length === 0 ? (
               <Typography
@@ -182,6 +242,36 @@ const BloodPostDetails = ({ params }: TParams) => {
                 <AccetpedDonorCard key={item.id} item={item} />
               ))
             )}
+
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "end",
+                justifyContent: "center",
+                mt: 4,
+              }}
+            >
+              <Button
+                sx={{
+                  mr: 3,
+                  padding: "2px 10px",
+                }}
+                variant="contained"
+                onClick={() => handleOpenModal(params?.postId)}
+              >
+                Donate Now
+              </Button>
+              <PopupModal
+                loading={loading}
+                open={isModalOpen}
+                handleClose={handleCloseModal}
+                handleConfirm={handleConfirm}
+                title="Donate Blood"
+                message="Are you sure you want to donote blood?"
+                okButton="Confirm"
+                cancelButtom="Cancel"
+              />
+            </Box>
           </Box>
         </Stack>
       </Box>

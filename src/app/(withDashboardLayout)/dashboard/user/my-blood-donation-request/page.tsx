@@ -1,7 +1,15 @@
 "use client";
 import { useGetMyRequestsQuery } from "@/redux/api/requestApi";
 import { formatBloodType } from "@/utils/formatBloodType";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  Skeleton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Link from "next/link";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,6 +19,8 @@ import { useEffect, useState } from "react";
 const MyDonationRequestPage = () => {
   const { data, isLoading } = useGetRequestsMadeByMeQuery({});
   const [allRequest, setAllRequest] = useState<any>([]);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   console.log(data);
 
@@ -141,20 +151,42 @@ const MyDonationRequestPage = () => {
       </Box>
 
       {!isLoading ? (
-        <Box>
-          <DataGrid
-            rows={allRequest ?? []}
-            columns={columns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 8 },
-              },
-            }}
-            pageSizeOptions={[5, 10]}
-          />
+        <Box
+          sx={{
+            width: isSmallScreen ? "380px" : "100%",
+            display: "flex",
+            flexDirection: "column",
+            overflowX: isSmallScreen ? "auto" : "hidden",
+          }}
+        >
+          <Box sx={{ minWidth: isSmallScreen ? "380px" : "100%" }}>
+            <DataGrid
+              sx={{
+                width: "100%",
+              }}
+              rows={allRequest ?? []}
+              columns={columns}
+              initialState={{
+                pagination: {
+                  paginationModel: { page: 0, pageSize: 8 },
+                },
+              }}
+              pageSizeOptions={[5, 10]}
+              autoHeight
+            />
+          </Box>
         </Box>
       ) : (
-        <h1>Loading...</h1>
+        <Box>
+          {Array.from(new Array(7)).map((_, index) => (
+            <Skeleton
+              key={index}
+              variant="rectangular"
+              height={52}
+              sx={{ mb: 2 }}
+            />
+          ))}
+        </Box>
       )}
     </Box>
   );
