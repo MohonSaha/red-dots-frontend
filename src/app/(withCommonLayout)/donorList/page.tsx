@@ -11,35 +11,51 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DonorLoadingPage from "./loading";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
 const DonorListPage = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
-  const query: Record<string, any> = {};
-
   const [searchTerm, setSearchTerm] = useState<{
     bloodType?: string;
     location?: string;
     availability?: boolean;
   }>({});
 
-  if (searchTerm.bloodType) {
-    query["bloodType"] = searchTerm.bloodType;
-  }
-  if (searchTerm.location) {
-    query["searchTerm"] = searchTerm.location;
-  }
-  if (searchTerm.availability) {
-    query["availability"] = searchTerm.availability;
-  }
+  // const queryParams = useSearchParams();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
-  // add pagination query:
-  query["page"] = page;
-  query["limit"] = limit;
+  const updateSearchParams = useCallback(() => {
+    const params = new URLSearchParams(searchParams);
 
-  const { data, isLoading } = useGetAllDonorsQuery({ ...query });
+    if (searchTerm.bloodType) {
+      params.set("bloodType", searchTerm.bloodType);
+    }
+
+    if (searchTerm.location) {
+      params.set("searchTerm", searchTerm.location);
+    }
+
+    if (searchTerm.availability !== undefined) {
+      params.set("availability", searchTerm.availability.toString());
+    }
+
+    params.set("page", page.toString());
+    params.set("limit", limit.toString());
+
+    replace(`${pathname}?${params.toString()}`);
+  }, [searchParams, pathname, replace, searchTerm, page, limit]);
+
+  useEffect(() => {
+    updateSearchParams();
+  }, [updateSearchParams]);
+
+  const { data, isLoading } = useGetAllDonorsQuery(searchParams.toString());
+
   //   console.log(data);
   const donors = data?.donors;
   const meta = data?.meta;
@@ -52,6 +68,8 @@ const DonorListPage = () => {
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
+
+  console.log(searchTerm);
 
   return (
     <Box

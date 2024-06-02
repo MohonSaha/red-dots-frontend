@@ -5,10 +5,10 @@ import { tagTypes } from "../tag-types";
 const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllDonors: build.query({
-      query: (arg: Record<string, any>) => ({
-        url: "/donor-list",
+      query: (queryString: string) => ({
+        url: `/donor-list`, // Append queryString directly to the URL
         method: "GET",
-        params: arg,
+        params: queryString,
       }),
       transformResponse: (response: IUser[], meta: IMeta) => {
         return {

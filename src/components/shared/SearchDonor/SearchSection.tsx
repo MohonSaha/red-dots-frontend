@@ -3,12 +3,7 @@ import ControlledDatePicker from "@/components/Forms/ControlledDatePicker";
 import ControlledForm from "@/components/Forms/ControlledForm";
 import ControlledInput from "@/components/Forms/ControlledInput";
 import ControlledSelectField from "@/components/Forms/ControlledSelectField";
-import {
-  DonateOption,
-  SearchBloodGroups,
-  SearchDistricts,
-  SearchDonorType,
-} from "@/types";
+import { BloodGroups, Districts, DonateOption, DonorType } from "@/types";
 import {
   Box,
   Button,
@@ -19,16 +14,14 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { useSearchParams } from "next/navigation";
 import React from "react";
 import { FieldValues } from "react-hook-form";
 
 // Define the shape of the form values
 interface SearchFormValues {
   bloodType?: string;
+  donateOption?: string;
   dateOfBloodDonation?: Date | null;
-  location?: string;
-  availability?: boolean;
 }
 
 // Define the props type for the component
@@ -37,48 +30,35 @@ interface SearchDonorProps {
   setSearch: (values: SearchFormValues) => void;
 }
 
-const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
+const SearchSection = ({ search, setSearch }: SearchDonorProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
 
   const handleSearchFunctionality = async (values: FieldValues) => {
-    const searchObj: Partial<SearchFormValues> = {
-      bloodType: values.bloodType,
-      location: values.location,
-      availability: values.availability,
-    };
+    console.log(values);
 
-    if (values.bloodType === SearchBloodGroups[0].value) {
-      delete searchObj.bloodType;
+    let searchObj = {};
+
+    if (values?.donorType == "Eligible") {
+      console.log("clicked");
+      searchObj = {
+        bloodType: values?.bloodType,
+        location: values?.district,
+        availability: true,
+      };
+    } else {
+      searchObj = {
+        bloodType: values?.bloodType,
+        location: values?.district,
+      };
     }
 
-    if (values.location === SearchDistricts[0].value) {
-      delete searchObj.location;
-    }
-
-    if (values.availability === undefined) {
-      delete searchObj.availability;
-    }
+    console.log(searchObj);
 
     setSearch(searchObj);
-    console.log(searchObj, "searchobj");
   };
 
-  const defaultBloodType = searchParams.get("bloodType") || undefined;
-  const defaultLocation = searchParams.get("searchTerm") || undefined;
-  const defaultAvailability =
-    searchParams.get("availability") === "true" ? true : undefined;
-
-  const defaultValues = {
-    ...search,
-    bloodType: defaultBloodType ?? SearchBloodGroups[0].value,
-    location: defaultLocation ?? SearchDistricts[0].value,
-    availability: defaultAvailability ?? SearchDonorType[0].value,
-  };
-
-  console.log(defaultValues, "dif");
+  // donorType: 'Eligible'
 
   return (
     <Box
@@ -93,7 +73,7 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
         <Box>
           <ControlledForm
             onSubmit={handleSearchFunctionality}
-            defaultValues={defaultValues}
+            //   defaultValues={defaultValues}
           >
             <Stack
               //   direction="row"
@@ -108,15 +88,15 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
               <Grid container spacing={2} my={1}>
                 <Grid item xs={12} sm={12} md={3}>
                   <ControlledSelectField
-                    items={SearchBloodGroups}
+                    items={BloodGroups}
                     name="bloodType"
                     label="Blood Group"
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={3}>
                   <ControlledSelectField
-                    items={SearchDistricts}
-                    name="location"
+                    items={Districts}
+                    name="district"
                     label="District"
                   />
                 </Grid>
@@ -129,8 +109,8 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={3}>
                   <ControlledSelectField
-                    items={SearchDonorType}
-                    name="availability"
+                    items={DonorType}
+                    name="donorType"
                     label="Donor Type"
                   />
                 </Grid>
@@ -153,4 +133,4 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
   );
 };
 
-export default SearchDonor;
+export default SearchSection;
