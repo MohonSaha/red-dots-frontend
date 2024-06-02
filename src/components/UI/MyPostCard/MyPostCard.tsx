@@ -46,7 +46,7 @@ const MyPostCard = ({ item }: { item: IBloodPost }) => {
         // backgroundColor: "white",
         backgroundImage:
           "linear-gradient(to bottom right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
-        padding: "15px",
+        padding: "15px 20px",
         borderRadius: "8px",
         border: "1px solid #e0e0e0",
         // width: "350px",
@@ -61,12 +61,12 @@ const MyPostCard = ({ item }: { item: IBloodPost }) => {
       }}
     >
       <Stack
-        direction="row"
+        direction={{ md: "row", sm: "column", xs: "column" }}
         gap={2}
         justifyContent="space-around"
         alignItems="center"
       >
-        <Box sx={{}}>
+        <Box>
           <Typography sx={{ fontWeight: 600, fontSize: 80 }}>O+</Typography>
         </Box>
         <Box>
@@ -88,18 +88,26 @@ const MyPostCard = ({ item }: { item: IBloodPost }) => {
               <Typography sx={{ fontWeight: 600 }}>
                 {item?.dateOfDonation}
               </Typography>
-              <Typography sx={{ fontWeight: 600 }}>{item?.reason}</Typography>
+              <Typography sx={{ fontWeight: 600 }}>
+                {item?.reason?.length > 15
+                  ? `${item.reason.slice(0, 15)}...`
+                  : item.reason}
+              </Typography>
               <Typography sx={{ fontWeight: 600 }}>
                 {item?.numberOfBags}
               </Typography>
               <Typography sx={{ fontWeight: 600 }}>
-                {item?.hospitalName}
+                {item?.hospitalName?.length > 15
+                  ? `${item.hospitalName.slice(0, 15)}...`
+                  : item.hospitalName}
               </Typography>
               <Typography sx={{ fontWeight: 600 }}>
                 {item?.hospitalLocation}
               </Typography>
               <Typography sx={{ fontWeight: 600 }}>
-                {item?.hospitalAddress}
+                {item?.hospitalAddress?.length > 15
+                  ? `${item.hospitalAddress.slice(0, 15)}...`
+                  : item.hospitalAddress}
               </Typography>
             </Box>
           </Stack>

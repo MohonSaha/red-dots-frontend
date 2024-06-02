@@ -160,6 +160,7 @@ const BloodPostDetails = ({ params }: TParams) => {
         <Stack
           direction={{ md: "row", sm: "column" }}
           justifyContent="space-between"
+          gap={{ md: 8, sm: 3, xs: 3 }}
         >
           <Box
             sx={{
@@ -167,7 +168,7 @@ const BloodPostDetails = ({ params }: TParams) => {
               padding: "15px",
               borderRadius: "8px",
               border: "1px solid #e0e0e0",
-              width: "48%",
+              width: "100%",
               boxShadow:
                 "0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)",
               transition: "transform 0.3s, box-shadow 0.3s",
@@ -213,7 +214,7 @@ const BloodPostDetails = ({ params }: TParams) => {
               padding: "15px",
               borderRadius: "8px",
               border: "1px solid #e0e0e0",
-              width: "48%",
+              width: "100%",
               boxShadow:
                 "0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)",
               transition: "transform 0.3s, box-shadow 0.3s",

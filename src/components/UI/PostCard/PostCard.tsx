@@ -90,18 +90,26 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
               <Typography sx={{ fontWeight: 600 }}>
                 {item?.dateOfDonation}
               </Typography>
-              <Typography sx={{ fontWeight: 600 }}>{item?.reason}</Typography>
+              <Typography sx={{ fontWeight: 600 }}>
+                {item?.reason?.length > 15
+                  ? `${item.reason.slice(0, 15)}...`
+                  : item.reason}
+              </Typography>
               <Typography sx={{ fontWeight: 600 }}>
                 {item?.numberOfBags}
               </Typography>
               <Typography sx={{ fontWeight: 600 }}>
-                {item?.hospitalName}
+                {item?.hospitalName?.length > 15
+                  ? `${item.hospitalName.slice(0, 15)}...`
+                  : item.hospitalName}
               </Typography>
               <Typography sx={{ fontWeight: 600 }}>
                 {item?.hospitalLocation}
               </Typography>
               <Typography sx={{ fontWeight: 600 }}>
-                {item?.hospitalAddress}
+                {item?.hospitalAddress?.length > 15
+                  ? `${item.hospitalAddress.slice(0, 15)}...`
+                  : item.hospitalAddress}
               </Typography>
             </Box>
           </Stack>
