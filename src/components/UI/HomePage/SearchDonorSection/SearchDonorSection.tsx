@@ -5,28 +5,63 @@ import SearchDonor from "@/components/shared/SearchDonor/SearchDonor";
 import { useGetAllDonorsQuery } from "@/redux/api/userApi";
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 const SearchDonorSection = () => {
-  const query: Record<string, any> = {};
+  // const query: Record<string, any> = {};
+  // const [searchTerm, setSearchTerm] = useState<{
+  //   bloodType?: string;
+  //   location?: string;
+  //   availability?: boolean;
+  // }>({});
+
+  // if (searchTerm.bloodType) {
+  //   query["bloodType"] = searchTerm.bloodType;
+  // }
+  // if (searchTerm.location) {
+  //   query["searchTerm"] = searchTerm.location;
+  // }
+  // if (searchTerm.availability) {
+  //   query["availability"] = searchTerm.availability;
+  // }
+
+  // const { data, isLoading } = useGetAllDonorsQuery({ ...query });
+  //   console.log(data);
+
+  // testing
   const [searchTerm, setSearchTerm] = useState<{
     bloodType?: string;
     location?: string;
     availability?: boolean;
   }>({});
 
-  if (searchTerm.bloodType) {
-    query["bloodType"] = searchTerm.bloodType;
-  }
-  if (searchTerm.location) {
-    query["searchTerm"] = searchTerm.location;
-  }
-  if (searchTerm.availability) {
-    query["availability"] = searchTerm.availability;
-  }
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace, push } = useRouter();
 
-  const { data, isLoading } = useGetAllDonorsQuery({ ...query });
-  //   console.log(data);
+  const updateSearchParams = useCallback(() => {
+    const params = new URLSearchParams(searchParams);
+
+    if (searchTerm.bloodType) {
+      params.set("bloodType", searchTerm.bloodType);
+    }
+
+    if (searchTerm.location) {
+      params.set("searchTerm", searchTerm.location);
+    }
+
+    if (searchTerm.availability !== undefined) {
+      params.set("availability", searchTerm.availability.toString());
+    }
+
+    push(`/donorList?${params.toString()}`);
+  }, [searchParams, push, searchTerm]);
+
+  const { data, isLoading } = useGetAllDonorsQuery(searchParams.toString());
+
+  // testing
+
   const donors = data?.donors;
   const meta = data?.meta;
 
@@ -53,7 +88,11 @@ const SearchDonorSection = () => {
             </Typography>
           </Box>
 
-          <SearchDonor search={searchTerm} setSearch={setSearchTerm} />
+          <SearchDonor
+            search={searchTerm}
+            setSearch={setSearchTerm}
+            updateSearchParams={updateSearchParams}
+          />
 
           <Container>
             <Box

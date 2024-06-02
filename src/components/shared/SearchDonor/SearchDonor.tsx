@@ -35,9 +35,14 @@ interface SearchFormValues {
 interface SearchDonorProps {
   search: SearchFormValues;
   setSearch: (values: SearchFormValues) => void;
+  updateSearchParams?: () => void;
 }
 
-const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
+const SearchDonor = ({
+  search,
+  setSearch,
+  updateSearchParams,
+}: SearchDonorProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const searchParams = useSearchParams();
@@ -62,8 +67,11 @@ const SearchDonor = ({ search, setSearch }: SearchDonorProps) => {
       delete searchObj.availability;
     }
 
-    setSearch(searchObj);
-    console.log(searchObj, "searchobj");
+    // setSearch(searchObj);
+    // console.log(searchObj, "searchobj");
+    if (updateSearchParams) {
+      updateSearchParams();
+    }
   };
 
   const defaultBloodType = searchParams.get("bloodType") || undefined;

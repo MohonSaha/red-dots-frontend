@@ -6,9 +6,8 @@ const userApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllDonors: build.query({
       query: (queryString: string) => ({
-        url: `/donor-list`, // Append queryString directly to the URL
+        url: `/donor-list?${queryString}`, // Append queryString directly to the URL
         method: "GET",
-        params: queryString,
       }),
       transformResponse: (response: IUser[], meta: IMeta) => {
         return {
