@@ -20,11 +20,30 @@ import { toast } from "sonner";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
 import { useState } from "react";
+import { z } from "zod";
+import dayjs from "dayjs";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 // Define the props type for the component
 interface IProps {
   donorId: string;
 }
+
+// validation schema for registration
+const ValidationSchema = z.object({
+  name: z.string().min(1, "Please enter you name!"),
+  email: z.string().email("Please enter a valid email address!"),
+  hospitalName: z.string().min(1, "Please enter the hospital name!"),
+  hospitalAddress: z.string().min(1, "Please enter the hospital name!"),
+  reason: z.string().min(1, "Please enter your the reason of blood!"),
+  phoneNumber: z.string().min(1, "Please enter your phone number!"),
+  // bloodType: z.string().min(1, "Please select a blood group!"),
+  dateOfDonation: z
+    .custom((val) => val === null || (dayjs.isDayjs(val) && val.isValid()), {
+      message: "Please select a valid date",
+    })
+    .nullable(),
+});
 
 const RequestForBlood = ({ donorId }: IProps) => {
   const [loading, setLoading] = useState(false);
@@ -103,7 +122,7 @@ const RequestForBlood = ({ donorId }: IProps) => {
         <Box sx={{ width: "70%", mx: "auto", mt: 4 }}>
           <ControlledForm
             onSubmit={handleRequestForBlood}
-            //   resolver={zodResolver(ValidationSchema)}
+            resolver={zodResolver(ValidationSchema)}
             defaultValues={defaultValues}
           >
             <Grid container spacing={2} my={1}>
@@ -144,6 +163,7 @@ const RequestForBlood = ({ donorId }: IProps) => {
                   name="dateOfDonation"
                   label="Date Of Donation"
                   sx={{ mt: 0.5 }}
+                  required={true}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={12}>
