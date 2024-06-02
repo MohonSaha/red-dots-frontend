@@ -20,6 +20,27 @@ import {
 import React, { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
+import { z } from "zod";
+import dayjs from "dayjs";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+// validation schema for create post
+const ValidationSchema = z.object({
+  name: z.string().min(1, "Please enter you name!"),
+  email: z.string().email("Please enter a valid email address!"),
+  hospitalName: z.string().min(1, "Please enter the hospital name!"),
+  hospitalLocation: z.string().min(1, "Please enter the hospital location!"),
+  hospitalAddress: z.string().min(1, "Please enter the hospital name!"),
+  reason: z.string().min(1, "Please enter your the reason of blood!"),
+  phoneNumber: z.string().min(1, "Please enter your phone number!"),
+  numberOfBags: z.string().min(1, "Please enter your phone number!"),
+  // bloodType: z.string().min(1, "Please select a blood group!"),
+  dateOfDonation: z
+    .custom((val) => val === null || (dayjs.isDayjs(val) && val.isValid()), {
+      message: "Please select a valid date",
+    })
+    .nullable(),
+});
 
 const CreatePostPage = () => {
   const [loading, setLoading] = useState(false);
@@ -67,7 +88,7 @@ const CreatePostPage = () => {
 
   return (
     <Container>
-      <Box sx={{ my: 12 }}>
+      <Box sx={{ my: 8 }}>
         <Box sx={{ textAlign: "center" }}>
           <Typography
             variant={isMobile ? "h5" : "h4"}
@@ -75,7 +96,7 @@ const CreatePostPage = () => {
             fontWeight={600}
             sx={{ mb: 1 }}
           >
-            Contact With Blood Donor
+            Create a post for blood
           </Typography>
           <Box
             sx={{
@@ -101,7 +122,7 @@ const CreatePostPage = () => {
           <Box sx={{ width: "70%", mx: "auto", mt: 4 }}>
             <ControlledForm
               onSubmit={handleRequestForBlood}
-              //   resolver={zodResolver(ValidationSchema)}
+              resolver={zodResolver(ValidationSchema)}
               defaultValues={defaultValues}
             >
               <Grid container spacing={2} my={1}>
@@ -165,6 +186,7 @@ const CreatePostPage = () => {
                     name="dateOfDonation"
                     label="Date Of Donation"
                     sx={{ mt: 0.5 }}
+                    required={true}
                   />
                 </Grid>
               </Grid>

@@ -29,7 +29,7 @@ interface IProps {
   donorId: string;
 }
 
-// validation schema for registration
+// validation schema for send request
 const ValidationSchema = z.object({
   name: z.string().min(1, "Please enter you name!"),
   email: z.string().email("Please enter a valid email address!"),
