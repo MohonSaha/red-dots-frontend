@@ -9,7 +9,7 @@ import { Box, Grid, Typography } from "@mui/material";
 
 const MyAcceptedPost = () => {
   const { data, isLoading } = useGetMyAcceptedPostQuery({});
-  console.log(data);
+  // console.log(data);
 
   return (
     <Box sx={{ mt: 2 }}>

@@ -11,13 +11,13 @@ import EditUserModal from "./components/EditUserModal";
 const ManageUserPage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [updateUserId, setUpdateUserId] = useState("");
-  const { data, isLoading } = useGetAllDonorsQuery({});
+  const { data, isLoading } = useGetAllDonorsQuery("");
   // console.log(data);
   const donors = data?.donors;
   const meta = data?.meta;
 
   const handleDelete = async (id: string) => {
-    console.log(id);
+    // console.log(id);
     try {
       // const res = await deleteDoctor(id).unwrap();
       // if (res.id) {

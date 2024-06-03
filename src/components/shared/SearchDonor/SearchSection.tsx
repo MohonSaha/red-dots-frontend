@@ -35,12 +35,12 @@ const SearchSection = ({ search, setSearch }: SearchDonorProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleSearchFunctionality = async (values: FieldValues) => {
-    console.log(values);
+    // console.log(values);
 
     let searchObj = {};
 
     if (values?.donorType == "Eligible") {
-      console.log("clicked");
+      // console.log("clicked");
       searchObj = {
         bloodType: values?.bloodType,
         location: values?.district,
@@ -53,7 +53,7 @@ const SearchSection = ({ search, setSearch }: SearchDonorProps) => {
       };
     }
 
-    console.log(searchObj);
+    // console.log(searchObj);
 
     setSearch(searchObj);
   };

@@ -15,7 +15,7 @@ import DonorLoadingPage from "../donorList/loading";
 import DonorCard from "@/components/UI/DonorCard/DonorCard";
 import PostCard from "@/components/UI/PostCard/PostCard";
 import TuneIcon from "@mui/icons-material/Tune";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterModal from "./components/FilterModal";
 import { useDebounced } from "@/redux/hooks";
 import { FieldValues } from "react-hook-form";
@@ -66,6 +66,7 @@ const BloodPost = () => {
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
+    window.scrollTo(0, 0);
   };
 
   return (

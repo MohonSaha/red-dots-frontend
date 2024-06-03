@@ -31,8 +31,9 @@ const Footer = () => {
               Red Dots
             </Typography>
             <Typography color="white">
-              Rokto is an automated blood service that connects blood searchers
-              with voluntary blood donors in a moment through SMS and website.
+              Red Dots is an automated blood service that connects blood
+              searchers with voluntary blood donors in a moment through SMS and
+              website.
             </Typography>
             <Box mt={2}>
               <Link
@@ -246,7 +247,7 @@ const Footer = () => {
             component="p"
             sx={{ textShadow: "2px 2px 4px rgba(0,0,0,0.9)", fontWeight: 600 }}
           >
-            &copy; 2024 PH Health Care. All Rights Reserved.
+            &copy; 2024 Red Dots. All Rights Reserved.
           </Typography>
         </Box>
       </Container>

@@ -48,7 +48,7 @@ instance.interceptors.response.use(
 
     // restore access token based on refresh token and error
     const config = error.config;
-    console.log();
+    // console.log();
     if (error?.response?.status === 500 && !config.sent) {
       config.sent = true;
       const response = await getNewAccessToken();

@@ -84,7 +84,7 @@ const MyDonationRequestPage = () => {
 
   const handleEdit = () => {
     if (selectedRowId) {
-      console.log("Edit", selectedRowId);
+      // console.log("Edit", selectedRowId);
       handleMenuClose();
     }
   };

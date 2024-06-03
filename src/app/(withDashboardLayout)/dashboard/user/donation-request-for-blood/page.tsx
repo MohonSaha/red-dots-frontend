@@ -26,7 +26,7 @@ const MyDonationRequestPage = () => {
 
   const { data, isLoading } = useGetMyRequestsQuery({});
 
-  console.log(data);
+  // console.log(data);
 
   const columns: GridColDef[] = [
     {

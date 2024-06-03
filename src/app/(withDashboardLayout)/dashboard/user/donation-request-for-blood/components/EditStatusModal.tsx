@@ -49,7 +49,7 @@ const EditStatusModal = ({
         id: requestId,
         body: updatedInfo,
       }).unwrap();
-      console.log(res);
+      // console.log(res);
 
       if (res?.id) {
         toast.success("Request updated successfully!");

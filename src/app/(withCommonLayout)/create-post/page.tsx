@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import dayjs from "dayjs";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 // validation schema for create post
 const ValidationSchema = z.object({
@@ -44,6 +45,7 @@ const ValidationSchema = z.object({
 });
 
 const CreatePostPage = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -69,6 +71,7 @@ const CreatePostPage = () => {
       // console.log(res);
       if (res?.id) {
         toast.success("Blood post created successfully!");
+        router.push("/posts-for-blood");
         setLoading(false);
       }
     } catch (error) {
@@ -199,7 +202,7 @@ const CreatePostPage = () => {
                 variant="contained"
                 fullWidth={true}
                 // endIcon={<SendIcon />}
-                loadingPosition="end"
+                // loadingPosition="end"
                 sx={{
                   margin: "10px 0px",
                 }}

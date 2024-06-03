@@ -68,7 +68,7 @@ const RequestForBlood = ({ donorId }: IProps) => {
 
     try {
       const res = await createRequestForBlood(requestData).unwrap();
-      console.log(res);
+      // console.log(res);
       if (res?.id) {
         toast.success("Your request sent successfully!");
         setLoading(false);

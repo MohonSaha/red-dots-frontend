@@ -69,7 +69,7 @@ const DonorListPage = () => {
     setPage(value);
   };
 
-  console.log(searchTerm);
+  // console.log(searchTerm);
 
   return (
     <Box

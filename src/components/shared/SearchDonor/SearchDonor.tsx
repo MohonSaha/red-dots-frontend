@@ -67,8 +67,7 @@ const SearchDonor = ({
       delete searchObj.availability;
     }
 
-    // setSearch(searchObj);
-    // console.log(searchObj, "searchobj");
+    setSearch(searchObj);
     if (updateSearchParams) {
       updateSearchParams();
     }
@@ -86,7 +85,7 @@ const SearchDonor = ({
     availability: defaultAvailability ?? SearchDonorType[0].value,
   };
 
-  console.log(defaultValues, "dif");
+  // console.log(defaultValues, "dif");
 
   return (
     <Box

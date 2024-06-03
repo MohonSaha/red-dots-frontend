@@ -7,7 +7,7 @@ import DonorCard from "../../DonorCard/DonorCard";
 import RecentDonarCard from "../../RecentDonarCard/RecentDonarCard";
 
 const RecentDonorSection = () => {
-  const { data, isLoading } = useGetAllDonorsQuery({});
+  const { data, isLoading } = useGetAllDonorsQuery("");
   //   console.log(data);
   const donors = data?.donors;
   const meta = data?.meta;

@@ -44,18 +44,18 @@ const LoginPage = () => {
 
     try {
       const res = await userLogin(values);
-      // console.log(res);
       if (res?.data?.accessToken) {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
-        // router.push("/");
         setLoading(false);
       } else {
         setError(res?.message);
         toast.error(res?.message);
+        setLoading(false);
       }
     } catch (err: any) {
       console.error(err.message);
+      toast.error("An unexpected error occurred.");
     }
   };
 
@@ -141,7 +141,7 @@ const LoginPage = () => {
                 variant="contained"
                 fullWidth={true}
                 // endIcon={<SendIcon />}
-                loadingPosition="end"
+                // loadingPosition="end"
                 sx={{
                   margin: "5px 0px",
                 }}
