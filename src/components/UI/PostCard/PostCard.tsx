@@ -1,9 +1,11 @@
 import PopupModal from "@/components/shared/Modal/PopupModal";
 import { useAcceptBloodPostMutation } from "@/redux/api/postApi";
+import { isLoggedIn } from "@/services/auth.service";
 import { formatBloodType } from "@/utils/formatBloodType";
 import { ChevronRight } from "@mui/icons-material";
 import { Box, Button, Stack, Tooltip, Typography } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -13,9 +15,16 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
   const [itemId, setItemId] = useState<string | null>(null);
   const [acceptBloodPost] = useAcceptBloodPostMutation();
 
+  const router = useRouter();
+
   const handleOpenModal = (itemId: string) => {
-    setItemId(itemId);
-    setIsModalOpen(true);
+    if (!isLoggedIn()) {
+      toast.warning("Please login frist to donate blood!");
+      return router.push("/login");
+    } else {
+      setItemId(itemId);
+      setIsModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {

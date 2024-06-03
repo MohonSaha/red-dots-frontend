@@ -49,7 +49,6 @@ const CreatePostPage = () => {
   const [loading, setLoading] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
   const { data, isLoading } = useGetSingleUserQuery({});
   const [createPostForBlood] = useCreatePostForBloodMutation();
 

@@ -9,7 +9,7 @@ const AuthRoutes = ["/login", "/register"];
 const commonPrivateRoutes = [
   "/dashboard",
   "/dashboard/change-password",
-  //   "/doctors",
+  "/create-post",
 ];
 const roleBasedPrivateRoutes = {
   ADMIN: [/^\/dashboard\/admin/],
@@ -61,5 +61,5 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/dashboard/:path*", "/login", "/register"],
+  matcher: ["/dashboard/:path*", "/login", "/register", "/create-post"],
 };
