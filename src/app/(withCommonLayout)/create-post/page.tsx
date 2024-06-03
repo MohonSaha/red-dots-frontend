@@ -13,6 +13,7 @@ import {
   Button,
   Container,
   Grid,
+  Skeleton,
   Typography,
   useMediaQuery,
   useTheme,
@@ -118,7 +119,7 @@ const CreatePostPage = () => {
             }}
           ></Box>
         </Box>
-        {!isLoading && (
+        {!isLoading ? (
           <Box sx={{ width: "70%", mx: "auto", mt: 4 }}>
             <ControlledForm
               onSubmit={handleRequestForBlood}
@@ -207,6 +208,19 @@ const CreatePostPage = () => {
               </LoadingButton>
             </ControlledForm>
           </Box>
+        ) : (
+          <Container>
+            <Box sx={{ width: "70%", mx: "auto", mt: 4 }}>
+              {Array.from(new Array(7)).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  variant="rectangular"
+                  height={52}
+                  sx={{ mb: 2 }}
+                />
+              ))}
+            </Box>
+          </Container>
         )}
       </Box>
     </Container>
