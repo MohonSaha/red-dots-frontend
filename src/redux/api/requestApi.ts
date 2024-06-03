@@ -51,6 +51,13 @@ const requestApi = baseApi.injectEndpoints({
       },
       invalidatesTags: [tagTypes.request],
     }),
+    deleteRequest: build.mutation({
+      query: (id: string | undefined) => ({
+        url: `/donation-request/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [tagTypes.request],
+    }),
   }),
   overrideExisting: false,
 });
@@ -60,4 +67,5 @@ export const {
   useCreateRequestForBloodMutation,
   useGetRequestsMadeByMeQuery,
   useUpdateRequestStatusMutation,
+  useDeleteRequestMutation,
 } = requestApi;

@@ -1,5 +1,8 @@
 "use client";
-import { useGetMyRequestsQuery } from "@/redux/api/requestApi";
+import {
+  useDeleteRequestMutation,
+  useGetMyRequestsQuery,
+} from "@/redux/api/requestApi";
 import { formatBloodType } from "@/utils/formatBloodType";
 import {
   Box,
@@ -9,20 +12,46 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import Link from "next/link";
 import EditIcon from "@mui/icons-material/Edit";
 import { useGetRequestsMadeByMeQuery } from "@/redux/api/requestApi";
 import { useEffect, useState } from "react";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import FileCopyIcon from "@mui/icons-material/FileCopyOutlined";
+import SaveIcon from "@mui/icons-material/Save";
+import PrintIcon from "@mui/icons-material/Print";
+import ShareIcon from "@mui/icons-material/Share";
+import DeleteIcon from "@mui/icons-material/Delete";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { toast } from "sonner";
+import PopupModal from "@/components/shared/Modal/PopupModal";
+
+const actionsIcon = [
+  { icon: <FileCopyIcon />, name: "Copy" },
+  { icon: <SaveIcon />, name: "Save" },
+  { icon: <PrintIcon />, name: "Print" },
+  { icon: <ShareIcon />, name: "Share" },
+];
 
 const MyDonationRequestPage = () => {
   const { data, isLoading } = useGetRequestsMadeByMeQuery({});
   const [allRequest, setAllRequest] = useState<any>([]);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [selectedRowId, setSelectedRowId] = useState<null | string>(null);
+  const [deleteRequest] = useDeleteRequestMutation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [itemId, setItemId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     const updateData = data?.map((request: any, index: number) => {
@@ -39,6 +68,60 @@ const MyDonationRequestPage = () => {
     });
     setAllRequest(updateData);
   }, [data]);
+
+  const handleMenuClick = (
+    event: React.MouseEvent<HTMLElement>,
+    id: string
+  ) => {
+    setAnchorEl(event.currentTarget);
+    setSelectedRowId(id);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setSelectedRowId(null);
+  };
+
+  const handleEdit = () => {
+    if (selectedRowId) {
+      console.log("Edit", selectedRowId);
+      handleMenuClose();
+    }
+  };
+
+  const handleDelete = () => {
+    if (selectedRowId) {
+      handleOpenModal(selectedRowId);
+    }
+  };
+
+  const handleOpenModal = (itemId: string) => {
+    setItemId(itemId);
+    setIsModalOpen(true);
+    handleMenuClose();
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setItemId(null);
+    handleMenuClose();
+  };
+
+  const handleConfirm = async () => {
+    setLoading(true);
+    try {
+      if (itemId) {
+        const res = await deleteRequest(itemId).unwrap();
+        if (res?.count > 0) {
+          toast.success("Your request deleted successfully!");
+          setLoading(false);
+          handleCloseModal();
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const columns: GridColDef[] = [
     { field: "sl", headerName: "SL", width: 30 },
@@ -126,16 +209,38 @@ const MyDonationRequestPage = () => {
       field: "action",
       headerName: "Action",
       flex: 1,
-      headerAlign: "center",
+      // headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => {
         return (
-          <Box>
-            <Link href={`/dashboard/admin/doctors/edit/${row.id}`}>
-              <IconButton color="secondary" aria-label="" sx={{ ml: 1 }}>
-                <EditIcon />
-              </IconButton>
-            </Link>
+          // <Box>
+          //   <Link href={`/dashboard/admin/doctors/edit/${row.id}`}>
+          //     <IconButton color="secondary" aria-label="" sx={{ ml: 1 }}>
+          //       <EditIcon />
+          //     </IconButton>
+          //   </Link>
+          // </Box>
+          <Box sx={{ height: "100%", display: "flex", alignItems: "center" }}>
+            <IconButton
+              aria-controls={`action-menu-${row.id}`}
+              aria-haspopup="true"
+              onClick={(event) => handleMenuClick(event, row.id)}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id={`action-menu-${row.id}`}
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl) && selectedRowId === row.id}
+              onClose={handleMenuClose}
+            >
+              <MenuItem onClick={handleEdit}>
+                <EditIcon fontSize="small" /> Edit
+              </MenuItem>
+              <MenuItem onClick={handleDelete}>
+                <DeleteIcon fontSize="small" /> Delete
+              </MenuItem>
+            </Menu>
           </Box>
         );
       },
@@ -149,6 +254,16 @@ const MyDonationRequestPage = () => {
           Blood Requests Made By Me
         </Typography>
       </Box>
+      <PopupModal
+        loading={loading}
+        open={isModalOpen}
+        handleClose={handleCloseModal}
+        handleConfirm={handleConfirm}
+        title="Delete Request"
+        message="Are you sure you want to delete the request?"
+        okButton="Yes"
+        cancelButtom="No"
+      />
 
       {!isLoading ? (
         <Box

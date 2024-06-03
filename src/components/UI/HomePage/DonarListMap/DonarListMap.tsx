@@ -4,16 +4,16 @@ import { styled } from "@mui/system";
 import WhereToVoteIcon from "@mui/icons-material/WhereToVote";
 
 const donors = [
-  { name: "Location 1", count: 10, x: "20%", y: "20%" },
-  { name: "Location 2", count: 15, x: "40%", y: "30%" },
-  { name: "Location 3", count: 20, x: "60%", y: "40%" },
-  { name: "Location 4", count: 25, x: "80%", y: "50%" },
-  { name: "Location 5", count: 30, x: "25%", y: "60%" },
-  { name: "Location 6", count: 35, x: "45%", y: "65%" },
-  { name: "Location 7", count: 40, x: "60%", y: "80%" },
-  { name: "Location 8", count: 45, x: "80%", y: "20%" },
-  { name: "Location 9", count: 50, x: "10%", y: "50%" },
-  { name: "Location 10", count: 55, x: "30%", y: "90%" },
+  { name: "Dhaka", count: 240, x: "20%", y: "20%" },
+  { name: "Chattogram", count: 80, x: "40%", y: "30%" },
+  { name: "Barishal", count: 90, x: "60%", y: "40%" },
+  { name: "Khulna", count: 120, x: "80%", y: "50%" },
+  { name: "Rajshahi", count: 130, x: "25%", y: "60%" },
+  { name: "Cumilla", count: 180, x: "45%", y: "65%" },
+  { name: "Faridpur", count: 55, x: "60%", y: "80%" },
+  { name: "Magura", count: 45, x: "80%", y: "20%" },
+  { name: "Jashore", count: 50, x: "10%", y: "50%" },
+  { name: "Narayanganj", count: 65, x: "30%", y: "90%" },
 ];
 
 const MapContainer = styled(Box)({
@@ -90,7 +90,10 @@ const DonorMap: React.FC = () => {
             <Typography variant="caption" sx={{ color: "primary.main" }}>
               {donor.name}
             </Typography>
-            <Typography variant="body2" sx={{ color: "red" }}>
+            <Typography
+              variant="body2"
+              sx={{ color: "black", fontWeight: 600 }}
+            >
               {donor.count} donors
             </Typography>
           </DonorMarker>

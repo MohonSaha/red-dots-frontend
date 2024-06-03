@@ -25,6 +25,7 @@ const Testimonials = () => {
         backgroundImage:
           "linear-gradient(to top right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
         pb: 5,
+        py: 8,
       }}
     >
       <Box>
