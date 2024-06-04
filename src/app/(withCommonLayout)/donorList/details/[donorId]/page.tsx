@@ -193,7 +193,7 @@ const DonorDetailsPage = ({ params }: TParams) => {
                         fontWeight: 600,
                       }}
                     >
-                      <LocationOnIcon sx={{ mr: "2px" }} />
+                      <LocationOnIcon sx={{ mr: "2px", color: "#486AFF" }} />
                       {data?.location}
                     </Typography>
                   </Box>
@@ -212,7 +212,7 @@ const DonorDetailsPage = ({ params }: TParams) => {
                         fontWeight: 600,
                       }}
                     >
-                      <BloodtypeIcon sx={{ mr: "2px" }} />
+                      <BloodtypeIcon sx={{ mr: "2px", color: "#eb2c29" }} />
                       {formatBloodType(data?.bloodType)}
                     </Typography>
                   </Box>
@@ -231,7 +231,12 @@ const DonorDetailsPage = ({ params }: TParams) => {
                         fontWeight: 600,
                       }}
                     >
-                      <FlakyIcon sx={{ mr: "2px" }} />
+                      {data?.availability === false ? (
+                        <FlakyIcon sx={{ mr: "2px", color: "#F7A511" }} />
+                      ) : (
+                        <FlakyIcon sx={{ mr: "2px", color: "green" }} />
+                      )}
+
                       {data?.availability === false
                         ? "Not Available"
                         : "Available"}

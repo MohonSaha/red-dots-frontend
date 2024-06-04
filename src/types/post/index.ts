@@ -16,6 +16,7 @@ interface IUser {
 interface IBloodPost {
   id: string;
   requesterId: string;
+  bloodType: string;
   numberOfBags: number;
   phoneNumber: string;
   dateOfDonation: string;

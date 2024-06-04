@@ -5,7 +5,7 @@ import ControlledInput from "@/components/Forms/ControlledInput";
 import ControlledSelectField from "@/components/Forms/ControlledSelectField";
 import { useGetSingleUserQuery } from "@/redux/api/authApi";
 import { useCreatePostForBloodMutation } from "@/redux/api/postApi";
-import { Districts } from "@/types";
+import { BloodGroups, Districts } from "@/types";
 import { dateFormatter } from "@/utils/dateFormatter";
 import LoadingButton from "@mui/lab/LoadingButton";
 import {
@@ -36,7 +36,7 @@ const ValidationSchema = z.object({
   reason: z.string().min(1, "Please enter your the reason of blood!"),
   phoneNumber: z.string().min(1, "Please enter your phone number!"),
   numberOfBags: z.string().min(1, "Please enter your phone number!"),
-  // bloodType: z.string().min(1, "Please select a blood group!"),
+  bloodType: z.string().min(1, "Please select a blood group!"),
   dateOfDonation: z
     .custom((val) => val === null || (dayjs.isDayjs(val) && val.isValid()), {
       message: "Please select a valid date",
@@ -63,7 +63,10 @@ const CreatePostPage = () => {
       hospitalAddress: values?.hospitalAddress,
       numberOfBags: Number(values?.numberOfBags),
       reason: values?.reason,
+      bloodType: values?.bloodType,
     };
+
+    // console.log(postData);
 
     try {
       const res = await createPostForBlood(postData).unwrap();
@@ -82,6 +85,7 @@ const CreatePostPage = () => {
     name: data?.name,
     email: data?.email,
     hospitalName: "",
+    bloodType: "",
     hospitalAddress: "",
     reason: "",
     phoneNumber: "",
@@ -170,6 +174,13 @@ const CreatePostPage = () => {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>
+                  <ControlledSelectField
+                    items={BloodGroups}
+                    name="bloodType"
+                    label="Blood Group"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={12} md={6}>
                   <ControlledInput
                     label="Reason Of Blood"
                     fullWidth={true}
@@ -184,11 +195,10 @@ const CreatePostPage = () => {
                     fullWidth={true}
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={12}>
+                <Grid item xs={12} sm={12} md={6}>
                   <ControlledDatePicker
                     name="dateOfDonation"
                     label="Date Of Donation"
-                    sx={{ mt: 0.5 }}
                     required={true}
                   />
                 </Grid>

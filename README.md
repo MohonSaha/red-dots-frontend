@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Red Dots
 
-## Getting Started
+[Red Dots](https://red-dots.vercel.app/)
 
-First, run the development server:
+Red Dots is an automated blood service that connects blood searchers with voluntary blood donors in a moment through SMS and website.
+
+## Table of Contents
+
+- [Red Dots](#red-dots)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Project](#running-the-project)
+  - [Scripts](#scripts)
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- You have installed Node.js and npm. You can download Node.js from [nodejs.org](https://nodejs.org/).
+
+## Installation
+
+To set up the project locally, follow these steps:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/blood-donation-frontend.git
+   ```
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd blood-donation-frontend
+   ```
+
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+
+## Running the Project
+
+To run the project locally, use the following commands:
+
+1. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+2. Open your browser and navigate to `http://localhost:3000`. You should see the Red Dots application running.
+
+## Scripts
+
+This project includes a variety of scripts for development and production builds:
+
+- `dev`: Starts the development server.
+- `build`: Builds the application for production.
+- `start`: Starts the application in production mode.
+- `lint`: Runs the linter to check for code quality.
+- `dev-bun`: Starts the development server with turbo mode.
+
+To run any of these scripts, use the following command:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run <script-name>
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

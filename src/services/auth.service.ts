@@ -42,7 +42,7 @@ export const removeUser = () => {
 // to generate access by the help of refresh token
 export const getNewAccessToken = async () => {
   return await axiosInstance({
-    url: "https://blood-donation-server-flax.vercel.app/api/refreshToken",
+    url: "http://localhost:5000/api/refreshToken",
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -85,7 +85,7 @@ const RegisterPage = () => {
 
     try {
       const res = await registerUser(registerUserData);
-      console.log(res);
+      // console.log(res);
       // register user direct login functionality
       if (res?.data?.id) {
         toast.success("User registered successfully!");
@@ -223,21 +223,10 @@ const RegisterPage = () => {
                 </Grid>
               </Grid>
 
-              {/* <Button
-                sx={{
-                  margin: "10px 0px",
-                }}
-                fullWidth={true}
-                type="submit"
-                // disabled={isButtonDisabled}
-              >
-                Register
-              </Button> */}
               <LoadingButton
                 size="small"
                 type="submit"
                 loading={loading}
-                // loadingIndicator="Logging…"
                 variant="contained"
                 fullWidth={true}
                 endIcon={<SendIcon />}

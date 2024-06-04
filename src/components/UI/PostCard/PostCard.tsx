@@ -78,7 +78,9 @@ const PostCard = ({ item }: { item: IBloodPost }) => {
         alignItems="center"
       >
         <Box sx={{}}>
-          <Typography sx={{ fontWeight: 600, fontSize: 80 }}>O+</Typography>
+          <Typography sx={{ fontWeight: 600, fontSize: 80 }}>
+            {formatBloodType(item?.bloodType)}
+          </Typography>
         </Box>
         <Box>
           <Stack
