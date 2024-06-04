@@ -23,6 +23,7 @@ import {
   getNextDonationDate,
 } from "@/utils/nextDonationDate";
 import CountdownTimer from "@/components/shared/CountDown/CountdownTimer";
+import Link from "next/link";
 
 const DoctorProfilePage = () => {
   const [donationDate, setDonationDate] = useState<{
@@ -74,13 +75,17 @@ const DoctorProfilePage = () => {
       >
         <Grid spacing={{ md: 2, sm: 5, xs: 5 }} container>
           <Grid item md={8} sm={12} xs={12}>
-            <Stack direction="row" spacing={2}>
+            <Stack
+              direction={{ md: "row", sm: "column", xs: "column" }}
+              spacing={2}
+            >
               <Box
                 sx={{
                   border: `3px solid #dbdbdb`,
                   borderRadius: "50%",
                   padding: "10px",
                   height: "75px",
+                  width: "75px",
                 }}
               >
                 <Image src={avatar} alt="avatar" height={50} width={50} />
@@ -106,15 +111,16 @@ const DoctorProfilePage = () => {
           </Grid>
 
           <Grid item md={3} sm={12} xs={12}>
-            <Button
-              sx={{
-                margin: "10px 0px",
-              }}
-              fullWidth={false}
-              type="submit"
-            >
-              Edit Profile
-            </Button>
+            <Link href={`/dashboard/admin/profile/edit-my-profile`}>
+              <Button
+                sx={{
+                  margin: "10px 0px",
+                }}
+                fullWidth={false}
+              >
+                Edit Profile
+              </Button>
+            </Link>
           </Grid>
         </Grid>
 
@@ -130,12 +136,13 @@ const DoctorProfilePage = () => {
                 }}
               >
                 <Stack
-                  direction="row"
+                  direction={{ md: "row", sm: "column", xs: "column" }}
                   sx={{
                     mt: 1,
                     display: "flex",
                     justifyContent: "space-between",
                   }}
+                  gap={3}
                 >
                   <Box
                     sx={{
@@ -152,7 +159,7 @@ const DoctorProfilePage = () => {
                         fontWeight: 600,
                       }}
                     >
-                      <LocationOnIcon sx={{ mr: "2px" }} />
+                      <LocationOnIcon sx={{ mr: "2px", color: "#486AFF" }} />
                       {data?.location}
                     </Typography>
                   </Box>
@@ -171,7 +178,7 @@ const DoctorProfilePage = () => {
                         fontWeight: 600,
                       }}
                     >
-                      <BloodtypeIcon sx={{ mr: "2px" }} />
+                      <BloodtypeIcon sx={{ mr: "2px", color: "#eb2c29" }} />
                       {formatBloodType(data?.bloodType)}
                     </Typography>
                   </Box>
@@ -190,7 +197,12 @@ const DoctorProfilePage = () => {
                         fontWeight: 600,
                       }}
                     >
-                      <FlakyIcon sx={{ mr: "2px" }} />
+                      {data?.availability === false ? (
+                        <FlakyIcon sx={{ mr: "2px", color: "#F7A511" }} />
+                      ) : (
+                        <FlakyIcon sx={{ mr: "2px", color: "green" }} />
+                      )}
+
                       {data?.availability === false
                         ? "Not Available"
                         : "Available"}
@@ -265,7 +277,8 @@ const DoctorProfilePage = () => {
 
         <Box mt={3}>
           <Stack
-            direction="row"
+            direction={{ md: "row", sm: "column", xs: "column" }}
+            gap={3}
             sx={{
               width: "99%",
               display: "flex",

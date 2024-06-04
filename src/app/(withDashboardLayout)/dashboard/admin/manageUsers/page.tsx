@@ -52,7 +52,30 @@ const ManageUserPage = () => {
     { field: "availability", headerName: "Availability", flex: 1 },
     { field: "location", headerName: "Location", flex: 1 },
     { field: "role", headerName: "Role", flex: 1 },
-    { field: "activeStatus", headerName: "Status", flex: 1 },
+    {
+      field: "activeStatus",
+      headerName: "Status",
+      flex: 1,
+      renderCell: ({ row }) => {
+        return (
+          <Box
+            sx={{
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Box>
+              {row?.activeStatus === "ACTIVATE" ? (
+                <Typography sx={{ color: "green" }}>ACTIVATE</Typography>
+              ) : (
+                <Typography sx={{ color: "#F7A511" }}>DEACTIVATE</Typography>
+              )}
+            </Box>
+          </Box>
+        );
+      },
+    },
     {
       field: "button",
       headerName: "Action",

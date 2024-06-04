@@ -3,12 +3,32 @@ import DonorLoadingPage from "@/app/(withCommonLayout)/donorList/loading";
 import DonorCard from "@/components/UI/DonorCard/DonorCard";
 import SearchDonor from "@/components/shared/SearchDonor/SearchDonor";
 import { useGetAllDonorsQuery } from "@/redux/api/userApi";
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 const SearchDonorSection = () => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  let fontSize;
+
+  if (isSmallScreen) {
+    fontSize = "22px"; // Adjust for optimal mobile readability
+  } else {
+    fontSize = "40px"; // Default size for larger screens (lg and up)
+  }
+
   // const query: Record<string, any> = {};
   // const [searchTerm, setSearchTerm] = useState<{
   //   bloodType?: string;
@@ -72,6 +92,7 @@ const SearchDonorSection = () => {
         backgroundImage:
           "linear-gradient(to top right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
       }}
+      mt={isSmallScreen ? -12 : 0}
     >
       <Container>
         <Box
@@ -83,7 +104,7 @@ const SearchDonorSection = () => {
           }}
         >
           <Box textAlign="center" sx={{ mb: 4 }}>
-            <Typography variant="h3" fontWeight={600}>
+            <Typography variant="h3" fontWeight={600} sx={{ fontSize }}>
               Search, Connect & Save Life
             </Typography>
           </Box>

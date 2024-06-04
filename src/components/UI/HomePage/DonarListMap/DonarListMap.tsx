@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
 import { styled } from "@mui/system";
 import WhereToVoteIcon from "@mui/icons-material/WhereToVote";
 
@@ -49,6 +49,17 @@ const DonorMarker = styled(Box)(({ theme }) => ({
 const DonorMap: React.FC = () => {
   const [blinkingIndices, setBlinkingIndices] = useState<number[]>([]);
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  let fontSize;
+
+  if (isSmallScreen) {
+    fontSize = "22px"; // Adjust for optimal mobile readability
+  } else {
+    fontSize = "40px"; // Default size for larger screens (lg and up)
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
       const newBlinkingIndices = Array.from({ length: 3 }, () =>
@@ -72,7 +83,7 @@ const DonorMap: React.FC = () => {
       }}
     >
       <Box textAlign="center">
-        <Typography variant="h3" fontWeight={600}>
+        <Typography variant="h3" fontWeight={600} sx={{ fontSize }}>
           We&#39;re a network of
         </Typography>
       </Box>

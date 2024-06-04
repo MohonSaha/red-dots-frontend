@@ -1,4 +1,12 @@
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Stack,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React from "react";
 import Link from "next/link";
 
@@ -6,6 +14,17 @@ import Link from "next/link";
 //           "conic-gradient(from 135deg, #f6f6f6, #FED7D5 90deg, #f6f6f6 180deg, #f6f6f6)",
 
 const AboutSection = () => {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  let fontSize;
+
+  if (isSmallScreen) {
+    fontSize = "22px"; // Adjust for optimal mobile readability
+  } else {
+    fontSize = "40px"; // Default size for larger screens (lg and up)
+  }
+
   return (
     <Box
       sx={{
@@ -18,7 +37,7 @@ const AboutSection = () => {
       <Container>
         <Stack sx={{ mx: "auto", width: "100%" }} direction="column" gap={8}>
           <Box textAlign="center" sx={{ mb: 4 }}>
-            <Typography variant="h3" fontWeight={600}>
+            <Typography variant="h3" fontWeight={600} sx={{ fontSize }}>
               About Us: Lifelines of Hope
             </Typography>
           </Box>
@@ -27,8 +46,8 @@ const AboutSection = () => {
             <Box sx={{ width: "100%" }}>
               <Box>
                 <Typography
-                  component="h5"
-                  variant="h5"
+                  component="h6"
+                  variant="h6"
                   sx={{ fontWeight: 600, mb: 2 }}
                 >
                   Why is Red Dots?
@@ -46,8 +65,8 @@ const AboutSection = () => {
             <Box sx={{ width: "100%" }}>
               <Box sx={{ mx: "auto", width: "100%" }}>
                 <Typography
-                  component="h5"
-                  variant="h5"
+                  component="h6"
+                  variant="h6"
                   sx={{ fontWeight: 600, mb: 2 }}
                 >
                   Objectives

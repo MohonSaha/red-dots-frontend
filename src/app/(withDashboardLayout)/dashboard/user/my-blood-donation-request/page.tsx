@@ -143,7 +143,7 @@ const MyDonationRequestPage = () => {
               {row?.requestStatus === "APPROVED" ? (
                 <Typography sx={{ color: "green" }}>{row.email}</Typography>
               ) : (
-                <Typography sx={{ color: "orange" }}>Not Available</Typography>
+                <Typography sx={{ color: "#F7A511" }}>Not Available</Typography>
               )}
             </Box>
           </Box>
@@ -170,7 +170,7 @@ const MyDonationRequestPage = () => {
               {row?.requestStatus === "APPROVED" ? (
                 <Typography sx={{ color: "green" }}>APPROVED</Typography>
               ) : (
-                <Typography sx={{ color: "orange" }}>PENDING</Typography>
+                <Typography sx={{ color: "#F7A511" }}>PENDING</Typography>
               )}
             </Box>
           </Box>

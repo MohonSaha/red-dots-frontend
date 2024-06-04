@@ -1,17 +1,14 @@
+"use client";
 import ControlledForm from "@/components/Forms/ControlledForm";
 import ControlledInput from "@/components/Forms/ControlledInput";
 import ControlledSelectField from "@/components/Forms/ControlledSelectField";
 import MyModal from "@/components/shared/Modal/MyModal";
 import { useUpdateUserMutation } from "@/redux/api/userApi";
-import {
-  ActiveStatusOption,
-  BloodGroups,
-  DonateOption,
-  UserRoleOption,
-} from "@/types";
-import { modifyPayload } from "@/utils/modifyPayload";
-import { Box, Button, Grid, TextField } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { ActiveStatusOption, UserRoleOption } from "@/types";
+import LoadingButton from "@mui/lab/LoadingButton";
+import { Grid } from "@mui/material";
+
+import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -23,8 +20,10 @@ type TProps = {
 
 const EditUserModal = ({ open, setOpen, userId }: TProps) => {
   const [updateUser] = useUpdateUserMutation();
+  const [loading, setLoading] = useState(false);
 
   const handleFormSubmit = async (values: FieldValues) => {
+    setLoading(true);
     const updateUserInfo = {
       role: values?.role,
       activeStatus: values?.status,
@@ -38,6 +37,7 @@ const EditUserModal = ({ open, setOpen, userId }: TProps) => {
 
       if (res?.id) {
         toast.success("User data updated successfully!");
+        setLoading(false);
         setOpen(false);
       }
     } catch (error: any) {
@@ -81,15 +81,25 @@ const EditUserModal = ({ open, setOpen, userId }: TProps) => {
             </Grid>
           </Grid>
 
-          <Button
+          {/* <Button
             sx={{
               margin: "10px 0px",
             }}
             fullWidth={true}
             type="submit"
+          ></Button> */}
+
+          <LoadingButton
+            size="small"
+            type="submit"
+            loading={loading}
+            variant="contained"
+            sx={{
+              margin: "10px 0px",
+            }}
           >
-            Register
-          </Button>
+            <span>Update</span>
+          </LoadingButton>
         </ControlledForm>
       </MyModal>
     </div>

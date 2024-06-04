@@ -10,6 +10,8 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import DonorLoadingPage from "../donorList/loading";
 import DonorCard from "@/components/UI/DonorCard/DonorCard";
@@ -25,6 +27,8 @@ const BloodPost = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [filter, setFilter] = useState<{
     hospitalLocation?: string;
     dateOfDonation?: string;
@@ -69,23 +73,37 @@ const BloodPost = () => {
     window.scrollTo(0, 0);
   };
 
+  let fontSize;
+
+  if (isSmallScreen) {
+    fontSize = "22px"; // Adjust for optimal mobile readability
+  } else {
+    fontSize = "35px"; // Default size for larger screens (lg and up)
+  }
+
   return (
     <Container sx={{ my: 8 }}>
       <Box>
-        <Stack direction="row" justifyContent="space-between" mb={2}>
-          <Box>
-            <Typography sx={{}} variant="h4" fontWeight={600}>
+        <Stack
+          direction={{ md: "row", sm: "column", xs: "column" }}
+          justifyContent="space-between"
+          mb={2}
+          gap={3}
+        >
+          <Box sx={{ width: "100%" }}>
+            <Typography sx={{ fontSize }} variant="h4" fontWeight={600}>
               Save a Life, Donate Blood
             </Typography>
           </Box>
-          <Box>
+          <Box sx={{ width: "100%" }}>
             <Stack direction="row" justifyContent="space-between">
-              <Box>
+              <Box sx={{ width: "100%", textAlign: "end" }}>
                 <TextField
                   size="small"
                   placeholder="Hospital name & address"
                   color="secondary"
-                  fullWidth={true}
+                  // fullWidth={true}
+                  sx={{ width: "70%" }}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </Box>
@@ -93,7 +111,7 @@ const BloodPost = () => {
                 <IconButton
                   color="secondary"
                   aria-label=""
-                  sx={{ ml: 3 }}
+                  sx={{ ml: 3, color: "#eb2c29" }}
                   onClick={() => {
                     setIsModalOpen(true);
                   }}

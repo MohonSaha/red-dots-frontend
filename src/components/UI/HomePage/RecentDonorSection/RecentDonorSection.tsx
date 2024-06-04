@@ -1,13 +1,32 @@
 "use client";
 import DonorLoadingPage from "@/app/(withCommonLayout)/donorList/loading";
 import { useGetAllDonorsQuery } from "@/redux/api/userApi";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React from "react";
 import DonorCard from "../../DonorCard/DonorCard";
 import RecentDonarCard from "../../RecentDonarCard/RecentDonarCard";
 
 const RecentDonorSection = () => {
   const { data, isLoading } = useGetAllDonorsQuery("");
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  let fontSize;
+
+  if (isSmallScreen) {
+    fontSize = "22px"; // Adjust for optimal mobile readability
+  } else {
+    fontSize = "40px"; // Default size for larger screens (lg and up)
+  }
+
   //   console.log(data);
   const donors = data?.donors;
   const meta = data?.meta;
@@ -24,7 +43,7 @@ const RecentDonorSection = () => {
       }}
     >
       <Box textAlign="center">
-        <Typography variant="h3" fontWeight={600}>
+        <Typography variant="h3" fontWeight={600} sx={{ fontSize }}>
           Meet Our Hero Donors
         </Typography>
       </Box>
