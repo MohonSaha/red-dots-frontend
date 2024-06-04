@@ -122,13 +122,17 @@ const DonorDetailsPage = ({ params }: TParams) => {
       >
         <Grid spacing={{ md: 2, sm: 5, xs: 5 }} container>
           <Grid item md={8} sm={12} xs={12}>
-            <Stack direction="row" spacing={2}>
+            <Stack
+              direction={{ md: "row", sm: "column", xs: "column" }}
+              spacing={2}
+            >
               <Box
                 sx={{
                   border: `3px solid #dbdbdb`,
                   borderRadius: "50%",
                   padding: "10px",
                   height: "75px",
+                  width: "75px",
                 }}
               >
                 <Image src={avatar} alt="avatar" height={50} width={50} />
@@ -166,12 +170,13 @@ const DonorDetailsPage = ({ params }: TParams) => {
                 }}
               >
                 <Stack
-                  direction="row"
+                  direction={{ md: "row", sm: "column", xs: "column" }}
                   sx={{
                     mt: 1,
                     display: "flex",
                     justifyContent: "space-between",
                   }}
+                  gap={3}
                 >
                   <Box
                     sx={{
@@ -259,7 +264,7 @@ const DonorDetailsPage = ({ params }: TParams) => {
                   backgroundColor: "#dbdbdb",
                   borderRadius: "8px",
                   padding: "20px",
-                  width: "95%",
+                  // width: "100%",
                   height: "100%",
                 }}
               >
@@ -301,7 +306,8 @@ const DonorDetailsPage = ({ params }: TParams) => {
 
         <Box mt={3}>
           <Stack
-            direction="row"
+            direction={{ md: "row", sm: "column", xs: "column" }}
+            gap={3}
             sx={{
               width: "99%",
               display: "flex",

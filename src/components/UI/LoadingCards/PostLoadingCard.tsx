@@ -31,7 +31,7 @@ const PostLoadingCard = () => {
       }}
     >
       <Stack
-        direction="row"
+        direction={{ md: "row", sm: "column", xs: "column" }}
         gap={5}
         justifyContent="center"
         alignItems="center"

@@ -23,6 +23,7 @@ const MyDonationRequestPage = () => {
   const [donateDate, setDonateDate] = useState<string>("");
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isExtraSmall = useMediaQuery(theme.breakpoints.down("xs"));
 
   const { data, isLoading } = useGetMyRequestsQuery({});
 
@@ -128,16 +129,16 @@ const MyDonationRequestPage = () => {
       {!isLoading ? (
         <Box
           sx={{
-            width: isSmallScreen ? "380px" : "100%",
+            width: isExtraSmall ? "300px" : isSmallScreen ? "380px" : "100%", // Set widths for different breakpoints
             display: "flex",
             flexDirection: "column",
-            overflowX: isSmallScreen ? "auto" : "hidden",
+            overflowX: isExtraSmall || isSmallScreen ? "auto" : "hidden",
           }}
         >
-          <Box sx={{ minWidth: isSmallScreen ? "380px" : "100%" }}>
+          <Box sx={{}}>
             <DataGrid
               sx={{
-                width: "100%",
+                width: isSmallScreen ? "100%" : "100%",
               }}
               rows={data}
               columns={columns}
