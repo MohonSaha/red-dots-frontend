@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Avatar, Badge, Stack } from "@mui/material";
+import { Avatar, Badge, Stack, useMediaQuery, useTheme } from "@mui/material";
 // import { useGetSingleUserQuery } from "@/redux/api/userApi";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import AccountMenu from "@/components/shared/AccountMenu/AccountMenu";
@@ -22,6 +22,20 @@ export default function DashboardDrawer({
 }: {
   children: React.ReactNode;
 }) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("md", "lg"));
+
+  let fontSize;
+
+  if (isMobile) {
+    fontSize = "18px"; // Adjust for optimal mobile readability
+  } else if (isTablet) {
+    fontSize = "20px"; // Adjust for tablet screen sizes
+  } else {
+    fontSize = "24px"; // Default size for larger screens (lg and up)
+  }
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
 
@@ -87,17 +101,17 @@ export default function DashboardDrawer({
                 variant="h6"
                 noWrap
                 component="div"
-                sx={{ color: "black" }}
+                sx={{ color: "black", fontSize }}
               >
                 Welcome to Red Dots!
               </Typography>
             </Box>
             <Stack direction="row" gap={3}>
-              <Badge badgeContent={1} color="primary">
+              {/* <Badge badgeContent={1} color="primary">
                 <IconButton sx={{ background: "#ffffff", color: "black" }}>
                   <NotificationsNoneIcon color="action" />
                 </IconButton>
-              </Badge>
+              </Badge> */}
               {/* <Avatar alt={data?.name} src={data?.profilePhoto} /> */}
               <AccountMenu color="white" />
             </Stack>
