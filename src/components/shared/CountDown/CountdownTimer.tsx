@@ -1,5 +1,11 @@
 import React from "react";
-import { Box, Typography, CircularProgress, styled } from "@mui/material";
+import {
+  Box,
+  Typography,
+  CircularProgress,
+  styled,
+  Stack,
+} from "@mui/material";
 
 interface CountdownProps {
   nextDonationDate: {
@@ -68,15 +74,20 @@ const CountdownTimer = ({ nextDonationDate }: CountdownProps) => {
   );
 
   return (
-    <Box
+    <Stack
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      direction={{ md: "row", sm: "column", xs: "column" }}
     >
-      {renderSegment(countdown.months, "Months", 4)}
-      {renderSegment(countdown.days, "Days", 30)}
-      {renderSegment(countdown.hours, "Hours", 24)}
-      {renderSegment(countdown.minutes, "Minutes", 60)}
-      {renderSegment(countdown.seconds, "Seconds", 60)}
-    </Box>
+      <Box sx={{ display: "flex" }}>
+        {renderSegment(countdown.months, "Months", 4)}
+        {renderSegment(countdown.days, "Days", 30)}
+        {renderSegment(countdown.hours, "Hours", 24)}
+      </Box>
+      <Box sx={{ display: "flex" }}>
+        {renderSegment(countdown.minutes, "Minutes", 60)}
+        {renderSegment(countdown.seconds, "Seconds", 60)}
+      </Box>
+    </Stack>
   );
 };
 
