@@ -13,6 +13,8 @@ interface IDatePicker {
   required?: boolean;
   fullWidth?: boolean;
   sx?: SxProps;
+  disablePast?: boolean;
+  disableFuture?: boolean;
 }
 
 const ControlledDatePicker = ({
@@ -22,6 +24,8 @@ const ControlledDatePicker = ({
   required,
   fullWidth = true,
   sx,
+  disablePast,
+  disableFuture,
 }: IDatePicker) => {
   const { control } = useFormContext();
   return (
@@ -35,6 +39,8 @@ const ControlledDatePicker = ({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
               label={label}
+              disableFuture={disableFuture}
+              disablePast={disablePast}
               onChange={(date) => onChange(date ? dayjs(date) : null)}
               {...field}
               value={dateValue}

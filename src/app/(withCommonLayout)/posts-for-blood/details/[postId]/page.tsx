@@ -6,6 +6,7 @@ import {
   useAcceptBloodPostMutation,
   useGetSinglePostQuery,
 } from "@/redux/api/postApi";
+import { isLoggedIn } from "@/services/auth.service";
 import { formatBloodType } from "@/utils/formatBloodType";
 import {
   Box,
@@ -15,6 +16,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -25,14 +27,20 @@ type TParams = {
 };
 
 const BloodPostDetails = ({ params }: TParams) => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [itemId, setItemId] = useState<string | null>(null);
   const [acceptBloodPost] = useAcceptBloodPostMutation();
 
   const handleOpenModal = (itemId: string) => {
-    setItemId(itemId);
-    setIsModalOpen(true);
+    if (!isLoggedIn()) {
+      toast.warning("Please login frist to donate blood!");
+      return router.push("/login");
+    } else {
+      setItemId(itemId);
+      setIsModalOpen(true);
+    }
   };
 
   const handleCloseModal = () => {

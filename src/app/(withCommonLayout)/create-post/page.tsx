@@ -200,6 +200,7 @@ const CreatePostPage = () => {
                     name="dateOfDonation"
                     label="Date Of Donation"
                     required={true}
+                    disablePast={true}
                   />
                 </Grid>
               </Grid>

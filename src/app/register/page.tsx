@@ -210,6 +210,7 @@ const RegisterPage = () => {
                     name="lastDonationDate"
                     label="Last Donation Date"
                     sx={{ mt: 0.5 }}
+                    disableFuture={true}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12} md={6}>

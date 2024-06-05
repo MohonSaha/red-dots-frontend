@@ -234,9 +234,9 @@ const MyDonationRequestPage = () => {
               open={Boolean(anchorEl) && selectedRowId === row.id}
               onClose={handleMenuClose}
             >
-              <MenuItem onClick={handleEdit}>
+              {/* <MenuItem onClick={handleEdit}>
                 <EditIcon fontSize="small" /> Edit
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem onClick={handleDelete}>
                 <DeleteIcon fontSize="small" /> Delete
               </MenuItem>

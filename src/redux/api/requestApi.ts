@@ -10,7 +10,7 @@ const requestApi = baseApi.injectEndpoints({
         method: "POST",
         data: data,
       }),
-      // invalidatesTags: [tagTypes.specialties],
+      invalidatesTags: [tagTypes.request],
     }),
     getMyRequests: build.query({
       query: (arg: Record<string, any>) => ({

@@ -164,6 +164,7 @@ const RequestForBlood = ({ donorId }: IProps) => {
                   label="Date Of Donation"
                   sx={{ mt: 0.5 }}
                   required={true}
+                  disablePast={true}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={12}>
@@ -175,17 +176,6 @@ const RequestForBlood = ({ donorId }: IProps) => {
                 />
               </Grid>
             </Grid>
-
-            {/* <Button
-              sx={{
-                margin: "10px 0px",
-              }}
-              fullWidth={true}
-              type="submit"
-              // disabled={isButtonDisabled}
-            >
-              Send Blood Request
-            </Button> */}
 
             <LoadingButton
               size="small"

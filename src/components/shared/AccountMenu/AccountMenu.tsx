@@ -79,7 +79,6 @@ export default function AccountMenu({ color }: { color: string }) {
 
   const handleLogout = () => {
     setAnchorEl(null);
-
     logoutUser(router);
   };
 
