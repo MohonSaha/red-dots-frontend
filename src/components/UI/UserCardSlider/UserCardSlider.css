@@ -1,0 +1,23 @@
+.UserCardSlider .slick-slide {
+  gap: 10px;
+  /* margin: 4px; */
+  text-align: center;
+  cursor: pointer;
+  /* margin-top: 6px; */
+}
+
+.slick-slide {
+  padding: 0px 8px 0px 0px !important;
+}
+
+.UserCardSlider .item {
+  border: 1px solid rgb(100, 99, 99);
+  border-radius: 10px;
+  padding: 3px;
+  background-color: white;
+}
+
+.slick-track {
+  /* height: 20px; */
+  margin-top: 4px;
+}

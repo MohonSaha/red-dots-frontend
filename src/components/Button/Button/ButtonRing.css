@@ -1,0 +1,39 @@
+.button-ring {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Click animation effect */
+.button-ring:active {
+  transform: scale(0.95); /* Button scale down when clicked */
+}
+
+/* Ripple effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+  transform: scale(0);
+  animation: ripple-effect 0.6s ease-out;
+  pointer-events: none;
+}
+
+/* Hover effect */
+.button-ring:hover {
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Ripple animation */
+@keyframes ripple-effect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Styles for the button content */
+.button-content {
+  position: relative;
+  z-index: 1; /* Ensure the content is above the ripple effect */
+}
