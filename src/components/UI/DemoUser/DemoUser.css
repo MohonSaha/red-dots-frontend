@@ -1,0 +1,51 @@
+.demoUserWrapper {
+  background: #ccc;
+  border: 2px dashed #b1b1b1;
+  border-radius: 4px;
+  /* position: relative; */
+  transition: all 0.3s ease-in-out;
+  overflow: hidden; /* Added to ensure content doesn't overflow */
+}
+
+.demoUser {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  overflow: hidden; /* Added to ensure content doesn't overflow */
+  transition: all 2s ease-in-out;
+}
+
+.demoBtn {
+  background-color: white;
+  /* padding: 10px 16px; */
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  white-space: nowrap;
+  text-align: center;
+  height: auto;
+}
+
+.demoText {
+  transition: opacity 0.5s ease;
+}
+
+.demoBtn.active {
+  /* padding: 10px 0; Adjusted padding to fit the expanded button */
+  color: red;
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  transition: all 0.3s ease-in-out; /* Smooth transition for the button */
+}
+
+.demoUserWrapper .demoUser .demoBtn.active + .demoText {
+  opacity: 0;
+}

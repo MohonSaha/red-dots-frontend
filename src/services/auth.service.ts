@@ -40,13 +40,15 @@ export const removeUser = () => {
 };
 
 // to generate access by the help of refresh token
-export const getNewAccessToken = async () => {
-  return await axiosInstance({
-    url: "https://blood-donation-server-flax.vercel.app/api/refreshToken",
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    withCredentials: true,
-  });
-};
+// export const getNewAccessToken = async () => {
+//   return await axiosInstance({
+//     url: "http://localhost:5000/api/refreshToken",
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     withCredentials: true,
+//   });
+// };
+
+// https://blood-donation-server-flax.vercel.app

@@ -23,6 +23,8 @@ import { storeUserInfo } from "@/services/auth.service";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingButton from "@mui/lab/LoadingButton";
+import MyButton from "@/components/Button/MyButton/MyButton";
+import DemoUser from "@/components/UI/DemoUser/DemoUser";
 
 const ValidationSchema = z.object({
   email: z.string().email("Please enter a valid email address!"),
@@ -76,7 +78,7 @@ const LoginPage = () => {
             boxShadow: 1,
             borderRadius: 1,
             p: 4,
-            textAlign: "center",
+            // textAlign: "center",
           }}
         >
           <Stack
@@ -86,14 +88,19 @@ const LoginPage = () => {
             }}
           >
             <Box>
-              <Image src={logo} alt="logo" width={80} height={80} />
-            </Box>
-            <Box>
-              <Typography variant="h6" fontWeight={600}>
-                Login To Red Dots
-              </Typography>
+              <Image src={logo} alt="logo" width={90} height={90} />
             </Box>
           </Stack>
+
+          <Box>
+            <Typography
+              variant="h5"
+              sx={{ fontSize: "28px", mt: 2, mb: -1.5 }}
+              fontWeight={600}
+            >
+              Login in your account to red dots
+            </Typography>
+          </Box>
 
           {error && (
             <Box>
@@ -113,7 +120,7 @@ const LoginPage = () => {
               }}
             >
               <Grid container spacing={2} my={1}>
-                <Grid item xs={12} sm={12} md={6}>
+                <Grid item xs={12} sm={12} md={12}>
                   <ControlledInput
                     name="email"
                     label="Email"
@@ -121,7 +128,7 @@ const LoginPage = () => {
                     fullWidth={true}
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={6}>
+                <Grid item xs={12} sm={12} md={12}>
                   <ControlledInput
                     name="password"
                     label="Password"
@@ -141,8 +148,6 @@ const LoginPage = () => {
                 loading={loading}
                 variant="contained"
                 fullWidth={true}
-                // endIcon={<SendIcon />}
-                // loadingPosition="end"
                 sx={{
                   margin: "5px 0px",
                 }}
@@ -156,6 +161,35 @@ const LoginPage = () => {
                   Create an account
                 </Link>
               </Typography>
+
+              {/* <Grid container spacing={2} my={1}>
+                <Grid item xs={12} sm={12} md={12}>
+                  <MyButton
+                    hoverColor="#4caf50"
+                    borderColor="#4caf50"
+                    textColor="#4caf50"
+                    type="button"
+                    // onClick={handleSyncClick}
+                  >
+                    Sync Click
+                  </MyButton>
+                </Grid>
+                <Grid item xs={12} sm={12} md={12}>
+                  <MyButton
+                    hoverColor="#2196f3"
+                    borderColor="#2196f3"
+                    textColor="#2196f3"
+                    backgroundColor="#e3f2fd"
+                    type="button"
+                  >
+                    Default Click
+                  </MyButton>
+                </Grid>
+              </Grid> */}
+
+              <Box>
+                <DemoUser />
+              </Box>
             </ControlledForm>
           </Box>
         </Box>

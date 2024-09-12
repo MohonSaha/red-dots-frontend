@@ -1,0 +1,67 @@
+.userThumb {
+  height: auto;
+  /* background-color: #ccc; */
+  width: 100%;
+  border: 2px solid rgba(0, 0, 0, 0.635);
+  overflow: hidden;
+  border-radius: 15px;
+  padding: 15px;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+
+.userThumb:hover {
+  box-shadow: var(--box-shadow) !important;
+  /* transform: translateY(-0.3px) scale(1.003); */
+}
+
+.userCardWrapper {
+  display: flex;
+  /* gap: 5%; */
+}
+
+.userImage {
+  border-radius: 50%;
+  border: 2px solid black;
+  height: 150px;
+  width: 150px;
+  padding: 2px;
+}
+
+.userInfoWrapper {
+  width: 60%;
+  margin-left: auto;
+  margin-left: 7%;
+}
+
+.userInfoWrapper h2 {
+  font-size: 24px;
+  color: black;
+  font-weight: 600;
+}
+
+.userInfoWrapper .iconWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userInfoWrapper .iconWrapper svg {
+  color: rgb(243, 81, 132);
+  cursor: pointer;
+}
+
+.userInfoWrapper .badge span {
+  background: rgb(249, 139, 174);
+  display: inline;
+  font-size: 16px;
+  color: black;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.userInfo svg {
+  color: black;
+  font-size: 20px;
+  margin-bottom: 2px;
+}

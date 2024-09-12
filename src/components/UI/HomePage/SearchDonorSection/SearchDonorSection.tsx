@@ -142,7 +142,7 @@ const SearchDonorSection = () => {
                 ) : (
                   donors &&
                   donors.slice(0, 6).map((item, index) => (
-                    <Grid item key={item.id} xs={12} sm={12} md={4}>
+                    <Grid item key={item.id} xs={12} sm={12} md={6}>
                       <DonorCard item={item} />
                     </Grid>
                   ))
