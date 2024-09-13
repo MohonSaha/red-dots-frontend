@@ -1,0 +1,119 @@
+.donorFilterWrapper {
+  max-width: 85%;
+  /* margin: 0px auto; */
+}
+
+.headerSearch {
+  width: 100%;
+  height: 50px;
+  border: 1px solid rgba(130, 130, 130, 0.404);
+  padding: 10px 0px 10px 0px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+.headerSearch:hover {
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.headerSearch .selectDrop,
+.dateWrapper {
+  width: 20%;
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+  /* margin-left: 10px; */
+  text-align: center;
+}
+
+.headerSearch .selectDrop::after {
+  content: "";
+  width: 2px;
+  height: 25px;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 7px;
+  right: 0px;
+}
+
+.custom-date {
+  background: transparent !important;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.headerSearch .search {
+  width: 68%;
+  padding-left: 20px;
+  position: relative;
+}
+
+.headerSearch .search input {
+  width: 100%;
+  height: 38px;
+  outline: none !important;
+  border: 0;
+  font-size: 16px;
+}
+
+.headerSearch .search .searchIcons {
+  position: absolute;
+  top: 5px;
+  right: -10px;
+  opacity: 0.5 !important;
+  font-size: 28px;
+}
+
+.dateWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.dateWrapper input[type="date"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0.3);
+}
+
+.searchButtonWrapper {
+  flex-grow: 1;
+  display: flex;
+  align-items: stretch; /* Ensure the button grows to full height */
+}
+
+.searchButton {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 12px;
+  height: 100%;
+  /* border-left: 1px solid rgba(0, 0, 0, 0.115); */
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.063);
+}
+
+.searchButton:hover {
+  background-color: transparent;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.077); */
+  /* border-left: 1px solid rgba(0, 0, 0, 0.115);
+  border-right: 1px solid rgba(0, 0, 0, 0.077); */
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1),
+    /* Left shadow */ 5px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.searchButton:active {
+  transform: scale(0.95);
+}

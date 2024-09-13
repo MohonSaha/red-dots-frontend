@@ -2,8 +2,10 @@
 import DonorLoadingPage from "@/app/(withCommonLayout)/donorList/loading";
 import DonorCard from "@/components/UI/DonorCard/DonorCard";
 import SearchDonor from "@/components/shared/SearchDonor/SearchDonor";
+import SearchDonorV2 from "@/components/shared/SearchDonor/SearchDonorV2";
 import { useGetAllDonorsQuery } from "@/redux/api/userApi";
 import {
+  Badge,
   Box,
   Button,
   Container,
@@ -16,6 +18,8 @@ import {
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import MailIcon from "@mui/icons-material/Mail";
+import ButtonRing from "@/components/Button/Button/ButtonRing";
 
 const SearchDonorSection = () => {
   const theme = useTheme();
@@ -109,14 +113,34 @@ const SearchDonorSection = () => {
             </Typography>
           </Box>
 
-          <SearchDonor
+          {/* <SearchDonor
             search={searchTerm}
             setSearch={setSearchTerm}
             updateSearchParams={updateSearchParams}
-          />
+          /> */}
 
-          <Container>
-            <Box
+          <Stack
+            sx={{
+              mt: 3,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexDirection: "row",
+              width: "100%",
+            }}
+          >
+            <Box sx={{ maxWidth: "100%", flexGrow: 1 }}>
+              <SearchDonorV2 />
+            </Box>
+            <Stack sx={{ maxWidth: "20%" }}>
+              <Badge color="secondary" badgeContent={1}>
+                <Button sx={{ background: "gray" }}>Turbo Mail</Button>
+              </Badge>
+            </Stack>
+          </Stack>
+
+          <Box>
+            {/* <Box
               sx={{
                 backgroundColor: "#eb2c29",
                 padding: "10px 0",
@@ -133,7 +157,7 @@ const SearchDonorSection = () => {
               >
                 Total donors found: {meta?.total}
               </Typography>
-            </Box>
+            </Box> */}
 
             <Box sx={{ mt: 4 }}>
               <Grid container spacing={2}>
@@ -149,7 +173,7 @@ const SearchDonorSection = () => {
                 )}
               </Grid>
             </Box>
-          </Container>
+          </Box>
 
           <Box sx={{ mt: 5, textAlign: "center" }}>
             <Link href="/donorList">

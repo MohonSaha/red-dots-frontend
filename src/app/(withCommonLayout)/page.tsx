@@ -1,4 +1,5 @@
 "use client";
+import DailyDeals from "@/components/UI/DailyDonor/DailyDonor";
 import AboutSection from "@/components/UI/HomePage/AboutSection/AboutSection";
 import DonorMap from "@/components/UI/HomePage/DonarListMap/DonarListMap";
 import HeroSection from "@/components/UI/HomePage/HeroSection/HeroSection";
@@ -17,6 +18,7 @@ const HomePage = () => {
       <AboutSection />
       {/* <OurServiceSection /> */}
       <RecentDonorSection />
+      <DailyDeals />
       <DonorMap />
       <Testimonials />
     </>

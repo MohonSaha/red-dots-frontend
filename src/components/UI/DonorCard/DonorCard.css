@@ -18,6 +18,8 @@
 .userCardWrapper {
   display: flex;
   /* gap: 5%; */
+
+  width: 100%;
 }
 
 .userImage {
@@ -32,6 +34,7 @@
   width: 55%;
   margin-left: auto;
   margin-left: 7%;
+  flex-grow: 1;
 }
 
 .userInfoWrapper h2 {
