@@ -8,9 +8,15 @@ interface SelectProps {
   data: { label: string; value: string | undefined | boolean; index: number }[];
   placeholder: string;
   icon?: React.ReactNode;
+  onSelect: (selectedValue: string | boolean | undefined) => void; // Add this prop
 }
 
-const Select: React.FC<SelectProps> = ({ data, placeholder, icon }) => {
+const Select: React.FC<SelectProps> = ({
+  data,
+  placeholder,
+  icon,
+  onSelect, // Destructure the onSelect prop
+}) => {
   const [isOpenSelect, setIsOpenSelect] = useState(false);
   const [selectedItem, setSelectedItem] = useState<{
     label: string;
@@ -31,6 +37,7 @@ const Select: React.FC<SelectProps> = ({ data, placeholder, icon }) => {
   }) => {
     setSelectedItem(item);
     setIsOpenSelect(false);
+    onSelect(item.value); // Pass selected value back to parent
   };
 
   const filterList = (e: React.ChangeEvent<HTMLInputElement>) => {

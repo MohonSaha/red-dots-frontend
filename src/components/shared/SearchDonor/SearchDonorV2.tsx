@@ -1,32 +1,63 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "../SelectDropdown/Select";
 import "./SearchDonorV2.css";
-import SearchIcon from "@mui/icons-material/Search";
-import ButtonRing from "@/components/Button/Button/ButtonRing";
-import { Button, Container } from "@mui/material";
 import { SearchBloodGroups, SearchDistricts, SearchDonorType } from "@/types";
-import DatePickerWithIcon from "../DatePicker/DatePicker";
+import { useRouter } from "next/navigation";
 
-const SearchDonorV2 = () => {
-  const categoriesNames = [
-    "Clothing and Beauty",
-    "Soft Drinks",
-    "Fish and Seafood",
-    "Pet food & toy",
-    "Fast food",
-    "Baking material",
-    "Vegetables",
-    "Fresh fruit",
-    "Bread and juice",
-    "Milk and Dairies",
-    "Soft Drinks",
-    "Clothing and Beauty",
-    "Fish and Seafood",
-    "Fast food",
-    "Pet food & toy",
-  ];
-  // eslint-disable-next-line no-unused-vars
-  const [categories, setCategories] = useState(categoriesNames);
+const SearchDonorV2 = ({ setQueryString }) => {
+  const [selectedBloodGroup, setSelectedBloodGroup] = useState<
+    string | undefined
+  >();
+  const [selectedDonorType, setSelectedDonorType] = useState<
+    boolean | undefined
+  >();
+  const [selectedArea, setSelectedArea] = useState<string | undefined>();
+  const [selectedDate, setSelectedDate] = useState<string | undefined>();
+  const [searchTerm, setSearchTerm] = useState<{
+    bloodType?: string;
+    location?: string;
+    availability?: boolean;
+    date?: string;
+  }>({});
+
+  const router = useRouter();
+
+  const handleFilter = () => {
+    const filterQuery = {
+      bloodType: selectedBloodGroup,
+      availability: selectedDonorType,
+      searchTerm: selectedArea,
+      date: selectedDate,
+    };
+    // console.log("Filter Query:", filterQuery);
+    setSearchTerm(filterQuery);
+    // You can now send this `filterQuery` to the backend or use it for local filtering
+
+    const queryString = getQueryString(filterQuery);
+    router.push(`?${queryString}`, { shallow: true }); // Update the URL without reloading the page
+
+    setQueryString(queryString);
+  };
+
+  // Function to convert searchTerm object to a query string
+  const getQueryString = (params: Record<string, any>) => {
+    const queryParams = new URLSearchParams();
+
+    Object.keys(params).forEach((key) => {
+      if (params[key] !== undefined && params[key] !== null) {
+        queryParams.append(key, params[key]);
+      }
+    });
+
+    return queryParams.toString();
+  };
+
+  // Convert searchTerm object to a query string
+  // const queryString = getQueryString({
+  //   ...searchTerm,
+  //   // page,
+  //   // limit,
+  // });
 
   return (
     <div className="donorFilterWrapper">
@@ -35,33 +66,38 @@ const SearchDonorV2 = () => {
           data={SearchBloodGroups}
           placeholder={"Blood Groups"}
           icon={undefined}
+          onSelect={(value) =>
+            setSelectedBloodGroup(value as string | undefined)
+          }
         />
         <Select
           data={SearchDistricts}
           placeholder={"Select Area"}
           icon={undefined}
+          onSelect={(value) => setSelectedArea(value as string | undefined)}
         />
+
         <Select
           data={SearchDonorType}
           placeholder={"Donor Type"}
           icon={undefined}
+          onSelect={(value) =>
+            setSelectedDonorType(value as boolean | undefined)
+          }
         />
-
         <div className="dateWrapper">
           <input
             type="date"
             className="custom-date"
             placeholder="Select Date"
+            onChange={(e) => setSelectedDate(e.target.value)}
           />
         </div>
 
-        {/* <div className="search">
-          <input type="text" placeholder="Search for items..." />
-          <SearchIcon className="searchIcons cursor-pointer" icon={false} />
-        </div> */}
-
         <div className="searchButtonWrapper">
-          <button className="searchButton">Search Donor</button>
+          <button onClick={handleFilter} className="searchButton">
+            Search Donor
+          </button>
         </div>
       </div>
     </div>

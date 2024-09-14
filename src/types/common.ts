@@ -149,6 +149,11 @@ export const SearchBloodGroups = [
   { label: "O-", value: "O_NEGATIVE", index: 7 },
 ] as { label: string; value: string | undefined; index: number }[];
 
+export const SearchDonorType = [
+  { label: "All", value: false, index: 0 },
+  { label: "Eligible", value: true, index: 1 },
+] as { label: string; value: boolean | undefined; index: number }[];
+
 export const SearchDistricts = [
   { label: "Dhaka", value: "Dhaka", index: 0 },
   { label: "Chattogram", value: "Chattogram", index: 1 },
@@ -214,8 +219,3 @@ export const SearchDistricts = [
   { label: "Tangail", value: "Tangail", index: 61 },
   { label: "Thakurgaon", value: "Thakurgaon", index: 62 },
 ] as { label: string; value: string | undefined; index: number }[];
-
-export const SearchDonorType = [
-  { label: "All", value: false, index: 0 },
-  { label: "Eligible", value: true, index: 1 },
-] as { label: string; value: boolean | undefined; index: number }[];

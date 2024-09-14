@@ -49,14 +49,14 @@ const DonorCard = ({ item }: { item: IUser }) => {
                 <VerifiedIcon />
               </CustomTooltip>
 
-              {/* <CustomTooltip
+              <CustomTooltip
                 bgColor="#030000"
                 title="Complete Donation: 3"
                 placement="top"
                 arrow
               >
                 <TokenIcon />
-              </CustomTooltip> */}
+              </CustomTooltip>
               <CustomTooltip
                 bgColor="#030000"
                 title="Add To Turbo Mail"

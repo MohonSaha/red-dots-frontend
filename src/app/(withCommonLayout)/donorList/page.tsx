@@ -1,60 +1,40 @@
 "use client";
 
 import DonorCard from "@/components/UI/DonorCard/DonorCard";
-import SearchDonor from "@/components/shared/SearchDonor/SearchDonor";
 import { useGetAllDonorsQuery } from "@/redux/api/userApi";
 import {
+  Badge,
   Box,
+  Button,
   Container,
   Grid,
   Pagination,
   Stack,
   Typography,
 } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import DonorLoadingPage from "./loading";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import SearchDonorV2 from "@/components/shared/SearchDonor/SearchDonorV2";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const DonorListPage = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
-  const [searchTerm, setSearchTerm] = useState<{
-    bloodType?: string;
-    location?: string;
-    availability?: boolean;
-  }>({});
+  // const [queryString, setQueryString] = useState();
 
-  // const queryParams = useSearchParams();
+  // Use Next.js' `useSearchParams` to get the query params from the URL
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
+  const router = useRouter();
 
-  const updateSearchParams = useCallback(() => {
-    const params = new URLSearchParams(searchParams);
+  // Read query parameters on page load and parse them into an object
+  const [queryString, setQueryString] = useState<string>(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    return params.toString();
+  });
 
-    if (searchTerm.bloodType) {
-      params.set("bloodType", searchTerm.bloodType);
-    }
-
-    if (searchTerm.location) {
-      params.set("searchTerm", searchTerm.location);
-    }
-
-    if (searchTerm.availability !== undefined) {
-      params.set("availability", searchTerm.availability.toString());
-    }
-
-    params.set("page", page.toString());
-    params.set("limit", limit.toString());
-
-    replace(`${pathname}?${params.toString()}`);
-  }, [searchParams, pathname, replace, searchTerm, page, limit]);
-
-  useEffect(() => {
-    updateSearchParams();
-  }, [updateSearchParams]);
-
-  const { data, isLoading } = useGetAllDonorsQuery(searchParams.toString());
+  console.log("Query String:", queryString);
+  // You can fetch the donors using the query string from the URL
+  const { data, isLoading } = useGetAllDonorsQuery(queryString);
 
   //   console.log(data);
   const donors = data?.donors;
@@ -69,37 +49,45 @@ const DonorListPage = () => {
     setPage(value);
   };
 
-  // console.log(searchTerm);
-
   return (
-    <Box
-      sx={{
-        mb: 5,
-        // backgroundImage:
-        //   "linear-gradient(to bottom right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
-      }}
-    >
-      <SearchDonor search={searchTerm} setSearch={setSearchTerm} />
-
-      <Container>
-        <Box
+    <Container>
+      <Box
+        sx={{
+          mb: 5,
+        }}
+      >
+        <Stack
           sx={{
-            backgroundColor: "#eb2c29",
-            padding: "10px 0",
-            mt: 5,
-            borderRadius: "4px",
+            mt: 3,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexDirection: "row",
+            width: "100%",
+            position: "sticky",
+            top: "10%",
+            zIndex: 1000,
+            backgroundColor: "white",
+            marginBottom: "15px",
+            paddingTop: "20px",
+            paddingBottom: "15px",
           }}
         >
-          <Typography
-            sx={{
-              padding: "5px 20px",
-              color: "white",
-              fontWeight: 600,
-            }}
-          >
-            Total donors found: {meta?.total}
-          </Typography>
-        </Box>
+          <Box sx={{ maxWidth: "100%", flexGrow: 1 }}>
+            <SearchDonorV2 setQueryString={setQueryString} />
+          </Box>
+          <Stack sx={{ maxWidth: "20%" }}>
+            <Badge color="secondary" badgeContent={1}>
+              <Button sx={{ background: "gray" }}>Turbo Mail</Button>
+            </Badge>
+          </Stack>
+        </Stack>
+
+        {/* <SearchDonor
+          search={searchTerm}
+          setSearch={setSearchTerm}
+          updateSearchParams={updateSearchParams}
+        /> */}
 
         <Box sx={{ mt: 4 }}>
           <Grid container spacing={2}>
@@ -110,7 +98,7 @@ const DonorListPage = () => {
             ) : (
               donors &&
               donors.map((item) => (
-                <Grid item key={item.id} xs={12} sm={12} md={4}>
+                <Grid item key={item.id} xs={12} sm={12} md={6}>
                   <DonorCard item={item} />
                 </Grid>
               ))
@@ -127,8 +115,8 @@ const DonorListPage = () => {
             color="primary"
           />
         </Box>
-      </Container>
-    </Box>
+      </Box>
+    </Container>
   );
 };
 
