@@ -14,13 +14,19 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addDonor } from "@/redux/features/GroupMailSlice";
+import { RootState } from "@/redux/store";
 
 const DonorCard = ({ item }: { item: IUser }) => {
   const dispatch = useDispatch();
-
-  const handleAddToGroupMail = (donor) => {
+  const handleAddToGroupMail = (donor: any) => {
     dispatch(addDonor(donor));
   };
+  const selectedDonors = useSelector((state: RootState) => state.groupMail);
+
+  // Function to check if an ID exists in the array
+  const doesDonorExist = selectedDonors.some(
+    (donor: IUser) => donor?.id === item.id
+  );
 
   return (
     <div className="userThumb">
@@ -76,7 +82,7 @@ const DonorCard = ({ item }: { item: IUser }) => {
                   <EmailOutlinedIcon
                     sx={{
                       cursor: "pointer",
-                      color: "red",
+                      color: doesDonorExist ? "red" : "gray",
                     }}
                   />
                 </span>
