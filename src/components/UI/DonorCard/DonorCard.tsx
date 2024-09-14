@@ -10,10 +10,18 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ButtonRing from "@/components/Button/Button/ButtonRing";
 import UserCardSlider from "../UserCardSlider/UserCardSlider";
 import Link from "next/link";
-import MailIcon from "@mui/icons-material/Mail";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addDonor } from "@/redux/features/GroupMailSlice";
 
 const DonorCard = ({ item }: { item: IUser }) => {
+  const dispatch = useDispatch();
+
+  const handleAddToGroupMail = (donor) => {
+    dispatch(addDonor(donor));
+  };
+
   return (
     <div className="userThumb">
       <div className="userCardWrapper">
@@ -57,13 +65,21 @@ const DonorCard = ({ item }: { item: IUser }) => {
               >
                 <TokenIcon />
               </CustomTooltip>
+              {/* Add To Group Request button with dynamic color */}
               <CustomTooltip
-                bgColor="#030000"
-                title="Add To Turbo Mail"
+                bgColor="#2e7df8"
+                title="Add To Group Request"
                 placement="top"
                 arrow
               >
-                <EmailOutlinedIcon />
+                <span onClick={() => handleAddToGroupMail(item)}>
+                  <EmailOutlinedIcon
+                    sx={{
+                      cursor: "pointer",
+                      color: "red",
+                    }}
+                  />
+                </span>
               </CustomTooltip>
             </div>
           </div>

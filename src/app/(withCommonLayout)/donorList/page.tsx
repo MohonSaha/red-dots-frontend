@@ -16,6 +16,9 @@ import { useState } from "react";
 import DonorLoadingPage from "./loading";
 import SearchDonorV2 from "@/components/shared/SearchDonor/SearchDonorV2";
 import { useRouter, useSearchParams } from "next/navigation";
+import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const DonorListPage = () => {
   const [page, setPage] = useState(1);
@@ -46,6 +49,10 @@ const DonorListPage = () => {
     setPage(value);
   };
 
+  const selectedDonors = useSelector((state: RootState) => state.groupMail);
+
+  console.log(selectedDonors);
+
   return (
     <Container>
       <Box
@@ -74,8 +81,16 @@ const DonorListPage = () => {
             <SearchDonorV2 setQueryString={setQueryString} />
           </Box>
           <Stack sx={{ maxWidth: "20%" }}>
-            <Badge color="secondary" badgeContent={1}>
-              <Button sx={{ background: "gray" }}>Turbo Mail</Button>
+            <Badge
+              color="secondary"
+              sx={{ color: "#2e7df8" }}
+              badgeContent={
+                selectedDonors.length === 0 ? "0" : selectedDonors.length
+              }
+            >
+              <ForwardToInboxIcon
+                sx={{ fontSize: "30px", cursor: "pointer" }}
+              />
             </Badge>
           </Stack>
         </Stack>
