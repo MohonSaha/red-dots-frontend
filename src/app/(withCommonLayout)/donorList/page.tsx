@@ -20,9 +20,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 const DonorListPage = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(6);
-  // const [queryString, setQueryString] = useState();
 
-  // Use Next.js' `useSearchParams` to get the query params from the URL
+  // useSearchParams to get the query params from the URL
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -32,11 +31,9 @@ const DonorListPage = () => {
     return params.toString();
   });
 
-  console.log("Query String:", queryString);
-  // You can fetch the donors using the query string from the URL
+  // Fetch the donors using the query string from the URL
   const { data, isLoading } = useGetAllDonorsQuery(queryString);
 
-  //   console.log(data);
   const donors = data?.donors;
   const meta = data?.meta;
   let pageCount: number = 0;

@@ -25,6 +25,23 @@ const SearchDonorSection = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  // useSearchParams to get the query params from the URL
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  // Read query parameters on page load and parse them into an object
+  const [queryString, setQueryString] = useState<string>(() => {
+    const params = new URLSearchParams(searchParams.toString());
+    return params.toString();
+  });
+
+  const { data, isLoading } = useGetAllDonorsQuery(queryString);
+
+  // testing
+
+  const donors = data?.donors;
+  const meta = data?.meta;
+
   let fontSize;
 
   if (isSmallScreen) {
@@ -32,62 +49,6 @@ const SearchDonorSection = () => {
   } else {
     fontSize = "40px"; // Default size for larger screens (lg and up)
   }
-
-  // const query: Record<string, any> = {};
-  // const [searchTerm, setSearchTerm] = useState<{
-  //   bloodType?: string;
-  //   location?: string;
-  //   availability?: boolean;
-  // }>({});
-
-  // if (searchTerm.bloodType) {
-  //   query["bloodType"] = searchTerm.bloodType;
-  // }
-  // if (searchTerm.location) {
-  //   query["searchTerm"] = searchTerm.location;
-  // }
-  // if (searchTerm.availability) {
-  //   query["availability"] = searchTerm.availability;
-  // }
-
-  // const { data, isLoading } = useGetAllDonorsQuery({ ...query });
-  //   console.log(data);
-
-  // testing
-  const [searchTerm, setSearchTerm] = useState<{
-    bloodType?: string;
-    location?: string;
-    availability?: boolean;
-  }>({});
-
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace, push } = useRouter();
-
-  const updateSearchParams = useCallback(() => {
-    const params = new URLSearchParams(searchParams);
-
-    if (searchTerm.bloodType) {
-      params.set("bloodType", searchTerm.bloodType);
-    }
-
-    if (searchTerm.location) {
-      params.set("searchTerm", searchTerm.location);
-    }
-
-    if (searchTerm.availability !== undefined) {
-      params.set("availability", searchTerm.availability.toString());
-    }
-
-    push(`/donorList?${params.toString()}`);
-  }, [searchParams, push, searchTerm]);
-
-  const { data, isLoading } = useGetAllDonorsQuery(searchParams.toString());
-
-  // testing
-
-  const donors = data?.donors;
-  const meta = data?.meta;
 
   return (
     <Box
@@ -130,7 +91,7 @@ const SearchDonorSection = () => {
             }}
           >
             <Box sx={{ maxWidth: "100%", flexGrow: 1 }}>
-              <SearchDonorV2 />
+              <SearchDonorV2 setQueryString={setQueryString} />
             </Box>
             <Stack sx={{ maxWidth: "20%" }}>
               <Badge color="secondary" badgeContent={1}>

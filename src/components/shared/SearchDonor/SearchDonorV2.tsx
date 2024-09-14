@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import Select from "../SelectDropdown/Select";
 import "./SearchDonorV2.css";
 import { SearchBloodGroups, SearchDistricts, SearchDonorType } from "@/types";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-const SearchDonorV2 = ({ setQueryString }) => {
+const SearchDonorV2 = ({ setQueryString }: { setQueryString: any }) => {
   const [selectedBloodGroup, setSelectedBloodGroup] = useState<
     string | undefined
   >();
@@ -20,8 +20,6 @@ const SearchDonorV2 = ({ setQueryString }) => {
     date?: string;
   }>({});
 
-  const router = useRouter();
-
   const handleFilter = () => {
     const filterQuery = {
       bloodType: selectedBloodGroup,
@@ -34,7 +32,7 @@ const SearchDonorV2 = ({ setQueryString }) => {
     // You can now send this `filterQuery` to the backend or use it for local filtering
 
     const queryString = getQueryString(filterQuery);
-    router.push(`?${queryString}`, { shallow: true }); // Update the URL without reloading the page
+    router.push(`/donorList?${queryString}`, { shallow: true }); // Update the URL without reloading the page
 
     setQueryString(queryString);
   };
@@ -59,12 +57,36 @@ const SearchDonorV2 = ({ setQueryString }) => {
   //   // limit,
   // });
 
+  const router = useRouter();
+  const searchParams = useSearchParams(); // For getting URL params
+
+  // Parse URL parameters and set initial filter values
+  useEffect(() => {
+    const bloodType = searchParams.get("bloodType");
+    const location = searchParams.get("searchTerm");
+    const availability = searchParams.get("availability") === "true"; // Convert to boolean
+    const date = searchParams.get("date");
+
+    setSelectedBloodGroup(bloodType || undefined);
+    setSelectedArea(location || undefined);
+    setSelectedDonorType(availability || undefined);
+    setSelectedDate(date || undefined);
+
+    setSearchTerm({
+      bloodType: bloodType || undefined,
+      location: location || undefined,
+      availability: availability || undefined,
+      date: date || undefined,
+    });
+  }, [searchParams]);
+
   return (
     <div className="donorFilterWrapper">
       <div className="headerSearch flex items-center rounded-md">
         <Select
           data={SearchBloodGroups}
           placeholder={"Blood Groups"}
+          selectedValue={selectedBloodGroup}
           icon={undefined}
           onSelect={(value) =>
             setSelectedBloodGroup(value as string | undefined)
@@ -73,6 +95,7 @@ const SearchDonorV2 = ({ setQueryString }) => {
         <Select
           data={SearchDistricts}
           placeholder={"Select Area"}
+          selectedValue={selectedArea}
           icon={undefined}
           onSelect={(value) => setSelectedArea(value as string | undefined)}
         />
@@ -80,6 +103,7 @@ const SearchDonorV2 = ({ setQueryString }) => {
         <Select
           data={SearchDonorType}
           placeholder={"Donor Type"}
+          selectedValue={selectedDonorType}
           icon={undefined}
           onSelect={(value) =>
             setSelectedDonorType(value as boolean | undefined)

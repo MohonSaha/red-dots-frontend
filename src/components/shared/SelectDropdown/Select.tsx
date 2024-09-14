@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
@@ -9,6 +9,7 @@ interface SelectProps {
   placeholder: string;
   icon?: React.ReactNode;
   onSelect: (selectedValue: string | boolean | undefined) => void; // Add this prop
+  selectedValue?: string | boolean | undefined;
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -16,6 +17,7 @@ const Select: React.FC<SelectProps> = ({
   placeholder,
   icon,
   onSelect, // Destructure the onSelect prop
+  selectedValue,
 }) => {
   const [isOpenSelect, setIsOpenSelect] = useState(false);
   const [selectedItem, setSelectedItem] = useState<{
@@ -24,6 +26,17 @@ const Select: React.FC<SelectProps> = ({
     index: number;
   } | null>(null);
   const [listData, setListData] = useState(data);
+
+  // Set the selected item based on the selectedValue prop
+  useEffect(() => {
+    console.log({ selectedValue });
+    const selectedOption = data.find((item) => item.value === selectedValue);
+    if (selectedOption) {
+      setSelectedItem(selectedOption);
+    }
+
+    console.log({ selectedOption });
+  }, [selectedValue, data]);
 
   const openSelect = () => {
     setIsOpenSelect(!isOpenSelect);
