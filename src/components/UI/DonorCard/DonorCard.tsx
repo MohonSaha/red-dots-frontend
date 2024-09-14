@@ -82,7 +82,7 @@ const DonorCard = ({ item }: { item: IUser }) => {
                   <EmailOutlinedIcon
                     sx={{
                       cursor: "pointer",
-                      color: doesDonorExist ? "red" : "gray",
+                      color: doesDonorExist ? "red" : "",
                     }}
                   />
                 </span>

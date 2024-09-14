@@ -19,6 +19,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import Link from "next/link";
 
 const DonorListPage = () => {
   const [page, setPage] = useState(1);
@@ -81,17 +82,19 @@ const DonorListPage = () => {
             <SearchDonorV2 setQueryString={setQueryString} />
           </Box>
           <Stack sx={{ maxWidth: "20%" }}>
-            <Badge
-              color="secondary"
-              sx={{ color: "#2e7df8" }}
-              badgeContent={
-                selectedDonors.length === 0 ? "0" : selectedDonors.length
-              }
-            >
-              <ForwardToInboxIcon
-                sx={{ fontSize: "30px", cursor: "pointer" }}
-              />
-            </Badge>
+            <Link href={`/groupMail`}>
+              <Badge
+                color="secondary"
+                sx={{ color: "#2e7df8" }}
+                badgeContent={
+                  selectedDonors.length === 0 ? "0" : selectedDonors.length
+                }
+              >
+                <ForwardToInboxIcon
+                  sx={{ fontSize: "30px", cursor: "pointer" }}
+                />
+              </Badge>
+            </Link>
           </Stack>
         </Stack>
 
