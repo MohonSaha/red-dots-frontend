@@ -5,6 +5,8 @@ import { SearchBloodGroups, SearchDistricts, SearchDonorType } from "@/types";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const SearchDonorV2 = ({ setQueryString }: { setQueryString: any }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams(); // For getting URL params
   const [selectedBloodGroup, setSelectedBloodGroup] = useState<
     string | undefined
   >();
@@ -56,9 +58,6 @@ const SearchDonorV2 = ({ setQueryString }: { setQueryString: any }) => {
   //   // page,
   //   // limit,
   // });
-
-  const router = useRouter();
-  const searchParams = useSearchParams(); // For getting URL params
 
   // Parse URL parameters and set initial filter values
   useEffect(() => {

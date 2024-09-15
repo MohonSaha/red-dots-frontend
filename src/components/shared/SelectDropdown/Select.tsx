@@ -29,13 +29,13 @@ const Select: React.FC<SelectProps> = ({
 
   // Set the selected item based on the selectedValue prop
   useEffect(() => {
-    console.log({ selectedValue });
+    // console.log({ selectedValue });
     const selectedOption = data.find((item) => item.value === selectedValue);
     if (selectedOption) {
       setSelectedItem(selectedOption);
     }
 
-    console.log({ selectedOption });
+    // console.log({ selectedOption });
   }, [selectedValue, data]);
 
   const openSelect = () => {

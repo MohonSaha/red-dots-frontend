@@ -1,0 +1,13 @@
+.mailUserBoxWrapper {
+  border: 1px solid #ccc;
+  padding: 8px 16px;
+  border-radius: 3px;
+  margin-top: 16px;
+}
+
+.mailUserBoxWrapper .mailUserImage {
+  border-radius: 50%;
+  border: 2px solid black;
+  height: 70px;
+  width: 70px;
+}

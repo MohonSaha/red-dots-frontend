@@ -12,7 +12,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DonorLoadingPage from "./loading";
 import SearchDonorV2 from "@/components/shared/SearchDonor/SearchDonorV2";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -50,9 +50,13 @@ const DonorListPage = () => {
     setPage(value);
   };
 
+  // Import the component dynamically without SSR
   const selectedDonors = useSelector((state: RootState) => state.groupMail);
+  const [isMounted, setIsMounted] = useState(false);
 
-  console.log(selectedDonors);
+  useEffect(() => {
+    setIsMounted(true); // Ensures the component has mounted before rendering
+  }, []);
 
   return (
     <Container>
@@ -83,17 +87,19 @@ const DonorListPage = () => {
           </Box>
           <Stack sx={{ maxWidth: "20%" }}>
             <Link href={`/groupMail`}>
-              <Badge
-                color="secondary"
-                sx={{ color: "#2e7df8" }}
-                badgeContent={
-                  selectedDonors.length === 0 ? "0" : selectedDonors.length
-                }
-              >
-                <ForwardToInboxIcon
-                  sx={{ fontSize: "30px", cursor: "pointer" }}
-                />
-              </Badge>
+              {isMounted && (
+                <Badge
+                  color="secondary"
+                  sx={{ color: "#2e7df8" }}
+                  badgeContent={
+                    selectedDonors.length === 0 ? "0" : selectedDonors.length
+                  }
+                >
+                  <ForwardToInboxIcon
+                    sx={{ fontSize: "30px", cursor: "pointer" }}
+                  />
+                </Badge>
+              )}
             </Link>
           </Stack>
         </Stack>

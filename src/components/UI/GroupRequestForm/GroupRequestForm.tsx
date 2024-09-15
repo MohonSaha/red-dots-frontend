@@ -1,34 +1,36 @@
 "use client";
+import ControlledDatePicker from "@/components/Forms/ControlledDatePicker";
 import ControlledForm from "@/components/Forms/ControlledForm";
 import ControlledInput from "@/components/Forms/ControlledInput";
-import ControlledDatePicker from "@/components/Forms/ControlledDatePicker";
-import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
-import { FieldValues } from "react-hook-form";
-import { useGetSingleUserQuery } from "@/redux/api/authApi";
-import { dateFormatter } from "@/utils/dateFormatter";
-import { useCreateRequestForBloodMutation } from "@/redux/api/requestApi";
-import { toast } from "sonner";
 import LoadingButton from "@mui/lab/LoadingButton";
-import SendIcon from "@mui/icons-material/Send";
-import { useState } from "react";
 import { z } from "zod";
 import dayjs from "dayjs";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { Box, Grid, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { useGetSingleUserQuery } from "@/redux/api/authApi";
+import { useCreateRequestForBloodMutation } from "@/redux/api/requestApi";
+import { FieldValues } from "react-hook-form";
+import { dateFormatter } from "@/utils/dateFormatter";
+import { toast } from "sonner";
+import SendIcon from "@mui/icons-material/Send";
+import { useDispatch } from "react-redux";
+import { clearAllDonors } from "@/redux/features/GroupMailSlice";
+import { useRouter } from "next/navigation";
 
 // Define the props type for the component
 interface IProps {
-  donorId: string;
+  donorIds: string[]; // Array of donor IDs
 }
 
-// validation schema for send request
+// Validation schema for sending a request
 const ValidationSchema = z.object({
-  name: z.string().min(1, "Please enter you name!"),
+  name: z.string().min(1, "Please enter your name!"),
   email: z.string().email("Please enter a valid email address!"),
   hospitalName: z.string().min(1, "Please enter the hospital name!"),
-  hospitalAddress: z.string().min(1, "Please enter the hospital name!"),
-  reason: z.string().min(1, "Please enter your the reason of blood!"),
+  hospitalAddress: z.string().min(1, "Please enter the hospital address!"),
+  reason: z.string().min(1, "Please enter the reason for blood!"),
   phoneNumber: z.string().min(1, "Please enter your phone number!"),
-  // bloodType: z.string().min(1, "Please select a blood group!"),
   dateOfDonation: z
     .custom((val) => val === null || (dayjs.isDayjs(val) && val.isValid()), {
       message: "Please select a valid date",
@@ -36,8 +38,10 @@ const ValidationSchema = z.object({
     .nullable(),
 });
 
-const RequestForBlood = ({ donorId }: IProps) => {
+const GroupRequestForm = ({ donorIds }: IProps) => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -45,28 +49,38 @@ const RequestForBlood = ({ donorId }: IProps) => {
 
   const [createRequestForBlood] = useCreateRequestForBloodMutation();
 
+  const isGroupMailDonorExist = donorIds.length;
+
+  // Function to handle creating requests for multiple donors
   const handleRequestForBlood = async (values: FieldValues) => {
     setLoading(true);
 
-    const requestData = {
-      donorId: donorId,
-      phoneNumber: values?.phoneNumber,
-      dateOfDonation: dateFormatter(values?.dateOfDonation),
-      hospitalName: values?.hospitalName,
-      hospitalAddress: values?.hospitalAddress,
-      reason: values?.reason,
-    };
+    // Loop over each donorId and create request data for each donor
+    for (const donorId of donorIds) {
+      const requestData = {
+        donorId: donorId,
+        phoneNumber: values?.phoneNumber,
+        dateOfDonation: dateFormatter(values?.dateOfDonation),
+        hospitalName: values?.hospitalName,
+        hospitalAddress: values?.hospitalAddress,
+        reason: values?.reason,
+      };
 
-    try {
-      const res = await createRequestForBlood(requestData).unwrap();
-      // console.log(res);
-      if (res?.id) {
-        toast.success("Your request sent successfully!");
-        setLoading(false);
+      console.log({ requestData });
+
+      try {
+        const res = await createRequestForBlood(requestData).unwrap();
+        if (res?.id) {
+          toast.success(`Request sent successfully`);
+        }
+      } catch (error) {
+        console.error(`Failed to send request to donor ID: ${donorId}`, error);
       }
-    } catch (error) {
-      console.log(error);
     }
+
+    dispatch(clearAllDonors());
+    router.push(`/dashboard/user/my-blood-donation-request`, { shallow: true });
+    setLoading(false); // Set loading to false after all requests are sent
   };
 
   const defaultValues = {
@@ -79,48 +93,19 @@ const RequestForBlood = ({ donorId }: IProps) => {
   };
 
   return (
-    <Box sx={{ my: 12 }}>
-      <Box sx={{ textAlign: "center" }}>
-        <Typography
-          variant={isMobile ? "h5" : "h4"}
-          component="h4"
-          fontWeight={600}
-          sx={{ mb: 1 }}
-        >
-          Contact With Blood Donor
-        </Typography>
-        <Box
-          sx={{
-            backgroundColor: "#878787",
-            borderRadius: "8px",
-            height: "6px",
-            width: "70%",
-            mx: "auto",
-          }}
-        ></Box>
-        <Box
-          sx={{
-            backgroundColor: "#878787",
-            borderRadius: "8px",
-            height: "6px",
-            width: "60%",
-            mx: "auto",
-            mt: 2,
-          }}
-        ></Box>
-      </Box>
+    <Box>
       {!isLoading && (
-        <Box sx={{ width: "70%", mx: "auto", mt: 4 }}>
+        <Box sx={{ width: "100%", mx: "auto", mt: -1 }}>
           <ControlledForm
             onSubmit={handleRequestForBlood}
             resolver={zodResolver(ValidationSchema)}
             defaultValues={defaultValues}
           >
             <Grid container spacing={2} my={1}>
-              <Grid item xs={12} sm={12} md={6}>
+              <Grid item xs={12} sm={12} md={12}>
                 <ControlledInput label="Name" fullWidth={true} name="name" />
               </Grid>
-              <Grid item xs={12} sm={12} md={6}>
+              <Grid item xs={12} sm={12} md={12}>
                 <ControlledInput
                   label="Email"
                   type="email"
@@ -144,7 +129,7 @@ const RequestForBlood = ({ donorId }: IProps) => {
               </Grid>
               <Grid item xs={12} sm={12} md={6}>
                 <ControlledInput
-                  label="Reason Of Blood"
+                  label="Reason For Blood"
                   fullWidth={true}
                   name="reason"
                 />
@@ -160,7 +145,7 @@ const RequestForBlood = ({ donorId }: IProps) => {
               </Grid>
               <Grid item xs={12} sm={12} md={12}>
                 <ControlledInput
-                  label="Contack Number"
+                  label="Contact Number"
                   type="number"
                   name="phoneNumber"
                   fullWidth={true}
@@ -176,6 +161,7 @@ const RequestForBlood = ({ donorId }: IProps) => {
               fullWidth={true}
               endIcon={<SendIcon />}
               loadingPosition="end"
+              disabled={isGroupMailDonorExist === 0}
               sx={{
                 margin: "10px 0px",
               }}
@@ -189,4 +175,4 @@ const RequestForBlood = ({ donorId }: IProps) => {
   );
 };
 
-export default RequestForBlood;
+export default GroupRequestForm;

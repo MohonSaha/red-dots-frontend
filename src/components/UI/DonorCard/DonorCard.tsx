@@ -11,7 +11,6 @@ import ButtonRing from "@/components/Button/Button/ButtonRing";
 import UserCardSlider from "../UserCardSlider/UserCardSlider";
 import Link from "next/link";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addDonor } from "@/redux/features/GroupMailSlice";
 import { RootState } from "@/redux/store";
@@ -25,7 +24,7 @@ const DonorCard = ({ item }: { item: IUser }) => {
 
   // Function to check if an ID exists in the array
   const doesDonorExist = selectedDonors.some(
-    (donor: IUser) => donor?.id === item.id
+    (donor: any) => donor?.id === item.id
   );
 
   return (

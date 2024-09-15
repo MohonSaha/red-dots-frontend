@@ -1,9 +1,9 @@
 "use client";
 import DonorLoadingPage from "@/app/(withCommonLayout)/donorList/loading";
 import DonorCard from "@/components/UI/DonorCard/DonorCard";
-import SearchDonor from "@/components/shared/SearchDonor/SearchDonor";
 import SearchDonorV2 from "@/components/shared/SearchDonor/SearchDonorV2";
 import { useGetAllDonorsQuery } from "@/redux/api/userApi";
+import { RootState } from "@/redux/store";
 import {
   Badge,
   Box,
@@ -16,14 +16,22 @@ import {
   useTheme,
 } from "@mui/material";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import MailIcon from "@mui/icons-material/Mail";
-import ButtonRing from "@/components/Button/Button/ButtonRing";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 
 const SearchDonorSection = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  // Import the component dynamically without SSR
+  const selectedDonors = useSelector((state: RootState) => state.groupMail);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true); // Ensures the component has mounted before rendering
+  }, []);
 
   // useSearchParams to get the query params from the URL
   const searchParams = useSearchParams();
@@ -36,6 +44,7 @@ const SearchDonorSection = () => {
   });
 
   const { data, isLoading } = useGetAllDonorsQuery(queryString);
+  // const selectedDonors = useSelector((state: RootState) => state.groupMail);
 
   // testing
 
@@ -94,9 +103,21 @@ const SearchDonorSection = () => {
               <SearchDonorV2 setQueryString={setQueryString} />
             </Box>
             <Stack sx={{ maxWidth: "20%" }}>
-              <Badge color="secondary" badgeContent={1}>
-                <Button sx={{ background: "gray" }}>Turbo Mail</Button>
-              </Badge>
+              <Link href={`/groupMail`}>
+                {isMounted && (
+                  <Badge
+                    color="secondary"
+                    sx={{ color: "#2e7df8" }}
+                    badgeContent={
+                      selectedDonors.length === 0 ? "0" : selectedDonors.length
+                    }
+                  >
+                    <ForwardToInboxIcon
+                      sx={{ fontSize: "30px", cursor: "pointer" }}
+                    />
+                  </Badge>
+                )}
+              </Link>
             </Stack>
           </Stack>
 
