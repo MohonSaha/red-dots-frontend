@@ -1,3 +1,21 @@
 .GroupMailWrapper h1 {
   color: blue;
 }
+
+.selectedDonorNumber {
+  color: #000;
+  opacity: 0.6;
+  font-weight: 500;
+}
+
+.clearCart svg {
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.clearCart {
+  color: #000;
+  opacity: 0.6;
+  font-weight: 500;
+  cursor: pointer;
+}

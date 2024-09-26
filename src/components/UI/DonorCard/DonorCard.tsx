@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addDonor } from "@/redux/features/GroupMailSlice";
 import { RootState } from "@/redux/store";
 
-const DonorCard = ({ item }: { item: IUser }) => {
+const DonorCard = ({ item }: { item: any }) => {
   const dispatch = useDispatch();
   const handleAddToGroupMail = (donor: any) => {
     dispatch(addDonor(donor));
@@ -32,7 +32,13 @@ const DonorCard = ({ item }: { item: IUser }) => {
       <div className="userCardWrapper">
         <div>
           <Image
-            src={image}
+            src={
+              item.userProfile.profileImage
+                ? item.userProfile.profileImage.startsWith("http")
+                  ? item.userProfile.profileImage
+                  : `/${item.userProfile.profileImage}`
+                : image // fallback to default image
+            }
             alt="avatar"
             height={150}
             width={150}

@@ -2,7 +2,7 @@
 
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "@/assets/svgs/logo.png";
 import ControlledForm from "@/components/Forms/ControlledForm";
 import Link from "next/link";
@@ -23,6 +23,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import dayjs from "dayjs";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SendIcon from "@mui/icons-material/Send";
+import {
+  CldUploadWidget,
+  CloudinaryUploadWidgetInfo,
+  CloudinaryUploadWidgetResults,
+} from "next-cloudinary";
+import ImageUploader from "@/components/shared/ImageUploader/ImageUploader";
 
 // validation schema for registration
 const ValidationSchema = z.object({
@@ -55,10 +61,17 @@ const defaultValues = {
 };
 
 const RegisterPage = () => {
+  const [resource, setResource] = useState<
+    CloudinaryUploadWidgetInfo | undefined | any
+  >(undefined);
   const [loading, setLoading] = useState(false);
   const [passwordMatchError, setPasswordMatchError] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const router = useRouter();
+
+  const handleImageUpload = (imageInfo: any) => {
+    setResource(imageInfo);
+  };
 
   const handleRegister = async (values: FieldValues) => {
     if (values?.password !== values?.confirmPassword) {
@@ -77,6 +90,7 @@ const RegisterPage = () => {
       lastDonationDate: dateFormatter(values?.lastDonationDate),
       age: Number(values?.age),
       bio: "Create your bio here ...",
+      profileImage: resource?.secure_url,
       availability: values?.donateOption === "YES" ? true : false,
     };
 
@@ -182,13 +196,74 @@ const RegisterPage = () => {
                     onBlur={handleConfirmPasswordBlur}
                   />
                 </Grid>
-                <Grid item xs={12} sm={12} md={12}>
+                <Grid item xs={12} sm={12} md={6}>
                   <ControlledSelectField
                     label="Address"
                     name="address"
                     items={Districts}
                   />
                 </Grid>
+                {/* <Grid item xs={12} sm={12} md={6}>
+                  <ControlledInput
+                    label=""
+                    type="file"
+                    fullWidth={true}
+                    name="profileImage"
+                    sx={{
+                      // marginTop: "20px",
+                      width: "100%",
+                      height: "44px", // You can adjust height for better design
+                    }}
+                  />
+                </Grid> */}
+                {/* <Grid item xs={12} sm={12} md={6}>
+                  <CldUploadWidget
+                    signatureEndpoint="\api\sign-image"
+                    onSuccess={(result, { widget }) => {
+                      setResource(result?.info); // { public_id, secure_url, etc }
+                      widget.close();
+                      // setFileName(result?.info?.original_filename);
+                    }}
+                  >
+                    {({ open }) => {
+                      return (
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            border: "2px dashed #ccc",
+                            borderRadius: "8px",
+                            padding: "15px",
+                            textAlign: "center",
+                            cursor: "pointer",
+                            height: "40px",
+                          }}
+                          onClick={() => open()} // Trigger click event
+                        >
+                          <Typography
+                            variant="body2"
+                            sx={{
+                              color: fileName ? "#5052fd" : "#aaa",
+                              fontWeight: fileName ? 600 : 500,
+                            }}
+                          >
+                            {fileName ? `${fileName}` : "Upload profile image"}
+                          </Typography>
+                        </Box>
+                      );
+                    }}
+                  </CldUploadWidget>
+                </Grid> */}
+
+                <Grid item xs={12} sm={12} md={6}>
+                  <ImageUploader
+                    label="Upload your profile picture"
+                    onUploadSuccess={handleImageUpload}
+                  />
+                </Grid>
+
                 <Grid item xs={12} sm={12} md={6}>
                   <ControlledSelectField
                     items={DonateOption}

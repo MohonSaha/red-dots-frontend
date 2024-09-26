@@ -18,6 +18,7 @@ import { keyframes } from "@emotion/react";
 import { authKey } from "@/constants/authKey";
 import { deleteCookies } from "@/services/actions/deleteCookies";
 import { logoutUser } from "@/services/actions/logoutUser";
+import { useGetSingleUserQuery } from "@/redux/api/authApi";
 
 const pulse = keyframes`
   0% {
@@ -62,12 +63,15 @@ export default function AccountMenu({ color }: { color: string }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const router = useRouter();
+  const { data, isLoading } = useGetSingleUserQuery({});
 
   const [userRole, setUserRole] = React.useState("");
   React.useEffect(() => {
     const { role } = getUserInfo() as any;
     setUserRole(role);
   }, []);
+
+  console.log(data, "image");
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -136,7 +140,9 @@ export default function AccountMenu({ color }: { color: string }) {
               sx={{
                 border: `3px solid white`,
                 borderRadius: "50%",
-                padding: "6px 6px 8px 10px",
+                padding: data?.userProfile?.profileImage
+                  ? "0.1px"
+                  : "6px 6px 8px 10px",
                 display: "inline-block",
                 position: "relative",
                 "&::after": {
@@ -151,7 +157,25 @@ export default function AccountMenu({ color }: { color: string }) {
                 },
               }}
             >
-              <Image alt="Remy Sharp" src={userLogo} height={25} width={25} />
+              <Image
+                alt="User Avatar"
+                src={
+                  !isLoading && data?.userProfile?.profileImage
+                    ? data.userProfile.profileImage.startsWith("http")
+                      ? data.userProfile.profileImage
+                      : `/${data.userProfile.profileImage}`
+                    : userLogo // Show default image while loading or if no profile image
+                }
+                height={data?.userProfile?.profileImage ? 35 : 25}
+                width={data?.userProfile?.profileImage ? 35 : 25}
+                style={{
+                  // width: "200%",
+                  // height: "200%",
+                  // objectFit: "cover",
+                  borderRadius: data?.userProfile?.profileImage && "50%",
+                  // marginRight: "20px",
+                }}
+              />
             </Box>
           </IconButton>
         </Tooltip>

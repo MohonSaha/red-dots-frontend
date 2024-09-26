@@ -3,14 +3,13 @@ import { Box, Container, Typography } from "@mui/material";
 import "./groupMail.css";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import DonorLoadingPage from "../donorList/loading";
 import GroupMailDonorCard from "@/components/UI/GroupMailDonorCard/GroupMailDonorCard";
-import RequestForBlood from "@/components/shared/RequestForBlood/RequestForBlood";
 import GroupRequestForm from "@/components/UI/GroupRequestForm/GroupRequestForm";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import ButtonRing from "@/components/Button/Button/ButtonRing";
 import Link from "next/link";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
 const GroupMailPage = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -32,6 +31,16 @@ const GroupMailPage = () => {
       <div className="GroupMailWrapper my-10">
         <div className="grid grid-cols-12  gap-8 mt-6">
           <div className="col-span-7 w-[90%]">
+            <div className="flex items-center">
+              <p className="selectedDonorNumber">
+                Total Selected donor{" "}
+                <span className="text-flash">{selectedDonors?.length}</span>
+              </p>
+              <div className="clearCart ml-auto">
+                <DeleteOutlinedIcon />
+                Clear All
+              </div>
+            </div>
             {selectedDonors.length === 0 ? (
               <div className="flex items-center gap-6">
                 <Typography

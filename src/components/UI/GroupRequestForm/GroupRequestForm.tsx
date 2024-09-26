@@ -17,6 +17,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { useDispatch } from "react-redux";
 import { clearAllDonors } from "@/redux/features/GroupMailSlice";
 import { useRouter } from "next/navigation";
+import { getUserInfo } from "@/services/auth.service";
 
 // Define the props type for the component
 interface IProps {
@@ -39,6 +40,7 @@ const ValidationSchema = z.object({
 });
 
 const GroupRequestForm = ({ donorIds }: IProps) => {
+  const userInfo = getUserInfo();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
@@ -91,6 +93,8 @@ const GroupRequestForm = ({ donorIds }: IProps) => {
     reason: "",
     phoneNumber: "",
   };
+
+  console.log(userInfo?.email, "swna");
 
   return (
     <Box>
@@ -161,12 +165,18 @@ const GroupRequestForm = ({ donorIds }: IProps) => {
               fullWidth={true}
               endIcon={<SendIcon />}
               loadingPosition="end"
-              disabled={isGroupMailDonorExist === 0}
+              disabled={
+                userInfo?.email == undefined || isGroupMailDonorExist === 0
+              }
               sx={{
                 margin: "10px 0px",
               }}
             >
-              <span>Send Blood Request</span>
+              {userInfo?.email == undefined ? (
+                <span>Login To Request</span>
+              ) : (
+                <span>Send Blood Request</span>
+              )}
             </LoadingButton>
           </ControlledForm>
         </Box>
