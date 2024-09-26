@@ -1,18 +1,35 @@
 import "./DailyDonorCard.css";
-import image from "../../../assets/images/hero-banner-2.png";
+import image from "../../../assets/images/bg-g.png";
 import { Button, Rating } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Image from "next/image";
 import Link from "next/link";
+import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import CoronavirusOutlinedIcon from "@mui/icons-material/CoronavirusOutlined";
+import { formatBloodType } from "@/utils/formatBloodType";
 // import { Link } from "react-router-dom";
 
-const ProductDaily = () => {
+const DailyDonorCard = ({ item }: { item: any }) => {
+  console.log(item);
   return (
     <div>
       <div className="dailyDealsWrapper">
-        <Image src={image} alt="mo" height={100} width={100} />
+        <Image
+          src={image}
+          alt="mo"
+          height={100}
+          width={100}
+          style={{
+            border: "6px solid  #d3ddb0",
+          }}
+        />
 
         <div className="info">
+          <div className="bloodGroupBig">
+            <h1>{formatBloodType(item.bloodType)}</h1>
+          </div>
           <div className="countdown">
             <div>
               <p className="countdown-value">17</p>
@@ -34,19 +51,25 @@ const ProductDaily = () => {
           <div className="infoWrapper">
             <div className="infoCard">
               <h4 className="title ">
-                <Link href="/">Angies Boomchickapop Sweet & Salty Kett...</Link>
+                <Link href="/">
+                  We are in urgent need of {formatBloodType(item.bloodType)}{" "}
+                  blood for a patient who is fighting for their life!
+                </Link>
               </h4>
+              <span className="brand block">
+                <CoronavirusOutlinedIcon />
+                {item.reason}
+              </span>
+              <span className="brand block">
+                <CalendarMonthOutlinedIcon /> {item.dateOfDonation}
+              </span>
               <div className="flex items-center space-x-2 rattingWrapper mt-6">
-                <Rating
-                  name="half-rating-read"
-                  defaultValue={2.5}
-                  precision={0.5}
-                  readOnly
-                />
-                <span className="ratingNumber">(2.5)</span>
+                <span className="brand block">
+                  <LocalHospitalOutlinedIcon /> {item.hospitalName}
+                </span>
               </div>
               <span className="brand block">
-                By <Link href="/">FlashTime</Link>
+                <LocationOnOutlinedIcon /> {item.hospitalAddress}
               </span>
 
               <div className="flex items-center mt-6">
@@ -69,4 +92,4 @@ const ProductDaily = () => {
   );
 };
 
-export default ProductDaily;
+export default DailyDonorCard;

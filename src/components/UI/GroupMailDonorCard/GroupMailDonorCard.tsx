@@ -10,14 +10,21 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ButtonRing from "@/components/Button/Button/ButtonRing";
 import Link from "next/link";
 
-const GroupMailDonorCard = ({ item }: { item: IUser }) => {
+const GroupMailDonorCard = ({ item }: { item: any }) => {
   return (
     <Box>
       <div className="mailUserBoxWrapper">
         <div className="flex items-center justify-between">
           <div>
             <Image
-              src={userImage}
+              src={
+                item.userProfile.profileImage
+                  ? item.userProfile.profileImage.startsWith("http")
+                    ? item.userProfile.profileImage
+                    : `/${item.userProfile.profileImage}`
+                  : userImage // fallback to default image
+              }
+              // src={userImage}
               alt="user image"
               height={60}
               width={60}

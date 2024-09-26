@@ -15,10 +15,10 @@ const HomePage = () => {
     <>
       <HeroSection />
       <SearchDonorSection />
+      <DailyDeals />
       <AboutSection />
       {/* <OurServiceSection /> */}
       <RecentDonorSection />
-      <DailyDeals />
       <DonorMap />
       <Testimonials />
     </>
