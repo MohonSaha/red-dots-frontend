@@ -20,6 +20,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
+import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
+import KeyboardDoubleArrowRightOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 
 const SearchDonorSection = () => {
   const theme = useTheme();
@@ -77,17 +79,13 @@ const SearchDonorSection = () => {
             justifyContent: "center",
           }}
         >
-          <Box textAlign="center" sx={{ mb: 4 }}>
-            <Typography variant="h3" fontWeight={600} sx={{ fontSize }}>
-              Search, Connect & Save Life
-            </Typography>
-          </Box>
-
-          {/* <SearchDonor
-            search={searchTerm}
-            setSearch={setSearchTerm}
-            updateSearchParams={updateSearchParams}
-          /> */}
+          <div className="flex justify-between items-center text-slate-600">
+            <SectionHeader sectionHeader={"Find your donors"} />
+            <Link href="/donorList" className="-mr-2">
+              <span className="font-semibold">See All Donors</span>
+              <KeyboardDoubleArrowRightOutlinedIcon className="" />
+            </Link>
+          </div>
 
           <Stack
             sx={{
@@ -157,7 +155,7 @@ const SearchDonorSection = () => {
             </Box>
           </Box>
 
-          <Box sx={{ mt: 5, textAlign: "center" }}>
+          {/* <Box sx={{ mt: 5, textAlign: "center" }}>
             <Link href="/donorList">
               <Button
                 sx={{
@@ -169,7 +167,7 @@ const SearchDonorSection = () => {
                 See More
               </Button>
             </Link>
-          </Box>
+          </Box> */}
         </Box>
       </Container>
     </Box>
