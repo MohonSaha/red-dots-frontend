@@ -150,7 +150,7 @@ export const SearchBloodGroups = [
 ] as { label: string; value: string | undefined; index: number }[];
 
 export const SearchDonorType = [
-  { label: "All", value: false, index: 0 },
+  { label: "Not Eligible", value: false, index: 0 },
   { label: "Eligible", value: true, index: 1 },
 ] as { label: string; value: boolean | undefined; index: number }[];
 

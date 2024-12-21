@@ -20,7 +20,7 @@ const DailyDeals = () => {
     slidesToShow: 3,
     slidesToScroll: 1,
     fade: false,
-    arrows: true,
+    arrows: false,
     autoplay: true, // Set autoplay to true
     autoplaySpeed: 2500, // Set autoplay interval to 2000ms (2 seconds)
   };

@@ -12,6 +12,9 @@ import {
 import React from "react";
 import DonorCard from "../../DonorCard/DonorCard";
 import RecentDonarCard from "../../RecentDonarCard/RecentDonarCard";
+import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
+import Link from "next/link";
+import KeyboardDoubleArrowRightOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 
 const RecentDonorSection = () => {
   const { data, isLoading } = useGetAllDonorsQuery("");
@@ -35,27 +38,30 @@ const RecentDonorSection = () => {
       sx={{
         minHeight: "100vh",
         backgroundImage:
-          "linear-gradient(to top right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
+          "linear-gradient(to bottom right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
         // display: "flex",
-        py: 8,
+        py: 3,
         // flexDirection: "column",
         // justifyContent: "center",
       }}
     >
-      <Box textAlign="center">
-        <Typography variant="h3" fontWeight={600} sx={{ fontSize }}>
-          Meet Our Hero Donors
-        </Typography>
-      </Box>
       <Container>
-        <Box sx={{ mt: 4 }}>
-          <Grid container spacing={2}>
+        <div className="flex justify-between items-center text-slate-600">
+          <SectionHeader sectionHeader={"Meet Our Hero Donors"} />
+          <Link href="/donorList" className="mr-0">
+            <span className="font-semibold">All Hero Donors</span>
+            <KeyboardDoubleArrowRightOutlinedIcon className="" />
+          </Link>
+        </div>
+
+        <Box sx={{ mt: 0 }}>
+          <Grid container spacing={4}>
             {isLoading ? (
               <DonorLoadingPage />
             ) : (
               donors &&
               donors.slice(0, 6).map((item, index) => (
-                <Grid item key={item.id} xs={12} sm={12} md={4}>
+                <Grid item key={item.id} xs={12} sm={12} md={6}>
                   <RecentDonarCard item={item} />
                 </Grid>
               ))

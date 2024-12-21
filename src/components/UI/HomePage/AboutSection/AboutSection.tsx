@@ -10,6 +10,7 @@ import {
 import React from "react";
 import Link from "next/link";
 import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
+import KeyboardDoubleArrowRightOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
 
 const aboutRedDots = [
   {
@@ -33,16 +34,21 @@ const AboutSection = () => {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
-        py: 10,
+        // minHeight: "100vh",
+        py: 3,
         backgroundImage:
           "linear-gradient(to top right, #FED7D5 0%, #f6f6f6 50%, #FED7D5 100%)",
       }}
     >
       <Container>
+        <div className="flex justify-between items-center text-slate-600">
+          <SectionHeader sectionHeader={"Blood Needed Now"} />
+          <Link href="/about-us" className="mr-0">
+            <span className="font-semibold">About Us</span>
+            <KeyboardDoubleArrowRightOutlinedIcon className="" />
+          </Link>
+        </div>
         <Stack sx={{ mx: "auto", width: "100%" }} direction="column" gap={3}>
-          <SectionHeader sectionHeader={"Red Dots- Lifelines of Hope"} />
-
           <Stack direction={{ md: "row", sm: "column" }} gap={5}>
             <Box sx={{ width: "100%" }}>
               <Box
@@ -150,19 +156,6 @@ const AboutSection = () => {
               </Box>
             </Box>
           </Stack>
-
-          <Box sx={{ mx: "auto", textAlign: "center" }}>
-            <Link href="/about-us">
-              <Button
-                sx={{
-                  margin: "10px 0px",
-                }}
-                fullWidth={false}
-              >
-                About Us
-              </Button>
-            </Link>
-          </Box>
         </Stack>
       </Container>
     </Box>

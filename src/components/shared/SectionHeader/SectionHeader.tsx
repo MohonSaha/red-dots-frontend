@@ -12,7 +12,16 @@ const SectionHeader = ({ sectionHeader }: { sectionHeader: string }) => {
   }
   return (
     <Box textAlign="left" sx={{ mb: 2 }}>
-      <Typography variant="h5" fontWeight={600} sx={{ fontSize }}>
+      <Typography
+        variant="h5"
+        fontWeight={600}
+        sx={{
+          fontSize,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {sectionHeader}
       </Typography>
     </Box>

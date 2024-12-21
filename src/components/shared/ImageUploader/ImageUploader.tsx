@@ -16,7 +16,7 @@ interface ImageUploaderProps {
 const ImageUploader: React.FC<ImageUploaderProps> = ({
   label = "Upload Image",
   onUploadSuccess,
-  buttonLabel = "Upload",
+  buttonLabel = "Upload Profile",
 }) => {
   const [fileName, setFileName] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -35,7 +35,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     }
   };
 
-  console.log(fileName, imageUrl);
+  // console.log(fileName, imageUrl);
 
   return (
     <Box
@@ -86,7 +86,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
             ) : (
               <Typography
                 variant="body2"
-                sx={{ color: "#aaa", fontWeight: 500 }}
+                sx={{ color: "#5052fd", fontWeight: 500 }}
               >
                 {buttonLabel}
               </Typography>

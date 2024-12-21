@@ -259,7 +259,7 @@ const RegisterPage = () => {
 
                 <Grid item xs={12} sm={12} md={6}>
                   <ImageUploader
-                    label="Upload your profile picture"
+                    label="Upload Profile"
                     onUploadSuccess={handleImageUpload}
                   />
                 </Grid>

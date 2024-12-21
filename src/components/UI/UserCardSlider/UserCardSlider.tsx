@@ -16,7 +16,7 @@ const UserCardSlider: React.FC<UserCardSliderProps> = ({ item }) => {
     slidesToScroll: 1,
     pauseOnHover: true,
     arrows: false,
-    // autoplay: true,
+    autoplay: true,
     // autoplaySpeed: 4000,
     responsive: [
       {

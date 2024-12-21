@@ -14,6 +14,8 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { addDonor } from "@/redux/features/GroupMailSlice";
 import { RootState } from "@/redux/store";
+import { useRef } from "react";
+import { motion, useInView, useScroll } from "framer-motion";
 
 const DonorCard = ({ item }: { item: any }) => {
   const dispatch = useDispatch();
@@ -28,7 +30,7 @@ const DonorCard = ({ item }: { item: any }) => {
   );
 
   return (
-    <div className="userThumb">
+    <motion.div className="userThumb">
       <div className="userCardWrapper">
         <div>
           <Image
@@ -116,7 +118,7 @@ const DonorCard = ({ item }: { item: any }) => {
           <UserCardSlider item={item} />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

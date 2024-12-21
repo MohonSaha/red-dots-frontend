@@ -20,6 +20,22 @@ import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import Link from "next/link";
+import { motion } from "framer-motion";
+
+const parent = {
+  initial: { opacity: 0, y: -40 },
+  animate: { opacity: 1, y: 0 },
+};
+
+const child = {
+  initial: { opacity: 0, y: -20 },
+  animate: { opacity: 1, y: 0 },
+};
+
+const parentSearch = {
+  initial: { opacity: 0, y: 40 },
+  animate: { opacity: 1, y: 0 },
+};
 
 const DonorListPage = () => {
   const [page, setPage] = useState(1);
@@ -65,67 +81,84 @@ const DonorListPage = () => {
           mb: 5,
         }}
       >
-        <Stack
-          sx={{
-            mt: 3,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexDirection: "row",
-            width: "100%",
-            position: "sticky",
-            top: "10%",
-            zIndex: 1000,
-            backgroundColor: "white",
-            marginBottom: "15px",
-            paddingTop: "20px",
-            paddingBottom: "15px",
+        <motion.div
+          className="z-auto"
+          style={{ position: "relative", zIndex: 10 }}
+          variants={parentSearch}
+          initial="initial"
+          animate="animate"
+          transition={{
+            duration: 1.5,
           }}
         >
-          <Box sx={{ maxWidth: "100%", flexGrow: 1 }}>
-            <SearchDonorV2 setQueryString={setQueryString} />
-          </Box>
-          <Stack sx={{ maxWidth: "20%" }}>
-            <Link href={`/groupMail`}>
-              {isMounted && (
-                <Badge
-                  color="secondary"
-                  sx={{ color: "#2e7df8" }}
-                  badgeContent={
-                    selectedDonors.length === 0 ? "0" : selectedDonors.length
-                  }
-                >
-                  <ForwardToInboxIcon
-                    sx={{ fontSize: "30px", cursor: "pointer" }}
-                  />
-                </Badge>
-              )}
-            </Link>
+          <Stack
+            sx={{
+              mt: 3,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexDirection: "row",
+              width: "100%",
+              position: "sticky",
+              top: "10%",
+              zIndex: 1000,
+              backgroundColor: "white",
+              marginBottom: "15px",
+              paddingTop: "20px",
+              paddingBottom: "15px",
+            }}
+          >
+            <Box sx={{ maxWidth: "100%", flexGrow: 1 }}>
+              <SearchDonorV2 setQueryString={setQueryString} />
+            </Box>
+
+            <Stack sx={{ maxWidth: "20%" }}>
+              <Link href={`/groupMail`}>
+                {isMounted && (
+                  <Badge
+                    color="secondary"
+                    sx={{ color: "#2e7df8" }}
+                    badgeContent={
+                      selectedDonors.length === 0 ? "0" : selectedDonors.length
+                    }
+                  >
+                    <ForwardToInboxIcon
+                      sx={{ fontSize: "30px", cursor: "pointer" }}
+                    />
+                  </Badge>
+                )}
+              </Link>
+            </Stack>
           </Stack>
-        </Stack>
+        </motion.div>
 
-        {/* <SearchDonor
-          search={searchTerm}
-          setSearch={setSearchTerm}
-          updateSearchParams={updateSearchParams}
-        /> */}
-
-        <Box sx={{ mt: 4 }}>
-          <Grid container spacing={2}>
-            {}
-
-            {isLoading ? (
-              <DonorLoadingPage />
-            ) : (
-              donors &&
-              donors.map((item) => (
-                <Grid item key={item.id} xs={12} sm={12} md={6}>
-                  <DonorCard item={item} />
-                </Grid>
-              ))
-            )}
-          </Grid>
-        </Box>
+        <motion.div
+          variants={parent}
+          initial="initial"
+          animate="animate"
+          transition={{
+            duration: 1.5,
+            delayChildren: 0.5,
+            staggerChildren: 0.5,
+          }}
+        >
+          <Box sx={{ mt: 4 }}>
+            <Grid container spacing={2}>
+              {isLoading ? (
+                <DonorLoadingPage />
+              ) : (
+                donors &&
+                donors.map((item) => (
+                  <Grid item key={item.id} xs={12} sm={12} md={6}>
+                    <motion.div variants={child}>
+                      <DonorCard item={item} />
+                    </motion.div>
+                  </Grid>
+                ))
+              )}
+            </Grid>
+          </Box>
+        </motion.div>
 
         <Box sx={{ mt: 6, display: "flex", justifyContent: "center" }}>
           <Pagination

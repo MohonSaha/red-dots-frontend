@@ -17,11 +17,17 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import SectionHeader from "@/components/shared/SectionHeader/SectionHeader";
 import KeyboardDoubleArrowRightOutlinedIcon from "@mui/icons-material/KeyboardDoubleArrowRightOutlined";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
+
+const parent = {
+  initial: { opacity: 0, y: -40 },
+  animate: { opacity: 1, y: 0 },
+};
 
 const SearchDonorSection = () => {
   const theme = useTheme();
@@ -61,6 +67,17 @@ const SearchDonorSection = () => {
     fontSize = "40px"; // Default size for larger screens (lg and up)
   }
 
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["0 1", "0.3 1"],
+  });
+
+  const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.7, 1]);
+  const opacityProgress = useTransform(scrollYProgress, [0, 1], [0.6, 1]);
+  const yTransform = useTransform(scrollYProgress, [0, 1], [10, 0]);
+  const opacityTransform = useTransform(scrollYProgress, [0, 1], [0, 1]); // fade in opacity
+
   return (
     <Box
       sx={{
@@ -71,104 +88,99 @@ const SearchDonorSection = () => {
       mt={isSmallScreen ? -12 : 0}
     >
       <Container>
-        <Box
-          sx={{
-            minHeight: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          }}
-        >
-          <div className="flex justify-between items-center text-slate-600">
-            <SectionHeader sectionHeader={"Find your donors"} />
-            <Link href="/donorList" className="-mr-2">
-              <span className="font-semibold">See All Donors</span>
-              <KeyboardDoubleArrowRightOutlinedIcon className="" />
-            </Link>
-          </div>
-
-          <Stack
+        <motion.div>
+          <Box
             sx={{
-              mt: 3,
+              minHeight: "100vh",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexDirection: "row",
-              width: "100%",
+              flexDirection: "column",
+              justifyContent: "center",
             }}
           >
-            <Box sx={{ maxWidth: "100%", flexGrow: 1 }}>
-              <SearchDonorV2 setQueryString={setQueryString} />
-            </Box>
-            <Stack sx={{ maxWidth: "20%" }}>
-              <Link href={`/groupMail`}>
-                {isMounted && (
-                  <Badge
-                    color="secondary"
-                    sx={{ color: "#2e7df8" }}
-                    badgeContent={
-                      selectedDonors.length === 0 ? "0" : selectedDonors.length
-                    }
-                  >
-                    <ForwardToInboxIcon
-                      sx={{ fontSize: "30px", cursor: "pointer" }}
-                    />
-                  </Badge>
-                )}
+            <motion.div
+              style={{
+                scale: scaleProgress,
+                y: yTransform, // transition on y-axis
+                opacity: opacityTransform, // transition opacity
+              }}
+              className="flex justify-between items-center text-slate-600"
+            >
+              <SectionHeader sectionHeader={"Find your donors"} />
+              <Link href="/donorList" className="-mr-2 mb-4">
+                <span className="font-semibold">See All Donors</span>
+                <KeyboardDoubleArrowRightOutlinedIcon className="" />
               </Link>
-            </Stack>
-          </Stack>
+            </motion.div>
 
-          <Box>
-            {/* <Box
-              sx={{
-                backgroundColor: "#eb2c29",
-                padding: "10px 0",
-                mt: 5,
-                borderRadius: "4px",
+            <motion.div
+              style={{
+                scale: scaleProgress,
+                y: yTransform, // transition on y-axis
+                opacity: opacityTransform, // transition opacity
               }}
             >
-              <Typography
+              <Stack
                 sx={{
-                  padding: "5px 20px",
-                  color: "white",
-                  fontWeight: 600,
+                  mt: 3,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexDirection: "row",
+                  width: "100%",
                 }}
               >
-                Total donors found: {meta?.total}
-              </Typography>
-            </Box> */}
+                <Box sx={{ maxWidth: "100%", flexGrow: 1 }}>
+                  <SearchDonorV2 setQueryString={setQueryString} />
+                </Box>
+                <Stack sx={{ maxWidth: "20%" }}>
+                  <Link href={`/groupMail`}>
+                    {isMounted && (
+                      <Badge
+                        color="secondary"
+                        sx={{ color: "#2e7df8" }}
+                        badgeContent={
+                          selectedDonors.length === 0
+                            ? "0"
+                            : selectedDonors.length
+                        }
+                      >
+                        <ForwardToInboxIcon
+                          sx={{ fontSize: "30px", cursor: "pointer" }}
+                        />
+                      </Badge>
+                    )}
+                  </Link>
+                </Stack>
+              </Stack>
+            </motion.div>
 
-            <Box sx={{ mt: 4 }}>
-              <Grid container spacing={2}>
-                {isLoading ? (
-                  <DonorLoadingPage />
-                ) : (
-                  donors &&
-                  donors.slice(0, 6).map((item, index) => (
-                    <Grid item key={item.id} xs={12} sm={12} md={6}>
-                      <DonorCard item={item} />
-                    </Grid>
-                  ))
-                )}
-              </Grid>
+            <Box>
+              <motion.div
+                ref={ref}
+                style={{
+                  scale: scaleProgress,
+                  // y: yTransform,
+                  opacity: opacityProgress,
+                }}
+              >
+                <Box sx={{ mt: 4 }}>
+                  <Grid container spacing={2}>
+                    {isLoading ? (
+                      <DonorLoadingPage />
+                    ) : (
+                      donors &&
+                      donors.slice(0, 6).map((item, index) => (
+                        <Grid item key={item.id} xs={12} sm={12} md={6}>
+                          <DonorCard item={item} />
+                        </Grid>
+                      ))
+                    )}
+                  </Grid>
+                </Box>
+              </motion.div>
             </Box>
           </Box>
-
-          {/* <Box sx={{ mt: 5, textAlign: "center" }}>
-            <Link href="/donorList">
-              <Button
-                sx={{
-                  margin: "10px 0px",
-                }}
-                fullWidth={false}
-                variant="outlined"
-              >
-                See More
-              </Button>
-            </Link>
-          </Box> */}
-        </Box>
+        </motion.div>
       </Container>
     </Box>
   );
